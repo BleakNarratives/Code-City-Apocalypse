@@ -1,0 +1,48 @@
+{
+  "timestamp": "2026-02-21T17:22:47Z",
+  "event_type": "interactive_start",
+  "message": "Agent Manager started in interactive mode"
+}
+{
+  "timestamp": "2026-02-21T17:23:21Z",
+  "event_type": "interactive_error",
+  "message": "Self-Healing Agent not found",
+  "agent_file": "/data/data/com.termux/files/home/modmind_unified/agents/agent_create self-healing Termux crash recovery_llama3.2.sh",
+  "error": "not_found"
+}
+{
+  "timestamp": "2026-02-21T17:23:31Z",
+  "event_type": "interactive_status",
+  "message": "Listed available agents"
+}
+{
+  "timestamp": "2026-02-21T17:23:54Z",
+  "event_type": "interactive_error",
+  "message": "Self-Healing Agent not found",
+  "agent_file": "/data/data/com.termux/files/home/modmind_unified/agents/agent_create self-healing Termux crash recovery_deepseek-coder.sh",
+  "error": "not_found"
+}
+{
+  "timestamp": "2026-02-21T17:24:15Z",
+  "event_type": "interactive_error",
+  "message": "DNA Pattern not found",
+  "dna_file": "/data/data/com.termux/files/home/modmind_unified/automation/docs/pitch_deck_slides.md",
+  "error": "not_found"
+}
+{
+  "timestamp": "2026-02-21T17:25:19Z",
+  "event_type": "interactive_error",
+  "message": "Task file not found",
+  "task_filename": "/data/data/com.termux/files/home/modmind_unified/swarm/tasks/reviewer_task.txt",
+  "error": "not_found"
+}
+{
+  "timestamp": "2026-02-21T17:26:06Z",
+  "event_type": "interactive_mindcom",
+  "message": "agents need to repair molt ollama network connectivity issues"
+}
+{
+  "timestamp": "2026-02-21T17:26:18Z",
+  "event_type": "interactive_exit",
+  "message": "Exiting interactive menu"
+}

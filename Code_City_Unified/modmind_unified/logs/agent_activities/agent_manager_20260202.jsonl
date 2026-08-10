@@ -1,0 +1,60 @@
+{
+  "timestamp": "2026-02-03T03:57:52Z",
+  "event_type": "cmd_start",
+  "message": "Agent Manager started via command line",
+  "agent_type": "task_tech_guru",
+  "task_file": "/data/data/com.termux/files/home/modmind_unified/swarm/tasks/tech_guru_task.txt"
+}
+{
+  "timestamp": "2026-02-03T03:57:52Z",
+  "event_type": "task_agent_start",
+  "message": "Starting task agent: ",
+  "task_name": "",
+  "task_file": "/data/data/com.termux/files/home/modmind_unified/swarm/tasks/tech_guru_task.txt",
+  "log_id": "1770091072520219193-2446"
+}
+{
+  "timestamp": "2026-02-03T03:57:52Z",
+  "event_type": "task_content_read",
+  "message": "Task content read",
+  "task_name": "",
+  "log_id": "1770091072520219193-2446",
+  "content_length": 383
+}
+{
+  "timestamp": "2026-02-03T03:57:53Z",
+  "event_type": "task_agent_end",
+  "message": "Task agent finished: ",
+  "task_name": "",
+  "log_id": "1770091072520219193-2446"
+}
+{
+  "timestamp": "2026-02-03T04:00:30Z",
+  "event_type": "cmd_start",
+  "message": "Agent Manager started via command line",
+  "agent_type": "task_tech_guru",
+  "task_file": "/data/data/com.termux/files/home/modmind_unified/swarm/tasks/tech_guru_task.txt"
+}
+{
+  "timestamp": "2026-02-03T04:00:31Z",
+  "event_type": "task_agent_start",
+  "message": "Starting task agent: ",
+  "task_name": "",
+  "task_file": "/data/data/com.termux/files/home/modmind_unified/swarm/tasks/tech_guru_task.txt",
+  "log_id": "1770091231015636737-18449"
+}
+{
+  "timestamp": "2026-02-03T04:00:31Z",
+  "event_type": "task_content_read",
+  "message": "Task content read",
+  "task_name": "",
+  "log_id": "1770091231015636737-18449",
+  "content_length": 383
+}
+{
+  "timestamp": "2026-02-03T04:00:31Z",
+  "event_type": "task_agent_end",
+  "message": "Task agent finished: ",
+  "task_name": "",
+  "log_id": "1770091231015636737-18449"
+}

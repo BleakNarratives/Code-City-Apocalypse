@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code City - Retro Visualization</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: #0a0e27;
+            font-family: 'Courier New', monospace;
+            color: #00ff41;
+            overflow: hidden;
+        }
+        
+        #cityCanvas {
+            display: block;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
+            margin: 0 auto;
+            border: 4px solid #00ff41;
+            box-shadow: 0 0 20px #00ff4133;
+        }
+        
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(10, 14, 39, 0.9);
+            border: 2px solid #00ff41;
+            padding: 15px;
+            font-size: 14px;
+            min-width: 250px;
+            box-shadow: 0 0 10px #00ff4133;
+        }
+        
+        #hud h2 {
+            color: #ff0066;
+            margin-bottom: 10px;
+            font-size: 18px;
+            text-shadow: 0 0 10px #ff0066;
+        }
+        
+        #hud .stat {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        #hud .stat-label {
+            color: #00ffff;
+        }
+        
+        #hud .stat-value {
+            color: #ffff00;
+            font-weight: bold;
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 14, 39, 0.9);
+            border: 2px solid #00ff41;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+            box-shadow: 0 0 10px #00ff4133;
+        }
+        
+        button {
+            background: #1a1f3a;
+            border: 2px solid #00ff41;
+            color: #00ff41;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        button:hover {
+            background: #00ff41;
+            color: #0a0e27;
+            box-shadow: 0 0 15px #00ff41;
+        }
+        
+        button:active {
+            transform: scale(0.95);
+        }
+        
+        #legend {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 14, 39, 0.9);
+            border: 2px solid #00ff41;
+            padding: 15px;
+            box-shadow: 0 0 10px #00ff4133;
+        }
+        
+        #legend h3 {
+            color: #ff0066;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+            font-size: 12px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border: 1px solid #00ff41;
+        }
+        
+        #bossBar {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 400px;
+            height: 60px;
+            background: rgba(10, 14, 39, 0.95);
+            border: 3px solid #ff0066;
+            padding: 10px;
+            display: none;
+            box-shadow: 0 0 20px #ff0066;
+        }
+        
+        #bossBar.active {
+            display: block;
+        }
+        
+        #bossBar h3 {
+            color: #ff0066;
+            text-align: center;
+            margin-bottom: 5px;
+            text-shadow: 0 0 10px #ff0066;
+        }
+        
+        #bossHealthBar {
+            width: 100%;
+            height: 20px;
+            background: #1a1f3a;
+            border: 2px solid #ff0066;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #bossHealthFill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff0066, #ff6600);
+            transition: width 0.3s;
+            box-shadow: 0 0 10px #ff0066;
+        }
+    </style>
+</head>
+<body>
+    <div id="hud">
+        <h2>🏙️ CODE CITY</h2>
+        <div class="stat">
+            <span class="stat-label">Buildings:</span>
+            <span class="stat-value" id="buildingCount">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Damaged:</span>
+            <span class="stat-value" id="damagedCount">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Monsters:</span>
+            <span class="stat-value" id="monsterCount">0</span>
+        </div>
+        <div class="stat">
+            <span class="stat-label">Scraps:</span>
+            <span class="stat-value" id="scrapCount">0</span>
+        </div>
+    </div>
+    
+    <div id="legend">
+        <h3>LEGEND</h3>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #3572a5;"></div>
+            <span>Python</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #f0db4f;"></div>
+            <span>JavaScript</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #e34c26;"></div>
+            <span>HTML/CSS</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #ff0066;"></div>
+            <span>Damaged</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: #00ff41;"></div>
+            <span>Healthy</span>
+        </div>
+    </div>
+    
+    <div id="bossBar">
+        <h3>💀 MAYOR STRUMP</h3>
+        <div id="bossHealthBar">
+            <div id="bossHealthFill" style="width: 100%;"></div>
+        </div>
+    </div>
+    
+    <canvas id="cityCanvas"></canvas>
+    
+    <div id="controls">
+        <button onclick="city.generateCity()">🏗️ Generate City</button>
+        <button onclick="city.spawnMonster()">👹 Spawn Monster</button>
+        <button onclick="city.bossAttack()">💀 Boss Attack</button>
+        <button onclick="city.refactorRandom()">✨ Refactor</button>
+        <button onclick="city.toggleBoss()">🎯 Toggle Boss</button>
+    </div>
+    
+    <script>
+      const SAMPLE_CITY_DATA = {
+            "buildings": [
+                // Flawed Code Buildings (Spaghetti, Legacy, UI Clunky)
+                { "id": "file_1", "path": "src/core.py", "language": "Python", "height": 10, "width": 4, "color": "#4B8BBE", "flaw_type": "spaghetti", "flaw_score": 0.85, "health": 100 },
+                { "id": "file_2", "path": "utils/legacy.js", "language": "JavaScript", "height": 18, "width": 6, "color": "#F7DF1E", "flaw_type": "legacy", "flaw_score": 0.70, "health": 100 },
+                { "id": "file_3", "path": "ui/dashboard.html", "language": "HTML", "height": 5, "width": 3, "color": "#e34c26", "flaw_type": "ui_clunky", "flaw_score": 0.95, "health": 100 },
+                
+                // Clean Code Buildings (Trivial, Placeholder for structure)
+                { "id": "file_4", "path": "tests/temp.c", "language": "C", "height": 7, "width": 2, "color": "#555555", "flaw_type": "placeholder", "flaw_score": 0.40, "health": 100 },
+                { "id": "file_5", "path": "config/settings.json", "language": "JSON", "height": 3, "width": 1, "color": "#00ff41", "flaw_type": "clean", "flaw_score": 0.05, "health": 100 },
+                { "id": "file_6", "path": "api/routes.go", "language": "Go", "height": 12, "width": 5, "color": "#00ADD8", "flaw_type": "clean", "flaw_score": 0.10, "health": 100 }
+            ]
+        };
+        // ----------------------------------------------------------------------------------
+
+        class CodeCity {
+            constructor() {
+                this.canvas = document.getElementById('cityCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.width = 1200;
+                this.height = 700;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+                this.pixelSize = 4; // Retro blockiness
+
+        class CodeCity {
+            constructor() {
+                this.canvas = document.getElementById('cityCanvas');
+                this.ctx = this.canvas.getContext('2d');
+                
+                // Set canvas size
+                this.width = 800;
+                this.height = 600;
+                this.canvas.width = this.width;
+                this.canvas.height = this.height;
+                
+                // City data
+                this.buildings = [];
+                this.monsters = [];
+                this.particles = [];
+                
+                // Boss
+                this.bossActive = false;
+                this.bossHealth = 100;
+                
+                // Colors
+                this.colors = {
+                    Python: '#3572a5',
+                    JavaScript: '#f0db4f',
+                    HTML: '#e34c26',
+                    CSS: '#563d7c',
+                    healthy: '#00ff41',
+                    damaged: '#ff0066',
+                    sky: '#0a0e27',
+                    ground: '#1a3020'
+                };
+                
+                // Stats
+                this.stats = {
+                    buildings: 0,
+                    damaged: 0,
+                    monsters: 0,
+                    scraps: 0
+                };
+                
+                this.init();
+            }
+            
+            init() {
+                this.generateCity();
+                this.animate();
+            }
+            
+            generateCity() {
+                this.buildings = [];
+                
+                const languages = ['Python', 'JavaScript', 'HTML', 'CSS'];
+                const buildingCount = 30 + Math.floor(Math.random() * 20);
+                
+                for (let i = 0; i < buildingCount; i++) {
+                    const language = languages[Math.floor(Math.random() * languages.length)];
+                    const height = 20 + Math.floor(Math.random() * 150);
+                    const width = 30 + Math.floor(Math.random() * 40);
+                    const x = 50 + Math.floor(Math.random() * (this.width - 150));
+                    const y = this.height - 100 - height;
+                    
+                    this.buildings.push({
+                        x, y,
+                        width, height,
+                        language,
+                        health: 100,
+                        damaged: false,
+                        flawType: this.randomFlawType()
+                    });
+                }
+                
+                this.updateStats();
+            }
+            
+            randomFlawType() {
+                const flaws = ['spaghetti', 'legacy', 'ui_clunky', 'ok'];
+                return flaws[Math.floor(Math.random() * flaws.length)];
+            }
+            
+            spawnMonster() {
+                this.monsters.push({
+                    x: Math.random() * this.width,
+                    y: 50 + Math.random() * 100,
+                    vx: (Math.random() - 0.5) * 2,
+                    vy: (Math.random() - 0.5) * 2,
+                    size: 10 + Math.random() * 10,
+                    color: '#ff0066'
+                });
+                
+                this.updateStats();
+            }
+            
+            bossAttack() {
+                if (this.buildings.length === 0) return;
+                
+                // Random building takes damage
+                const target = this.buildings[Math.floor(Math.random() * this.buildings.length)];
+                target.health -= 20;
+                
+                if (target.health <= 0) {
+                    target.damaged = true;
+                    this.stats.scraps++;
+                }
+                
+                // Visual effect
+                this.createExplosion(target.x + target.width / 2, target.y);
+                
+                this.updateStats();
+            }
+            
+            refactorRandom() {
+                const damaged = this.buildings.filter(b => b.damaged);
+                if (damaged.length === 0) return;
+                
+                const target = damaged[Math.floor(Math.random() * damaged.length)];
+                target.health = 100;
+                target.damaged = false;
+                
+                // Visual effect
+                this.createSparkles(target.x + target.width / 2, target.y);
+                
+                this.updateStats();
+            }
+            
+            toggleBoss() {
+                this.bossActive = !this.bossActive;
+                const bossBar = document.getElementById('bossBar');
+                
+                if (this.bossActive) {
+                    bossBar.classList.add('active');
+                    this.bossHealth = 100;
+                } else {
+                    bossBar.classList.remove('active');
+                }
+            }
+            
+            createExplosion(x, y) {
+                for (let i = 0; i < 10; i++) {
+                    this.particles.push({
+                        x, y,
+                        vx: (Math.random() - 0.5) * 5,
+                        vy: (Math.random() - 0.5) * 5,
+                        life: 30,
+                        color: '#ff0066'
+                    });
+                }
+            }
+            
+            createSparkles(x, y) {
+                for (let i = 0; i < 15; i++) {
+                    this.particles.push({
+                        x, y,
+                        vx: (Math.random() - 0.5) * 3,
+                        vy: (Math.random() - 0.5) * 3 - 2,
+                        life: 40,
+                        color: '#00ff41'
+                    });
+                }
+            }
+            
+            updateStats() {
+                this.stats.buildings = this.buildings.length;
+                this.stats.damaged = this.buildings.filter(b => b.damaged).length;
+                this.stats.monsters = this.monsters.length;
+                
+                document.getElementById('buildingCount').textContent = this.stats.buildings;
+                document.getElementById('damagedCount').textContent = this.stats.damaged;
+                document.getElementById('monsterCount').textContent = this.stats.monsters;
+                document.getElementById('scrapCount').textContent = this.stats.scraps;
+            }
+            
+            draw() {
+                // Clear canvas
+                this.ctx.fillStyle = this.colors.sky;
+                this.ctx.fillRect(0, 0, this.width, this.height);
+                
+                // Draw ground
+                this.ctx.fillStyle = this.colors.ground;
+                this.ctx.fillRect(0, this.height - 100, this.width, 100);
+                
+                // Draw grid lines (retro effect)
+                this.ctx.strokeStyle = '#00ff4122';
+                this.ctx.lineWidth = 1;
+                for (let i = 0; i < this.width; i += 40) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(i, 0);
+                    this.ctx.lineTo(i, this.height);
+                    this.ctx.stroke();
+                }
+                for (let i = 0; i < this.height; i += 40) {
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(0, i);
+                    this.ctx.lineTo(this.width, i);
+                    this.ctx.stroke();
+                }
+                
+                // Draw buildings
+                this.buildings.forEach(building => {
+                    // Building body
+                    this.ctx.fillStyle = building.damaged ? 
+                        this.colors.damaged : 
+                        this.colors[building.language];
+                    this.ctx.fillRect(building.x, building.y, building.width, building.height);
+                    
+                    // Building outline
+                    this.ctx.strokeStyle = building.damaged ? '#ff0066' : '#00ff41';
+                    this.ctx.lineWidth = 2;
+                    this.ctx.strokeRect(building.x, building.y, building.width, building.height);
+                    
+                    // Windows (pixelated)
+                    if (!building.damaged) {
+                        this.ctx.fillStyle = building.health > 50 ? '#ffff00' : '#ff6600';
+                        for (let wx = 0; wx < building.width; wx += 10) {
+                            for (let wy = 0; wy < building.height; wy += 15) {
+                                if (Math.random() > 0.3) {
+                                    this.ctx.fillRect(
+                                        building.x + wx + 2,
+                                        building.y + wy + 2,
+                                        4, 4
+                                    );
+                                }
+                            }
+                        }
+                    }
+                    
+                    // Health bar (if damaged)
+                    if (building.health < 100 && !building.damaged) {
+                        this.ctx.fillStyle = '#1a1f3a';
+                        this.ctx.fillRect(building.x, building.y - 8, building.width, 4);
+                        
+                        this.ctx.fillStyle = building.health > 50 ? '#00ff41' : '#ff6600';
+                        this.ctx.fillRect(
+                            building.x, 
+                            building.y - 8, 
+                            building.width * (building.health / 100), 
+                            4
+                        );
+                    }
+                });
+                
+                // Draw monsters
+                this.monsters.forEach(monster => {
+                    this.ctx.fillStyle = monster.color;
+                    this.ctx.beginPath();
+                    this.ctx.arc(monster.x, monster.y, monster.size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Eyes
+                    this.ctx.fillStyle = '#ffff00';
+                    this.ctx.fillRect(monster.x - 4, monster.y - 2, 3, 3);
+                    this.ctx.fillRect(monster.x + 2, monster.y - 2, 3, 3);
+                });
+                
+                // Draw particles
+                this.particles.forEach(particle => {
+                    this.ctx.fillStyle = particle.color;
+                    this.ctx.globalAlpha = particle.life / 40;
+                    this.ctx.fillRect(particle.x - 2, particle.y - 2, 4, 4);
+                    this.ctx.globalAlpha = 1;
+                });
+            }
+            
+            update() {
+                // Update monsters
+                this.monsters.forEach(monster => {
+                    monster.x += monster.vx;
+                    monster.y += monster.vy;
+                    
+                    // Bounce off walls
+                    if (monster.x < 0 || monster.x > this.width) monster.vx *= -1;
+                    if (monster.y < 0 || monster.y > this.height - 100) monster.vy *= -1;
+                });
+                
+                // Update particles
+                this.particles = this.particles.filter(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.2; // Gravity
+                    p.life--;
+                    return p.life > 0;
+                });
+                
+                // Update boss health bar
+                if (this.bossActive) {
+                    const fill = document.getElementById('bossHealthFill');
+                    fill.style.width = this.bossHealth + '%';
+                    
+                    // Damage boss over time (simulation)
+                    if (Math.random() < 0.01) {
+                        this.bossHealth = Math.max(0, this.bossHealth - 1);
+                    }
+                }
+            }
+            
+            animate() {
+                this.update();
+                this.draw();
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+        // Initialize city
+        const city = new CodeCity();
+    </script>
+</body>
+</html>

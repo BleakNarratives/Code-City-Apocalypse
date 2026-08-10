@@ -1,0 +1,79 @@
+{
+  "blueprint": "blueprint_1769108006",
+  "steps": [
+    {
+      "component": "Intent Parser",
+      "type": "ai",
+      "est_time": "4m",
+      "priority": 1,
+      "status": "pending",
+      "output_file": "eden/workbenches/workbench_blueprint_1769108006/Intent_Parser.ready"
+    },
+    {
+      "component": "Agent Router",
+      "type": "orchestration",
+      "est_time": "6m",
+      "priority": 1,
+      "status": "pending",
+      "output_file": "eden/workbenches/workbench_blueprint_1769108006/Agent_Router.ready"
+    },
+    {
+      "component": "Conflict Resolver",
+      "type": "logic",
+      "est_time": "5m",
+      "priority": 2,
+      "status": "pending",
+      "output_file": "eden/workbenches/workbench_blueprint_1769108006/Conflict_Resolver.ready"
+    },
+    {
+      "component": "Progress Tracker",
+      "type": "monitoring",
+      "est_time": "3m",
+      "priority": 3,
+      "status": "pending",
+      "output_file": "eden/workbenches/workbench_blueprint_1769108006/Progress_Tracker.ready"
+    },
+    {
+      "component": "Self-Optimizer",
+      "type": "ai",
+      "est_time": "8m",
+      "priority": 2,
+      "status": "pending",
+      "output_file": "eden/workbenches/workbench_blueprint_1769108006/Self-Optimizer.ready"
+    }
+  ],
+  "current_step": 0,
+  "components": [
+    {
+      "name": "Intent Parser",
+      "type": "ai",
+      "est_time": "4m",
+      "priority": 1
+    },
+    {
+      "name": "Agent Router",
+      "type": "orchestration",
+      "est_time": "6m",
+      "priority": 1
+    },
+    {
+      "name": "Conflict Resolver",
+      "type": "logic",
+      "est_time": "5m",
+      "priority": 2
+    },
+    {
+      "name": "Progress Tracker",
+      "type": "monitoring",
+      "est_time": "3m",
+      "priority": 3
+    },
+    {
+      "name": "Self-Optimizer",
+      "type": "ai",
+      "est_time": "8m",
+      "priority": 2
+    }
+  ],
+  "expected_outputs": []
+}

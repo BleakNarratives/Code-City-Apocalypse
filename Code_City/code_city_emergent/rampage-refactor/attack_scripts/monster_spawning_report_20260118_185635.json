@@ -1,0 +1,67 @@
+{
+  "attack_type": "monster_spawning",
+  "target": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts",
+  "timestamp": "2026-01-18T18:56:35.018912",
+  "target_files_found": 7,
+  "target_files": [
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/directory_traversal_attack.py",
+      "size": 11806,
+      "extension": ".py",
+      "lines": 289
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/code_injection_attack.py",
+      "size": 13179,
+      "extension": ".py",
+      "lines": 301
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/websocket_hijacking_attack.py",
+      "size": 12570,
+      "extension": ".py",
+      "lines": 300
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/file_corruption_attack.py",
+      "size": 16920,
+      "extension": ".py",
+      "lines": 401
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/monster_spawning_attack.py",
+      "size": 18598,
+      "extension": ".py",
+      "lines": 422
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/building_destruction_attack.py",
+      "size": 21635,
+      "extension": ".py",
+      "lines": 470
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/rampage_attack_orchestrator.py",
+      "size": 26755,
+      "extension": ".py",
+      "lines": 617
+    }
+  ],
+  "spawn_attempts": 0,
+  "successful_spawns": 0,
+  "files_infected": 0,
+  "monsters_spawned": 0,
+  "monster_details": [],
+  "recommendations": [
+    "\u2705 Implement static code analysis (SonarQube, ESLint, Pylint)",
+    "\u2705 Use automated testing with high coverage",
+    "\u2705 Implement code review processes",
+    "\u2705 Use type checking and linting tools",
+    "\u2705 Implement continuous integration with quality gates",
+    "\u2705 Use pre-commit hooks for code quality checks",
+    "\u2705 Implement automated bug detection tools",
+    "\u2705 Use code formatting tools consistently",
+    "\u2705 Implement technical debt tracking",
+    "\u2705 Conduct regular code audits and refactoring"
+  ]
+}

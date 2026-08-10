@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code City Apocalypse</title>
+    <style>
+        body { margin: 0; background: #1a1a2e; color: white; font-family: monospace; }
+        #info { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); padding: 10px; }
+        #stats { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 10px; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="info">
+        <h2>🏙️ CODE CITY APOCALYPSE</h2>
+        <p>Buildings = Files | Disasters = Errors</p>
+    </div>
+    <div id="stats">
+        <h3>Stats</h3>
+        <p>Buildings: 10</p>
+        <p>Disasters: 10</p>
+    </div>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        scene.add(new THREE.AmbientLight(0x404040));
+        const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshBasicMaterial({ color: 0x2d5a27 }));
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+        
+        const cityData = {"metadata": {"generated_at": "2026-05-09T08:19:20.808681", "total_buildings": 10, "total_disasters": 10, "total_monsters": 12, "total_air_raids": 16}, "city": {"buildings": [{"id": 0, "name": "code_city_debug.py", "path": "./code_city_debug.py", "height": 10, "width": 7, "depth": 15, "x": 52, "z": 99, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 35, "occupants": 2}, {"id": 1, "name": "code_city_apocalypse_v4.py", "path": "./code_city_apocalypse_v4.py", "height": 13, "width": 8, "depth": 8, "x": 24, "z": 21, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 45, "occupants": 8}, {"id": 2, "name": "code_city_static.py", "path": "./code_city_static.py", "height": 10, "width": 7, "depth": 12, "x": 74, "z": 24, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 21, "occupants": 6}, {"id": 3, "name": "code_city_apocalypse.py", "path": "./code_city_apocalypse.py", "height": 18, "width": 5, "depth": 8, "x": 32, "z": 61, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 6, "occupants": 2}, {"id": 4, "name": "code_city_apocalypse_v1_1.py", "path": "./code_city_apocalypse_v1_1.py", "height": 10, "width": 12, "depth": 13, "x": 31, "z": 35, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 20, "occupants": 9}, {"id": 5, "name": "code_city_apocalypse_v1_2_2.py", "path": "./code_city_apocalypse_v1_2_2.py", "height": 10, "width": 11, "depth": 15, "x": 8, "z": 84, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 43, "occupants": 3}, {"id": 6, "name": "code_city_apocalypse_v2.py", "path": "./code_city_apocalypse_v2.py", "height": 11, "width": 6, "depth": 13, "x": 17, "z": 1, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 5, "occupants": 5}, {"id": 7, "name": "code_city_apocalypse_v3.py", "path": "./code_city_apocalypse_v3.py", "height": 11, "width": 9, "depth": 12, "x": 88, "z": 55, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 33, "occupants": 7}, {"id": 8, "name": "code_city_apocalypse_v1_2.py", "path": "./code_city_apocalypse_v1_2.py", "height": 11, "width": 13, "depth": 14, "x": 40, "z": 29, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 10, "occupants": 3}, {"id": 9, "name": "code_city_apocalypse_v1_4.py", "path": "./code_city_apocalypse_v1_4.py", "height": 10, "width": 11, "depth": 13, "x": 96, "z": 99, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 11, "occupants": 3}], "disasters": [{"type": "fire", "building_id": 0, "intensity": 10, "position": {"x": 49, "y": 10, "z": 98}, "particles": 41}, {"type": "fire", "building_id": 0, "intensity": 6, "position": {"x": 55, "y": 10, "z": 98}, "particles": 14}, {"type": "fire", "building_id": 1, "intensity": 10, "position": {"x": 22, "y": 13, "z": 17}, "particles": 47}, {"type": "fire", "building_id": 2, "intensity": 5, "position": {"x": 74, "y": 10, "z": 26}, "particles": 50}, {"type": "fire", "building_id": 2, "intensity": 4, "position": {"x": 71, "y": 10, "z": 23}, "particles": 10}, {"type": "fire", "building_id": 3, "intensity": 4, "position": {"x": 35, "y": 14, "z": 60}, "particles": 24}, {"type": "fire", "building_id": 3, "intensity": 10, "position": {"x": 31, "y": 11, "z": 64}, "particles": 10}, {"type": "fire", "building_id": 6, "intensity": 3, "position": {"x": 17, "y": 11, "z": 2}, "particles": 30}, {"type": "fire", "building_id": 8, "intensity": 6, "position": {"x": 43, "y": 11, "z": 27}, "particles": 11}, {"type": "fire", "building_id": 9, "intensity": 1, "position": {"x": 97, "y": 10, "z": 96}, "particles": 32}], "monsters": [{"type": "monster", "species": "gorilla", "building_id": 0, "position": {"x": 52, "y": 0, "z": 99}, "scale": 2.2302922680218753, "health": 86, "damage": 2}, {"type": "monster", "species": "wolf", "building_id": 1, "position": {"x": 24, "y": 0, "z": 21}, "scale": 1.093035246358768, "health": 83, "damage": 5}, {"type": "monster", "species": "wolf", "building_id": 1, "position": {"x": 24, "y": 0, "z": 21}, "scale": 2.7916085545078557, "health": 85, "damage": 3}, {"type": "monster", "species": "gorilla", "building_id": 2, "position": {"x": 74, "y": 0, "z": 24}, "scale": 1.0317710453871936, "health": 53, "damage": 2}, {"type": "monster", "species": "gorilla", "building_id": 2, "position": {"x": 74, "y": 0, "z": 24}, "scale": 1.3917543219704864, "health": 86, "damage": 2}, {"type": "monster", "species": "lizard", "building_id": 3, "position": {"x": 32, "y": 0, "z": 61}, "scale": 1.2700585547039573, "health": 66, "damage": 3}, {"type": "monster", "species": "lizard", "building_id": 4, "position": {"x": 31, "y": 0, "z": 35}, "scale": 2.185145010424787, "health": 67, "damage": 2}, {"type": "monster", "species": "gorilla", "building_id": 5, "position": {"x": 8, "y": 0, "z": 84}, "scale": 2.669908780662607, "health": 85, "damage": 4}, {"type": "monster", "species": "wolf", "building_id": 5, "position": {"x": 8, "y": 0, "z": 84}, "scale": 2.4369348944525813, "health": 70, "damage": 2}, {"type": "monster", "species": "lizard", "building_id": 5, "position": {"x": 8, "y": 0, "z": 84}, "scale": 1.4434930335858027, "health": 69, "damage": 5}, {"type": "monster", "species": "lizard", "building_id": 7, "position": {"x": 88, "y": 0, "z": 55}, "scale": 2.988716641389881, "health": 83, "damage": 4}, {"type": "monster", "species": "lizard", "building_id": 9, "position": {"x": 96, "y": 0, "z": 99}, "scale": 2.1590325301389726, "health": 54, "damage": 1}], "air_raids": [{"type": "air_raid", "pilot": "red_baron", "building_id": 0, "position": {"x": 71, "y": 44, "z": 66}, "velocity": {"x": -0.19629887648601452, "y": 0, "z": -1.6186849271514143}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 0, "position": {"x": 50, "y": 49, "z": 18}, "velocity": {"x": -1.772643415472635, "y": 0, "z": 0.392630047495512}, "bombs": 5}, {"type": "air_raid", "pilot": "red_baron", "building_id": 1, "position": {"x": 15, "y": 49, "z": 22}, "velocity": {"x": 1.9790954246146817, "y": 0, "z": 1.2880910445192146}, "bombs": 4}, {"type": "air_raid", "pilot": "red_baron", "building_id": 1, "position": {"x": 15, "y": 41, "z": 56}, "velocity": {"x": -0.10886879384921366, "y": 0, "z": 1.0971833742166064}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 2, "position": {"x": 42, "y": 50, "z": 31}, "velocity": {"x": -1.9905101732605859, "y": 0, "z": -1.4061718339487683}, "bombs": 1}, {"type": "air_raid", "pilot": "red_baron", "building_id": 3, "position": {"x": 79, "y": 48, "z": 4}, "velocity": {"x": -0.040199284151253956, "y": 0, "z": -1.821498357023934}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 3, "position": {"x": 57, "y": 46, "z": 50}, "velocity": {"x": 1.8349916051144168, "y": 0, "z": -1.8412872783407335}, "bombs": 5}, {"type": "air_raid", "pilot": "red_baron", "building_id": 5, "position": {"x": 8, "y": 34, "z": 8}, "velocity": {"x": 1.506362263606813, "y": 0, "z": -0.3404680256854724}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 5, "position": {"x": 77, "y": 38, "z": 67}, "velocity": {"x": 1.9079858115138464, "y": 0, "z": 0.651617358383207}, "bombs": 5}, {"type": "air_raid", "pilot": "red_baron", "building_id": 8, "position": {"x": 16, "y": 48, "z": 95}, "velocity": {"x": -0.3714307580899794, "y": 0, "z": -1.1769475767229607}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 8, "position": {"x": 6, "y": 43, "z": 60}, "velocity": {"x": 0.47071517054466305, "y": 0, "z": -1.2477955299114822}, "bombs": 2}, {"type": "air_raid", "pilot": "red_baron", "building_id": 8, "position": {"x": 100, "y": 37, "z": 100}, "velocity": {"x": 1.756185718979098, "y": 0, "z": -1.3972172205019713}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 8, "position": {"x": 95, "y": 45, "z": 39}, "velocity": {"x": -1.7467005130251652, "y": 0, "z": -0.998780624911979}, "bombs": 5}, {"type": "air_raid", "pilot": "red_baron", "building_id": 9, "position": {"x": 66, "y": 33, "z": 38}, "velocity": {"x": -0.3342422364907307, "y": 0, "z": -1.6620510768419106}, "bombs": 4}, {"type": "air_raid", "pilot": "red_baron", "building_id": 9, "position": {"x": 58, "y": 32, "z": 47}, "velocity": {"x": -0.5705397076696332, "y": 0, "z": 0.5759275352293329}, "bombs": 4}, {"type": "air_raid", "pilot": "red_baron", "building_id": 9, "position": {"x": 59, "y": 44, "z": 90}, "velocity": {"x": 0.3873612473959569, "y": 0, "z": 0.4527188540065774}, "bombs": 3}]}};
+        
+        cityData.city.buildings.forEach(b => {
+            const geom = new THREE.BoxGeometry(b.width, b.height, b.depth);
+            const mat = new THREE.MeshBasicMaterial({ color: b.color });
+            const mesh = new THREE.Mesh(geom, mat);
+            mesh.position.set(b.x, b.height / 2, b.z);
+            scene.add(mesh);
+        });
+        
+        camera.position.set(50, 50, 50);
+        camera.lookAt(0, 0, 0);
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
+        

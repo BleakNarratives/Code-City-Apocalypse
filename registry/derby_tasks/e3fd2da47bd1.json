@@ -1,0 +1,13 @@
+{
+  "task_id": "e3fd2da47bd1",
+  "name": "whorl_hash_speed",
+  "prompt": "Implement the fastest possible whorl hash function that produces a 12-char hex digest from any number of string arguments.",
+  "test_command": "python3 -c 'from solution import *; print(whorl_hash(\"test\", \"123\"))'",
+  "expected_output": null,
+  "style_rules": [
+    "Must match JANUS _whorl_hash contract",
+    "No external deps"
+  ],
+  "created_at": "2026-06-30T05:43:05.134420+00:00",
+  "active": true
+}

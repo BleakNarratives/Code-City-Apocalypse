@@ -1,0 +1,609 @@
+.../68CC-9ED6/BleakDev $ python quick_share.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/quick_share.py", line 1, in <module>
+    cat > quick_share.py << 'EOF'
+    ^^^
+NameError: name 'cat' is not defined
+
+==============
+
+.../68CC-9ED6/BleakDev $ python chat_demon.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/chat_demon.py", line 8, in <module>
+    import websockets
+ModuleNotFoundError: No module named 'websockets'
+
+===============
+
+.../68CC-9ED6/BleakDev $ python code_miner.py IDEal/
+  File "/storage/68CC-9ED6/BleakDev/code_miner.py", line 137
+    r'import.*\.css';  # Remove CSS imports in TSX (we'll handle separately)
+                    ^
+SyntaxError: invalid syntax
+
+================
+
+I need some kind of lib or dictionary for py syntaxing in termux so it pops out the fix and I can hunt the shit down and hump it into submission. The Ol' Struggle Code-L (sounds like struggle *cuddle* lolol get it? Whop whoooop... Long assed foghorn sound byte goes here then slide whistle. My bad, shame on me ;) )
+
+================
+
+.../68CC-9ED6/BleakDev $ python tts_announcer.py
+🔊 Testing Text-to-Speech...
+Speaking: TTS system activated. Ready for live coding.
+🔇 No TTS system found on Linux. Install: sudo apt install espeak
+Speaking: File forensics complete. Found 124 Python files.
+🔇 No TTS system found on Linux. Install: sudo apt install espeak
+Speaking: Code miner finished. Removed all AI Studio garbage.
+🔇 No TTS system found on Linux. Install: sudo apt install espeak
+Speaking: Deployment successful. Your app is now live!
+🔇 No TTS system found on Linux. Install: sudo apt install espeak
+Speaking: Error detected. Fixing syntax issues now.
+🔇 No TTS system found on Linux. Install: sudo apt install espeak
+Speaking: 🎉 Celebration! All tests passing!
+🔇 No TTS system found on Linux. Install: sudo apt install espeak
+🎤 TTS test complete!
+
+==================
+
+.../68CC-9ED6/BleakDev $ python tts_termux.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/tts_termux.py", line 1, in <module>
+    cat > tts_termux.py << 'EOF'
+    ^^^
+NameError: name 'cat' is not defined
+
+===================
+
+.../68CC-9ED6/BleakDev $ python voice_demon.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/voice_demon.py", line 1, in <module>
+    import speech_recognition as sr
+ModuleNotFoundError: No module named 'speech_recognition'
+
+====================
+
+.../68CC-9ED6/BleakDev $ python react_decompiler.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/react_decompiler.py", line 12, in <module>
+    class ReactDecompiler:
+  File "/storage/68CC-9ED6/BleakDev/react_decompiler.py", line 88, in ReactDecompiler
+    def _extract_state(self, content: str) -> List[Dict]:
+                                              ^^^^
+NameError: name 'List' is not defined. Did you mean: 'list'?
+
+===================
+
+# Largest py files put everything down as 128k and that can't be right... Can it?
+
+128K	./voice_demon.py
+128K	./tasker_project/test.py
+128K	./stream_setup.py
+128K	./sinister_agents_v1/v_bot_agents/janebot/janebot_paradigm_hijack.py
+128K	./sinister_agents_v1/v_bot_agents/janebot/janebot_orchestrator.py
+128K	./sinister_agents_v1/v_bot_agents/janebot/janebot_modmind_afirefly.py
+128K	./sinister_agents_v1/v_bot_agents/janebot/MotherBrain.py
+128K	./sinister_agents_v1/v_bot_agents/agent_6/reality_sculptor_agent_6.py
+128K	./sinister_agents_v1/v_bot_agents/agent_5/shadow_narrative_weaving_agent_5.py
+128K	./sinister_agents_v1/v_bot_agents/agent_4/Agent4.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/synthetic_data_generation_engines.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/sustainable_tech_optimization.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/quantum_ai_fusion.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/nueromorphic_hardware_integration.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/multi_modal_foundation_models.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/edge_cloud_hybrid_computing.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/cutting_edge_evolution_blueprint.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/casual_explainable_ai_frameworks.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/blockchain_ai_decentralized_stacks.py
+128K	./sinister_agents_v1/v_bot_agents/agent_3/autonomous_robotics_ecosystem.py
+
+====================
+
+folder_structure.txt was blank
+
+=====================
+
+../68CC-9ED6/BleakDev $ python file_forensics.py
+🔍 Scanning: /storage/68CC-9ED6/BleakDev
+
+🎯 ANALYZING COMPLETENESS...
+================================================================================
+📊 FILE FORENSICS REPORT - BLEAKDEV
+================================================================================
+Scan Path: /storage/68CC-9ED6/BleakDev
+Scan Date: 2025-10-17T23:34:30.035916
+
+📈 EXECUTIVE SUMMARY:
+  • 📂 Total Files Found: 379
+  • ❌ Core Files Missing: 56
+  • 🔧 Incomplete Files: 26
+  • 📊 Your Stats: 124 Python, 13 TS, 88 TSX, 15 JSON files
+
+✅ KEY FILES FOUND:
+----------------------------------------
+
+📁 ROOT LEVEL:
+  ✅ forge_executor.py (314 lines)
+  ✅ chat_demon.py (300 lines)
+  ✅ stream_setup.py (44 lines)
+  ✅ install_plugins.py (25 lines)
+
+📁 FORGE_ACTUAL_OUTPUT:
+  📄 forge_actual_output/App.tsx
+  📄 forge_actual_output/forge_backend.py
+  📄 forge_actual_output/real_bundler.py
+
+❌ PRIORITY MISSING FILES:
+----------------------------------------
+
+🎯 Launchers Core:
+  ⚠️  plugin_loader.py
+
+🎯 Core Engine:
+  ⚠️  plugin_manager.py
+
+🎯 Plugins Voice Commands:
+  ⚠️  speech_engine.py
+  ⚠️  voice_ui.py
+
+🔄 INCOMPLETE FILES (NEEDS WORK):
+----------------------------------------
+
+📁 OTHER:
+  🔧 folder_structure.txt (only 0 lines)
+  🔧 JaneNat Hub/Nat/insights.json (only 1 lines)
+  🔧 ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/EquiNexInteractiveButton.tsx (only 1 lines)
+  🔧 ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/LookingGlass.tsx (only 1 lines)
+  🔧 ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ScreenDimmer.tsx (only 1 lines)
+
+📁 TESTING_DEV:
+  🔧 tasker_project/test.txt (only 1 lines)
+
+🏗️ PROJECTS DETECTED:
+----------------------------------------
+  📦 IDEal: 1 Python, 0 TSX files
+  📦 odds-of-the-gods: 1 Python, 24 TSX files
+  📦 sinister_agents_v1: 47 Python, 0 TSX files
+  📦 legal_ai: 0 Python, 0 TSX files
+  📦 aFiREFLY_agent: 7 Python, 0 TSX files
+  📦 keymaster: 1 Python, 0 TSX files
+  📦 ModMind-EquiNex: 10 Python, 4 TSX files
+  📦 ChAImeleon: 6 Python, 0 TSX files
+  📦 JaneNat Hub: 4 Python, 0 TSX files
+  📦 Co-Witness: 0 Python, 0 TSX files
+  📦 DreamTable_Sandbox: 6 Python, 0 TSX files
+
+💡 ACTION PLAN:
+----------------------------------------
+1. 🎯 COMPLETE CORE: Finish chat_demon.py & forge_executor.py
+2. 🚀 SETUP PLUGINS: Add voice_commands and gamification plugins
+3. 📦 CONSOLIDATE: Use code_miner.py to clean up AI Studio projects
+4. 🔧 FIX INCOMPLETE: Complete the empty/small files first
+
+🎪 NEXT STEPS:
+• Run: python quick_share.py .  (to create shareable bundle)
+• Run: python code_miner.py IDEal/  (clean AI Studio projects)
+• Focus on ONE project at a time
+📄 Report saved: /storage/68CC-9ED6/BleakDev/bleakdev_analysis_report.txt
+
+====================
+
+.../68CC-9ED6/BleakDev $ python quick_share.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/quick_share.py", line 1, in <module>
+    cat > quick_share.py << 'EOF'
+    ^^^
+NameError: name 'cat' is not defined
+
+.../68CC-9ED6/BleakDev $ python code_miner.py IDEal/
+  File "/storage/68CC-9ED6/BleakDev/code_miner.py", line 137
+    r'import.*\.css';  # Remove CSS imports in TSX (we'll handle separately)
+                    ^
+SyntaxError: invalid syntax
+
+====================
+
+.../68CC-9ED6/BleakDev $ python code_bundler_v2.py
+  File "/storage/68CC-9ED6/BleakDev/code_bundler_v2.py", line 64
+    [span_0](start_span)header = f"\n\n### FILE: [{name}] {relative_path}\n"[span_0](end_span)
+                        ^^^^^^
+SyntaxError: invalid syntax
+
+====================
+
+================================================================================
+📊 FILE FORENSICS REPORT - BLEAKDEV
+================================================================================
+Scan Path: /storage/68CC-9ED6/BleakDev
+Scan Date: 2025-10-17T23:34:30.035916
+
+📈 EXECUTIVE SUMMARY:
+  • 📂 Total Files Found: 379
+  • ❌ Core Files Missing: 56
+  • 🔧 Incomplete Files: 26
+  • 📊 Your Stats: 124 Python, 13 TS, 88 TSX, 15 JSON files
+
+✅ KEY FILES FOUND:
+----------------------------------------
+
+📁 ROOT LEVEL:
+  ✅ forge_executor.py (314 lines)
+  ✅ chat_demon.py (300 lines)
+  ✅ stream_setup.py (44 lines)
+  ✅ install_plugins.py (25 lines)
+
+📁 FORGE_ACTUAL_OUTPUT:
+  📄 forge_actual_output/App.tsx
+  📄 forge_actual_output/forge_backend.py
+  📄 forge_actual_output/real_bundler.py
+
+❌ PRIORITY MISSING FILES:
+----------------------------------------
+
+🎯 Launchers Core:
+  ⚠️  plugin_loader.py
+
+🎯 Core Engine:
+  ⚠️  plugin_manager.py
+
+🎯 Plugins Voice Commands:
+  ⚠️  speech_engine.py
+  ⚠️  voice_ui.py
+
+🔄 INCOMPLETE FILES (NEEDS WORK):
+----------------------------------------
+
+📁 OTHER:
+  🔧 folder_structure.txt (only 0 lines)
+  🔧 JaneNat Hub/Nat/insights.json (only 1 lines)
+  🔧 ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/EquiNexInteractiveButton.tsx (only 1 lines)
+  🔧 ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/LookingGlass.tsx (only 1 lines)
+  🔧 ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ScreenDimmer.tsx (only 1 lines)
+
+📁 TESTING_DEV:
+  🔧 tasker_project/test.txt (only 1 lines)
+
+🏗️ PROJECTS DETECTED:
+----------------------------------------
+  📦 IDEal: 1 Python, 0 TSX files
+  📦 odds-of-the-gods: 1 Python, 24 TSX files
+  📦 sinister_agents_v1: 47 Python, 0 TSX files
+  📦 legal_ai: 0 Python, 0 TSX files
+  📦 aFiREFLY_agent: 7 Python, 0 TSX files
+  📦 keymaster: 1 Python, 0 TSX files
+  📦 ModMind-EquiNex: 10 Python, 4 TSX files
+  📦 ChAImeleon: 6 Python, 0 TSX files
+  📦 JaneNat Hub: 4 Python, 0 TSX files
+  📦 Co-Witness: 0 Python, 0 TSX files
+  📦 DreamTable_Sandbox: 6 Python, 0 TSX files
+
+💡 ACTION PLAN:
+----------------------------------------
+1. 🎯 COMPLETE CORE: Finish chat_demon.py & forge_executor.py
+2. 🚀 SETUP PLUGINS: Add voice_commands and gamification plugins
+3. 📦 CONSOLIDATE: Use code_miner.py to clean up AI Studio projects
+4. 🔧 FIX INCOMPLETE: Complete the empty/small files first
+
+🎪 NEXT STEPS:
+• Run: python quick_share.py .  (to create shareable bundle)
+• Run: python code_miner.py IDEal/  (clean AI Studio projects)
+• Focus on ONE project at a time
+
+==================
+
+!!!??? PRIORITY MISSING FILES:
+----------------------------------------
+
+🎯 Launchers Core:
+  ⚠️  plugin_loader.py
+
+🎯 Core Engine:
+  ⚠️  plugin_manager.py
+
+🎯 Plugins Voice Commands:
+  ⚠️  speech_engine.py
+  ⚠️  voice_ui.py !!!???
+
+===================
+
+.../68CC-9ED6/BleakDev $ python batch_refiner.py
+Traceback (most recent call last):
+  File "/storage/68CC-9ED6/BleakDev/batch_refiner.py", line 7, in <module>
+    from code_miner import CodeMiner
+  File "/storage/68CC-9ED6/BleakDev/code_miner.py", line 137
+    r'import.*\.css';  # Remove CSS imports in TSX (we'll handle separately)
+                    ^
+SyntaxError: invalid syntax
+
+===================
+
+.../68CC-9ED6/BleakDev $ python auto_docs.py
+  File "/storage/68CC-9ED6/BleakDev/auto_docs.py", line 25
+    🚀 **Live-Coded Project** - Generated during stream
+    ^
+SyntaxError: invalid character '🚀' (U+1F680)
+
+===================
+
+.../68CC-9ED6/BleakDev $ cd /storage/68CC-9ED6/BleakDev/forge_actual_output/
+.../BleakDev/forge_actual_output $ python real_bundler.py
+✅ Project bundled: code_bundles/project_bundle_20251017_234615.zip
+(zip contained folders and files with code)
+
+=====================
+
+.../BleakDev/IDEal $ python code_miner.py
+  File "/storage/68CC-9ED6/BleakDev/IDEal/code_miner.py", line 137
+    r'import.*\.css';  # Remove CSS imports in TSX (we'll handle separately)
+                    ^
+SyntaxError: invalid syntax
+
+====================
+
+./ChAImeleon/ChAImeleon/Code_Chameleon.md
+./ChAImeleon/ChAImeleon/Code_Rabbit_Chameleon (1).md
+./ChAImeleon/ChAImeleon/Code_Rabbit_Chameleon_Phase2.md
+./ChAImeleon/ChAImeleon/chaimeleon_full.py
+./ChAImeleon/ChAImeleon/core/knowledge_base.py
+./ChAImeleon/ChAImeleon/core/llm_client.py
+./ChAImeleon/ChAImeleon/examples/run_demo.py
+./ChAImeleon/ChAImeleon/plugins/llm_critique.py
+./ChAImeleon/ChAImeleon/ui/app.py
+./DreamTable_Sandbox/DreamTable_Sandbox.py
+./DreamTable_Sandbox/DreamTable_Sandbox_V1.py
+./DreamTable_Sandbox/dreamtable_core.py
+./DreamTable_Sandbox/dreamtable_integration.py
+./DreamTable_Sandbox/dreamtable_prototype.py
+./DreamTable_Sandbox/dreamtable_sandbox_integration.py
+./FloatingOrbMenu.tsx
+./Foned/foned.py
+./IDEal/backdraft_protocol.py
+./IDEal/bleak_context.json
+./IDEal/syntax_ai_poc.json
+./JaneNat Hub/JaneBot_MotherBrain_CLI.py
+./JaneNat Hub/JaneBot_MotherBrain_Final.py
+./JaneNat Hub/Nat/insights.json
+./JaneNat Hub/janenat_hub.py
+./JaneNat Hub/janenat_motherbrain_production.py
+./ModMind-EquiNex/ModMind/dynamic_environment_poc.py
+./ModMind-EquiNex/ModMind/modmind_api.py
+./ModMind-EquiNex/ModMind/ness_transfer_poc.py
+./ModMind-EquiNex/ai_studio_temp/advanced_code_bundler_pdf.py
+./ModMind-EquiNex/equinex_dashboard.py
+./ModMind-EquiNex/modmind-brains/file_organizer.py
+./ModMind-EquiNex/modmind-brains/janenat_hub.py
+./ModMind-EquiNex/modmind-brains/modmind_controller.py
+./ModMind-EquiNex/modmind-brains/nexus_api.py
+./ModMind-EquiNex/modmind-mask/src/App.tsx
+./ModMind-EquiNex/modmind-mask/src/components/ErrorBoundary.tsx
+./ModMind-EquiNex/modmind-mask/src/components/FloatingOrbMenu.tsx
+./ModMind-EquiNex/modmind-mask/src/components/components_Error boundary (1).tsx
+./ModMind-EquiNex/modmind_api.py
+./Nesting_Bestie/nesting_bestie.json
+./Pattern Journal/enhanced_pattern_journal_integration.js
+./Pytch/mailernailerdealsealer.py
+./README.md
+./Roadmaps/roadmap_exporter.py
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/IDE/Bleak_Proof_Dev_Setup_Guide.md
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/App.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/README.md
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ActivityBar.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/AegisPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ArchitectPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Assistant.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/BlueSkyModal.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/CaptainLogPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ChangelogPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ChroniclePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/CodeBlock.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/CodeRenderer.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/CodeSkeletonLoader.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/CognitiveCorePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/CommandPalette.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/DataConsentPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/DebuggerPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Editor.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/EquiNexInteractiveButton.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ExplorerPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ForgePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/GhostwriterPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Header.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Helm.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Icon.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/InlineDiagnostic.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/IntelPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/KernelPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/KeystrokeCompendiumPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/LaunchpadPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/LookingGlass.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ModMindPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/OmniBar.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/OraclePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/PackagesPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/PreviewPane.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Proposal.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ScreenDimmer.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/SearchPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Sidebar.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/SourceControlPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/StatusBar.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/SymbioteBar.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/SymbioteConfigPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/SymbiotePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/TaskCruciblePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Terminal.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ThemePanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/ToolDeck.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/VaultPanel.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/WispFamiliar.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/WispHabitat.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/components/Workspace.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/constants.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/index.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/metadata.json
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/package.json
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/services/geminiService.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/services/sovereignService.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/services/wispService.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/src/App.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/src/components/CommandPalette.tsx
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/tsconfig.json
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/types.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/utils/audio.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/utils/language.ts
+./ShipWrekD-OS-Syntax-AI-Driven-IDE/ShipWrekD-OS-Syntax-AI-Driven-IDE-Version-2.0/sWdOS/vite.config.ts
+./Syntax AI/syntax_ai.py
+./Syntax AI/syntax_ai_autonomous.py
+./Syntax AI/syntax_ai_code_optimizer_core.py
+./Syntax AI/syntax_ai_pitcher.py
+./Syntax AI/syntax_ai_v2.py
+./Syntax AI/syntax_captcoder.py
+./TempleU/temple_revenue_system.py
+./aFiREFLY_agent/aFiREFLY/README.md
+./aFiREFLY_agent/aFiREFLY/deploy_smith.py
+./aFiREFLY_agent/aFiREFLY/firewarden.py
+./aFiREFLY_agent/aFiREFLY/scout.py
+./aFiREFLY_agent/aFiREFLY_stub.py
+./aFiREFLY_agent/ai_wrappers/ai_wrappers_optimization.md
+./aFiREFLY_agent/ai_wrappers/saas_consumer_and_workforce_ui_white_label_ai_wrapper_jig.md
+./aFiREFLY_agent/blackbox-output-code-EMVSXB7S8B.py
+./aFiREFLY_agent/blackbox-output-code-JE9H5MEK5E.py
+./aFiREFLY_agent/ff_walmart_report.py
+./advanced_code_bundler.py
+./advanced_code_bundler_pdf.py
+./advanced_code_bundler_stable_core.py
+./ai_pair.py
+./auto_docs.py
+./batch_refiner.py
+./chat_demon.py
+./chat_scraper.py
+./code_bundler.py
+./code_bundler_v2.py
+./code_gamification.py
+./code_miner.py
+./code_visualizer.py
+./collaboration.py
+./deploy_dashboard.py
+./example_minigame.py
+./file_forensics.py
+./file_organizer.py
+./forge_actual_output/App.tsx
+./forge_actual_output/components/BlueSkyMode.tsx
+./forge_actual_output/forge_backend.py
+./forge_actual_output/real_bundler.py
+./forge_actual_output/services/api.ts
+./forge_executor.py
+./holy_clapper/devicemotion.js
+./install_plugins.py
+./install_scraper.py
+./keymaster/KeyMaster/RWPConfig.json
+./keymaster/KeyMaster/keymaster_api.py
+./modmind-mask/src/components/FloatingOrbMenu.tsx
+./modmind-mask/src/components/IdentityGenerator.tsx
+./modmind-mask/src/components/types.ts
+./modmind_backend/multimodal_nexus.py
+./modmind_backend/nexus_api.py
+./odds-of-the-gods/Odds of the Gods/8-hour-workday-simulation.md
+./odds-of-the-gods/Odds of the Gods/README.md
+./odds-of-the-gods/Odds of the Gods/brand-guidelines.md
+./odds-of-the-gods/Odds of the Gods/conversation-summary.md
+./odds-of-the-gods/Odds of the Gods/grant-proposal-template.md
+./odds-of-the-gods/Odds of the Gods/kickstarter-pitch.md
+./odds-of-the-gods/Odds of the Gods/patreon-strategy.md
+./odds-of-the-gods/Odds of the Gods/portfolio-setup-guide.md
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/App.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/metadata.json
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/sanctum.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/App.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/GameCard.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/GameScreen.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/Header.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/HomeScreen.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/SanctumScreen.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/AnubisScales.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/FortunaWheel.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/HadesBones.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/HectateTrinity.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/LokiShells.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/MorriganWar.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/games/ZeusBolt.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/icons/GodIcon.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/icons/MythicIcons.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/modals/AscensionModal.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/modals/DivineProvidenceModal.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/modals/ExploitWarningModal.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/modals/PersonalizeGodModal.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/modals/SoulStoreModal.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/components/modals/ThothAudienceModal.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/constants.ts
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/index.tsx
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/services/audioService.ts
+./odds-of-the-gods/Odds of the Gods/unsorted_codebase/src/types.ts
+./odds-of-the-gods/aislots_data_model_poc.json
+./odds-of-the-gods/temple_artifact_renderer.py
+./performance_monitor.py
+./quick_ehare.py
+./react_decompiler.py
+./sinister_agents_v1/Agent6_RealitySculptor_OSINT_Hooke.py
+./sinister_agents_v1/README.md
+./sinister_agents_v1/RealitySculptor_Agent6.py
+./sinister_agents_v1/agent4_structure_design.py
+./sinister_agents_v1/agent5_implementation_framework.py
+./sinister_agents_v1/agent6_sustainability_adaptation.py
+./sinister_agents_v1/app.py
+./sinister_agents_v1/configs/bleak_bootstrap.json
+./sinister_agents_v1/configs/bootstrap.json
+./sinister_agents_v1/configs/gemini_bootstrap.json
+./sinister_agents_v1/configs/gpt_bootstrap.json
+./sinister_agents_v1/continuous_integration_helper_simple_test_runner.js
+./sinister_agents_v1/echo_s_miner.py
+./sinister_agents_v1/other_app.py
+./sinister_agents_v1/python_flask_ai_wrapper.py
+./sinister_agents_v1/scripts/config.json
+./sinister_agents_v1/scripts/sinister_agent_evolution.py
+./sinister_agents_v1/src/ray_scaler.py
+./sinister_agents_v1/v_bot_agents/agent_1/Agent1.py
+./sinister_agents_v1/v_bot_agents/agent_1/agent_1.py
+./sinister_agents_v1/v_bot_agents/agent_1/enhanced_agent_1.1.py
+./sinister_agents_v1/v_bot_agents/agent_2/Agent2.py
+./sinister_agents_v1/v_bot_agents/agent_2/covert_knowledge.py
+./sinister_agents_v1/v_bot_agents/agent_2/deception_counter.py
+./sinister_agents_v1/v_bot_agents/agent_2/ecosystem_control.py
+./sinister_agents_v1/v_bot_agents/agent_2/ethical_navigation.py
+./sinister_agents_v1/v_bot_agents/agent_2/network_infiltration.py
+./sinister_agents_v1/v_bot_agents/agent_2/resource_aquisition.py
+./sinister_agents_v1/v_bot_agents/agent_2/self_repair_evolution.py
+./sinister_agents_v1/v_bot_agents/agent_2/sinister_autonomy.py
+./sinister_agents_v1/v_bot_agents/agent_2/social_influence.py
+./sinister_agents_v1/v_bot_agents/agent_2/strategic_foresight.py
+./sinister_agents_v1/v_bot_agents/agent_2/thrives_in_chaos.py
+./sinister_agents_v1/v_bot_agents/agent_2/time_manipulation.py
+./sinister_agents_v1/v_bot_agents/agent_3/Agent3.py
+./sinister_agents_v1/v_bot_agents/agent_3/advanced_connectivity_6g_protocols.py
+./sinister_agents_v1/v_bot_agents/agent_3/agentic_ai_orchestration.py
+./sinister_agents_v1/v_bot_agents/agent_3/autonomous_robotics_ecosystem.py
+./sinister_agents_v1/v_bot_agents/agent_3/blockchain_ai_decentralized_stacks.py
+./sinister_agents_v1/v_bot_agents/agent_3/casual_explainable_ai_frameworks.py
+./sinister_agents_v1/v_bot_agents/agent_3/cutting_edge_evolution_blueprint.py
+./sinister_agents_v1/v_bot_agents/agent_3/edge_cloud_hybrid_computing.py
+./sinister_agents_v1/v_bot_agents/agent_3/multi_modal_foundation_models.py
+./sinister_agents_v1/v_bot_agents/agent_3/nueromorphic_hardware_integration.py
+./sinister_agents_v1/v_bot_agents/agent_3/quantum_ai_fusion.py
+./sinister_agents_v1/v_bot_agents/agent_3/sustainable_tech_optimization.py
+./sinister_agents_v1/v_bot_agents/agent_3/synthetic_data_generation_engines.py
+./sinister_agents_v1/v_bot_agents/agent_4/Agent4.py
+./sinister_agents_v1/v_bot_agents/agent_5/shadow_narrative_weaving_agent_5.py
+./sinister_agents_v1/v_bot_agents/agent_6/reality_sculptor_agent_6.py
+./sinister_agents_v1/v_bot_agents/janebot/MotherBrain.py
+./sinister_agents_v1/v_bot_agents/janebot/janebot_modmind_afirefly.py
+./sinister_agents_v1/v_bot_agents/janebot/janebot_orchestrator.py
+./sinister_agents_v1/v_bot_agents/janebot/janebot_paradigm_hijack.py
+./sinister_agents_v1/v_bot_agents/sinister_agents_v1.md
+./stream_setup.py
+./tasker_project/test.py
+./v0-underutilized-features.md
+./voice_demon.py
+
+# ^current_files.txt output
+
+=====================
+

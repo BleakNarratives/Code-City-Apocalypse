@@ -1,0 +1,12 @@
+version: "1.0.0" api_keys:
+  gemini: "AIzaSyDq5LSgDgc88DLJmkWH4Oq21S_oDRLM-Pw"
+modules:
+  boardroom: {enabled: true}
+  firefly: {enabled: true}
+  rapper: {enabled: true}
+audio:
+  sample_rate: 44100
+  bitrate: "320k"
+paths:
+  uploads: "./shared/data/uploads"
+  outputs: "./shared/data/outputs"

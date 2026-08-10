@@ -1,0 +1,36 @@
+# Fling Configuration - Defines permanent file routing paths.
+# Think of these as your "interstate highways" for files.
+
+sd_card_root: "/storage/emulated/0/root_2026" # Base path for all destinations on your SD card
+
+source_directories:
+  - "~/Documents"
+  - "~/Downloads"
+  - "~/code-city-reorg/misc" # Example: clean up old misc files
+  - "~/" # Monitor home directory directly (use with caution for broad patterns)
+
+mappings:
+  - name: "PDF Archive"
+    pattern: "*.pdf"
+    destination: "documents/pdfs" # Will resolve to /storage/emulated/0/root_2026/documents/pdfs
+    action: "move" # or "copy"
+    tag: "EXIT_PDF_ARCHIVE" # Analogous to an interstate exit sign
+
+  - name: "Project Reports"
+    pattern: "project_reports/*.md"
+    destination: "documents/reports"
+    action: "move"
+    tag: "EXIT_REPORTS_LANDING"
+  
+  - name: "Temporary Logs Cleanup"
+    pattern: "*.log"
+    source_subdir: "**/logs" # Look for .log files specifically in 'logs' subdirectories
+    destination: "system/logs_archive"
+    action: "move"
+    tag: "EXIT_LOGS_ARCHIVE"
+  
+  - name: "Media Files"
+    pattern: "*.{jpg,png,mp4,mp3}"
+    destination: "media/unsorted"
+    action: "copy" # Copy media to SD card, keep original
+    tag: "EXIT_MEDIA_LANDING"

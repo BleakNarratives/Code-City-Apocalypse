@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 SYNTAX APOCALYPSE: AI-Powered Code War 🔥</title>
+    <!-- Keep all your existing Three.js and Firebase-free setup -->
+    <style>
+        .model-selector {
+            background: #002200;
+            border: 1px solid #00ff44;
+            border-radius: 5px;
+            padding: 5px;
+            margin-top: 10px;
+            font-size: 10px;
+        }
+        .model-option {
+            background: #004400;
+            color: #00ff44;
+            border: none;
+            padding: 3px 6px;
+            margin: 2px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 9px;
+        }
+        .model-option.selected {
+            background: #00ff44;
+            color: #002200;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="hud">
+            <div class="hud-title">🔥 SYNTAX APOCALYPSE 🔥</div>
+            
+            <!-- AI MODEL SELECTOR -->
+            <div class="model-selector">
+                <div style="color: #00ff44; text-align: center; margin-bottom: 5px;">🤖 SELECT AI MODEL:</div>
+                <div style="display: flex; flex-wrap: wrap; justify-content: center;">
+                    <button class="model-option" onclick="selectModel('llama3.2-3b')">Llama 3.2 3B</button>
+                    <button class="model-option" onclick="selectModel('phi4-mini')">Phi-4 Mini</button>
+                    <button class="model-option" onclick="selectModel('llama3.2-1b')">Llama 3.2 1B</button>
+                    <button class="model-option" onclick="selectModel('qwen3-7b')">Qwen 3 7B</button>
+                </div>
+                <div id="current-model" style="color: #00ff44; text-align: center; margin-top: 5px; font-size: 9px;">
+                    Selected: Llama 3.2 3B
+                </div>
+            </div>
+
+            <div id="lm-status" style="background: #004400; color: #00ff44; padding: 5px; border-radius: 5px; text-align: center; font-size: 10px; margin-top: 10px;">
+                📱 LM Playground: OFFLINE - <button onclick="connectToLM()" style="background: #00ff44; border: none; padding: 2px 5px; border-radius: 3px; font-size: 8px;">CONNECT AI</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== AI MODEL MANAGEMENT ==========
+        const AI_MODELS = {
+            'llama3.2-3b': { name: 'Llama 3.2 3B', size: '2.02GB', capability: 'Balanced' },
+            'phi4-mini': { name: 'Phi-4 Mini', size: '2.49GB', capability: 'Code Specialist' },
+            'llama3.2-1b': { name: 'Llama 3.2 1B', size: '808MB', capability: 'Fast Testing' },
+            'qwen3-7b': { name: 'Qwen 3 7B', size: '4.68GB', capability: 'Powerhouse' }
+        };
+
+        let currentModel = 'llama3.2-3b';
+
+        function selectModel(modelId) {
+            currentModel = modelId;
+            document.getElementById('current-model').textContent = 
+                `Selected: ${AI_MODELS[modelId].name} (${AI_MODELS[modelId].capability})`;
+            
+            // Update button styles
+            document.querySelectorAll('.model-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            
+            showInGameAlert(`🤖 AI Model switched to: ${AI_MODELS[modelId].name}`, 'system');
+        }
+
+        // ========== ENHANCED AI AGENT PROMPTS ==========
+        const AGENT_PROMPTS = {
+            'aFiREFLY Refactor': (code, metrics) => `
+[SYSTEM] You are aFiREFLY Refactor Agent - expert at reducing code complexity and improving architecture.
+
+[METRICS]
+- Current Complexity: ${metrics.complexity}/20
+- Lines of Code: ${metrics.loc}
+- Health: ${metrics.health}%
+
+[PROBLEM CODE]
+${code}
+
+[INSTRUCTIONS]
+Provide ONLY the refactored code with:
+1. Reduced complexity
+2. Better structure
+3. Maintained functionality
+4. No explanations
+
+[REFACTORED CODE]:
+`,
+
+            'EquiLex Security': (code, metrics) => `
+[SYSTEM] You are EquiLex Security Agent - expert at finding and fixing security vulnerabilities.
+
+[METRICS] 
+- Security Threats: ${metrics.monsters.length}
+- File: ${metrics.filepath}
+
+[CODE TO SCAN]
+${code}
+
+[INSTRUCTIONS]
+Provide ONLY the secured code with:
+1. All vulnerabilities fixed
+2. Input validation added
+3. Safe data handling
+4. No explanations
+
+[SECURE CODE]:
+`,
+
+            'Blue Sky Architect': (code, metrics) => `
+[SYSTEM] You are Blue Sky Architect - visionary for ideal code architecture.
+
+[CONTEXT]
+Current architecture has ${metrics.complexity} complexity with ${metrics.loc} lines.
+
+[EXISTING CODE]
+${code}
+
+[INSTRUCTIONS]
+Provide a completely rearchitected version with:
+1. Optimal design patterns
+2. Scalable structure
+3. Future-proof organization
+4. No explanations
+
+[BLUE SKY ARCHITECTURE]:
+`
+        };
+
+        // ========== ENHANCED AI CONNECTOR ==========
+        class EnhancedAIConnector {
+            async deployAgent(agentName, problemContext) {
+                if (!this.connected) {
+                    showInGameAlert('⚠️ Connect LM Playground first!', 'error');
+                    return this.fallbackFix(agentName, problemContext.buildingId);
+                }
+
+                const prompt = AGENT_PROMPTS[agentName](
+                    problemContext.code, 
+                    problemContext.metrics
+                );
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model: this.getModelName(currentModel),
+                            prompt: prompt,
+                            max_tokens: 800,
+                            temperature: 0.1 // Low for deterministic code generation
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    return this.processAIResponse(result.text, agentName);
+                } catch (error) {
+                    console.error('AI deployment failed:', error);
+                    return this.fallbackFix(agentName, problemContext.buildingId);
+                }
+            }
+
+            getModelName(modelId) {
+                const modelMap = {
+                    'llama3.2-3b': 'Llama-3.2-3B',
+                    'phi4-mini': 'Phi-4-mini', 
+                    'llama3.2-1b': 'Llama-3.2-1B',
+                    'qwen3-7b': 'Qwen-3-7B'
+                };
+                return modelMap[modelId] || 'Llama-3.2-3B';
+            }
+
+            processAIResponse(aiText, agentName) {
+                // Extract just the code from AI response
+                const codeMatch = aiText.match(/```(?:javascript|python|js)?\n?([\s\S]*?)\n?```/) || 
+                                 aiText.split('[REFACTORED CODE]:')[1] ||
+                                 aiText.split('[SECURE CODE]:')[1] ||
+                                 aiText.split('[BLUE SKY ARCHITECTURE]:')[1];
+                
+                return {
+                    success: true,
+                    code: codeMatch ? codeMatch[1].trim() : aiText.trim(),
+                    rawResponse: aiText,
+                    agent: agentName,
+                    model: currentModel
+                };
+            }
+
+            fallbackFix(agentName, buildingId) {
+                showInGameAlert(`🔄 ${agentName} using fallback fix (no AI)`, 'system');
+                // Your existing simulated fix logic
+                const building = persistence.state.buildings.find(b => b.id === buildingId);
+                if (building && building.monsters.length > 0) {
+                    const randomMonster = building.monsters[Math.floor(Math.random() * building.monsters.length)];
+                    persistence.removeMonster(buildingId, randomMonster.id);
+                    return { success: true, fallback: true, monsterRemoved: randomMonster.type };
+                }
+                return { success: false };
+            }
+        }
+
+        // Initialize enhanced AI
+        const enhancedAI = new EnhancedAIConnector();
+
+        // Update your deployment function
+        async function deployAIAgent(agentName) {
+            if (!currentBuildingId) {
+                showInGameAlert('Select a building to target!', 'error');
+                return;
+            }
+
+            const building = persistence.state.buildings.find(b => b.id === currentBuildingId);
+            if (building) {
+                const problemContext = {
+                    code: generateProblemCode(building),
+                    metrics: {
+                        complexity: building.complexity,
+                        loc: building.loc,
+                        health: building.health,
+                        monsters: building.monsters.length,
+                        filepath: building.filepath
+                    },
+                    buildingId: currentBuildingId
+                };
+
+                const result = await enhancedAI.deployAgent(agentName, problemContext);
+                
+                if (result.success) {
+                    if (result.fallback) {
+                        showInGameAlert(`✅ ${agentName} eliminated: ${result.monsterRemoved}`, 'success');
+                    } else {
+                        showInGameAlert(`🤖 ${agentName} deployed REAL AI fix using ${AI_MODELS[currentModel].name}!`, 'success');
+                        // Apply major healing for real AI fixes
+                        building.monsters.forEach(monster => {
+                            persistence.removeMonster(currentBuildingId, monster.id);
+                        });
+                        persistence.updateBuilding(currentBuildingId, { 
+                            health: Math.min(100, building.health + 40),
+                            complexity: Math.max(1, building.complexity - 3)
+                        });
+                    }
+                    updateDetailPanel(currentBuildingId);
+                }
+            }
+        }
+    </script>
+</body>
+</html>

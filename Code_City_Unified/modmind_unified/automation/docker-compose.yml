@@ -1,0 +1,289 @@
+# FILE: automation_dna/docker-compose.yml
+# PURPOSE: Multi-container orchestration for full Automation DNA stack
+# USAGE: docker-compose up -d
+#        docker-compose logs -f
+#        docker-compose down
+
+version: '3.8'
+
+# =============================================================================
+# SERVICES DEFINITION
+# =============================================================================
+services:
+  # ---------------------------------------------------------------------------
+  # MAIN APPLICATION - Flask API + Evolution Engine
+  # ---------------------------------------------------------------------------
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    container_name: automation-dna-app
+    
+    # Port mapping: host:container
+    ports:
+      - "5000:5000"
+    
+    # Environment variables
+    environment:
+      # Flask configuration
+      - FLASK_ENV=production
+      - FLASK_APP=web.app
+      - SECRET_KEY=${SECRET_KEY:-change-me-in-production}
+      
+      # Database configuration (PostgreSQL)
+      - DATABASE_URL=postgresql://dnauser:dnapass@postgres:5432/automation_dna
+      
+      # Redis configuration (for caching and Celery)
+      - REDIS_URL=redis://redis:6379/0
+      
+      # Celery configuration
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      
+      # Logging
+      - LOG_LEVEL=INFO
+    
+    # Mount volumes for development hot-reload
+    # Comment out in production
+    volumes:
+      - ./core:/app/core
+      - ./web:/app/web
+      - ./data:/app/data
+    
+    # Service dependencies
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    
+    # Resource limits (adjust based on your server)
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 2G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+  
+  # ---------------------------------------------------------------------------
+  # POSTGRESQL DATABASE
+  # ---------------------------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    
+    container_name: automation-dna-postgres
+    
+    # Environment variables
+    environment:
+      - POSTGRES_DB=automation_dna
+      - POSTGRES_USER=dnauser
+      - POSTGRES_PASSWORD=dnapass
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    
+    # Persist database data
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      # Optional: Initialize database with custom SQL
+      # - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    
+    # Port mapping (useful for external DB tools)
+    ports:
+      - "5432:5432"
+    
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dnauser -d automation_dna"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+  
+  # ---------------------------------------------------------------------------
+  # REDIS - Caching and Message Broker
+  # ---------------------------------------------------------------------------
+  redis:
+    image: redis:7-alpine
+    
+    container_name: automation-dna-redis
+    
+    # Redis configuration
+    command: redis-server --appendonly yes --maxmemory 512mb --maxmemory-policy allkeys-lru
+    
+    # Persist Redis data
+    volumes:
+      - redis_data:/data
+    
+    # Port mapping
+    ports:
+      - "6379:6379"
+    
+    restart: unless-stopped
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+  
+  # ---------------------------------------------------------------------------
+  # CELERY WORKER - Background Task Processing
+  # ---------------------------------------------------------------------------
+  celery_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    container_name: automation-dna-celery
+    
+    # Override default command to run Celery
+    command: celery -A web.app.celery worker --loglevel=info --concurrency=4
+    
+    # Same environment as main app
+    environment:
+      - DATABASE_URL=postgresql://dnauser:dnapass@postgres:5432/automation_dna
+      - REDIS_URL=redis://redis:6379/0
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    
+    # Mount code for development
+    volumes:
+      - ./core:/app/core
+      - ./web:/app/web
+    
+    depends_on:
+      - postgres
+      - redis
+    
+    restart: unless-stopped
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+  
+  # ---------------------------------------------------------------------------
+  # NGINX - Reverse Proxy (Optional but recommended for production)
+  # ---------------------------------------------------------------------------
+  nginx:
+    image: nginx:alpine
+    
+    container_name: automation-dna-nginx
+    
+    ports:
+      - "80:80"
+      - "443:443"
+    
+    volumes:
+      # Custom nginx configuration
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      # Static files
+      - ./web/static:/usr/share/nginx/html/static:ro
+    
+    depends_on:
+      - app
+    
+    restart: unless-stopped
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 64M
+
+# =============================================================================
+# VOLUMES - Persistent Data Storage
+# =============================================================================
+volumes:
+  # PostgreSQL data
+  postgres_data:
+    driver: local
+  
+  # Redis data
+  redis_data:
+    driver: local
+
+# =============================================================================
+# NETWORKS (Optional - for custom networking)
+# =============================================================================
+networks:
+  default:
+    name: automation-dna-network
+    driver: bridge
+
+# =============================================================================
+# USAGE EXAMPLES
+# =============================================================================
+# 
+# Start all services:
+#   docker-compose up -d
+#
+# View logs:
+#   docker-compose logs -f app
+#   docker-compose logs -f postgres
+#
+# Stop all services:
+#   docker-compose down
+#
+# Stop and remove volumes (WARNING: deletes data):
+#   docker-compose down -v
+#
+# Rebuild and restart:
+#   docker-compose up -d --build
+#
+# Run database migrations:
+#   docker-compose exec app flask db upgrade
+#
+# Access database shell:
+#   docker-compose exec postgres psql -U dnauser -d automation_dna
+#
+# Access Redis CLI:
+#   docker-compose exec redis redis-cli
+#
+# Scale Celery workers:
+#   docker-compose up -d --scale celery_worker=3

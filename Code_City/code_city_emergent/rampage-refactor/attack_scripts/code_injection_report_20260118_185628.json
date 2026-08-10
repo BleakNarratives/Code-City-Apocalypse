@@ -1,0 +1,38 @@
+{
+  "attack_type": "code_injection",
+  "target": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts",
+  "timestamp": "2026-01-18T18:56:28.688775",
+  "vulnerable_files_found": 2,
+  "vulnerable_files": [
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/code_injection_attack.py",
+      "type": "python_injection_vulnerability",
+      "pattern": "eval\\(",
+      "description": "eval() function usage",
+      "severity": "high"
+    },
+    {
+      "file": "/storage/ED7B-AD5A/root_2026/code_city_emergent/rampage-refactor/attack_scripts/monster_spawning_attack.py",
+      "type": "python_injection_vulnerability",
+      "pattern": "exec\\(",
+      "description": "exec() function usage",
+      "severity": "high"
+    }
+  ],
+  "injection_attempts": 0,
+  "successful_injections": 0,
+  "files_injected": 0,
+  "malicious_payloads_executed": 0,
+  "recommendations": [
+    "\u2705 Never use eval() or exec() with user input",
+    "\u2705 Avoid using __import__() dynamically",
+    "\u2705 Use safe alternatives to pickle/yaml deserialization",
+    "\u2705 Always sanitize and validate user input",
+    "\u2705 Use Content Security Policy (CSP) headers",
+    "\u2705 Implement proper input validation and output encoding",
+    "\u2705 Use parameterized queries for database operations",
+    "\u2705 Implement code signing and integrity checks",
+    "\u2705 Use static code analysis tools to detect injection vulnerabilities",
+    "\u2705 Conduct regular security training for developers"
+  ]
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Wellington KS Underground Network</title>
+<style>
+    .tunnel {stroke: #8B4513; stroke-width: 3; fill: none;}
+    .confirmed {stroke: #FF4444; stroke-dasharray: 5;}
+    .speculative {stroke: #888888; stroke-dasharray: 10;}
+    .historic {stroke: #4444FF;}
+    .modern {stroke: #FF44FF;}
+    .building {fill: #f0f0f0; stroke: #666;}
+    .hotspot {fill: #FF0000; opacity: 0.7;}
+</style>
+</head>
+<body>
+<svg width="1200" height="800" viewBox="0 0 1200 800">
+
+<!-- SURFACE LAYER - WELLINGTON DOWNTOWN -->
+<rect x="0" y="0" width="1200" height="800" fill="#e8f4f8"/>
+
+<!-- HISTORIC BUILDINGS -->
+<rect class="building" x="200" y="300" width="100" height="80"/>
+<text x="250" y="340">Opera House</text>
+
+<rect class="building" x="400" y="250" width="120" height="100"/>  
+<text x="460" y="300">Railroad Depot</text>
+
+<rect class="building" x="600" y="350" width="150" height="120"/>
+<text x="675" y="410">320 E 7th (Wade)</text>
+
+<rect class="building" x="800" y="280" width="100" height="90"/>
+<text x="850" y="325">Court House</text>
+
+<!-- CONFIRMED TUNNELS -->
+<path class="tunnel confirmed historic" d="M250 380 Q350 420 450 350"/>
+<path class="tunnel confirmed historic" d="M500 350 L700 410"/>
+<path class="tunnel confirmed modern" d="M750 410 Q850 380 900 320"/>
+
+<!-- SPECULATIVE NETWORKS -->
+<path class="tunnel speculative" d="M250 380 Q150 320 100 250"/>
+<path class="tunnel speculative" d="M900 320 Q950 280 1000 220"/>
+<path class="tunnel speculative" d="M700 410 Q650 500 600 550"/>
+
+<!-- UNDERGROUND SPACES -->
+<ellipse class="hotspot" cx="350" cy="420" rx="40" ry="25"/>
+<text x="330" y="425">Storage</text>
+
+<ellipse class="hotspot" cx="600" cy="450" rx="50" ry="30"/>  
+<text x="570" y="455">Hub</text>
+
+<ellipse class="hotspot" cx="850" cy="350" rx="35" ry="20"/>
+<text x="830" y="355">Access</text>
+
+<!-- VENTILATION -->
+<circle cx="650" cy="380" r="8" fill="#00FF00"/>
+<circle cx="480" cy="320" r="8" fill="#00FF00"/>
+<circle cx="920" cy="300" r="8" fill="#00FF00"/>
+
+</svg>
+
+<!-- LEGEND -->
+<div style="position:absolute; top:650px; left:50px;">
+    <h3>SUBTERRANEAN NETWORK LEGEND</h3>
+    <p><span style="color:#FF4444">■</span> Confirmed Historic Tunnels (Pre-1940)</p>
+    <p><span style="color:#FF44FF">■</span> Confirmed Modern Tunnels (Post-1960)</p> 
+    <p><span style="color:#888888">■</span> Speculative/Unverified Passages</p>
+    <p><span style="color:#00FF00">●</span> Ventilation/Access Points</p>
+    <p><span style="color:#FF0000">●</span> Underground Chambers</p>
+</div>
+
+<!-- INTELLIGENCE ANALYSIS -->
+<div style="position:absolute; top:50px; left:800px; background:#f8f8f8; padding:20px; border:1px solid #ccc;">
+    <h3>PATTERN ANALYSIS</h3>
+    <p><strong>Network Topology:</strong> Hub-and-spoke design centered at 320 E 7th</p>
+    <p><strong>Historical Layers:</strong> UGRR + Prohibition + Modern adaptation</p>
+    <p><strong>Ventilation System:</strong> Active airflow management detected</p>
+    <p><strong>Expansion Pattern:</strong> Radial growth from downtown core</p>
+</div>
+
+</body>
+</html>

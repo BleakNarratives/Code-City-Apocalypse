@@ -1,0 +1,13 @@
+websockets
+requests
+pyyaml
+
+# Core dependencies for Vertical AI boardroom
+# Most functionality uses Python standard library + subprocess calls to Ollama.
+# Add requests only if you implement real swarm scouts (optional).
+
+# For future swarm analytics (optional)
+requests>=2.25.0
+
+# For any JSON handling (built-in, but listed for clarity)
+# No additional packages needed for basic TUI and context system.

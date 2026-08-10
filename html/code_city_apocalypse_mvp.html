@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<title>ROOT CHAOS — THE REPO WARS</title>
+<style>
+  html,body{height:100%;margin:0;background:#05050a;color:#ddd;font-family:Inter,system-ui,Arial;}
+  #container{width:100%;height:100%;position:relative;overflow:hidden;}
+  #overlay{position:absolute;left:12px;top:12px;z-index:30;max-width:46%;min-width:220px}
+  .title{font-weight:800;font-size:22px;line-height:1.05;color:#fff;text-shadow:0 6px 20px rgba(0,0,0,0.9)}
+  .subtitle{opacity:0.7;font-size:12px;margin-top:4px}
+  .controls{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px) scale(0.995)}
+  #panel{position:absolute;right:12px;top:12px;z-index:30;width:320px;max-width:46%;background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.15));border-radius:10px;padding:12px;color:#ddd;backdrop-filter: blur(6px);}
+  #info{font-size:13px;line-height:1.3;max-height:60vh;overflow:auto}
+  #splash{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:40;text-align:center;padding:18px;border-radius:12px;min-width:320px}
+  #splash h1{font-size:34px;margin:0;color:#fff;letter-spacing:1px;text-shadow:0 10px 40px rgba(0,0,0,0.9)}
+  #splash p{opacity:0.75;margin-top:8px}
+  #closeSplash{margin-top:12px;background:#fff;color:#111;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  #metadata{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:35;background:rgba(0,0,0,0.45);padding:12px;border-radius:8px;min-width:280px;max-width:90%;display:none}
+  @media (max-width:720px){#overlay{max-width:60%} #panel{display:none}}
+</style>
+</head>
+<body>
+<div id="container"></div>
+<div id="overlay">
+  <div class="title">ROOT CHAOS — THE REPO WARS</div>
+  <div class="subtitle">The machines are writing back · City generated from your repo</div>
+  <div class="controls">
+    <button class="btn" id="toggleOps">OPS MODE</button>
+    <button class="btn" id="detailLow">LOW</button>
+    <button class="btn" id="detailMed">MED</button>
+    <button class="btn" id="detailHigh">HIGH</button>
+    <button class="btn" id="snapshot">SNAPSHOT</button>
+    <button class="btn" id="toggleSplash">SPLASH</button>
+  </div>
+</div>
+<div id="panel">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-weight:800">City Panel</div>
+    <div style="opacity:0.7;font-size:12px">Buildings: <span id="count">--</span></div>
+  </div>
+  <hr style="opacity:0.06;margin:8px 0">
+  <div id="info">Click a building to inspect. Use OPS MODE to show debug lines and spawners.</div>
+</div>
+<div id="metadata"></div>
+<div id="splash">
+  <h1>ROOT CHAOS</h1>
+  <p style="font-weight:700">THE REPO WARS — Your root folder made physical</p>
+  <p style="opacity:0.7">Click to drop into the city. Buildings = files · Towers = modules · Agents = coming soon</p>
+  <button id="closeSplash">ENTER THE CITY</button>
+</div>
+
+<script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
+<script src="https://unpkg.com/three@0.152.2/examples/js/controls/OrbitControls.js"></script>
+
+<script>
+(async () => {
+  const container = document.getElementById('container');
+  let width = container.clientWidth, height = container.clientHeight;
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a0a0a, 0.0025);
+  const camera = new THREE.PerspectiveCamera(45, width/height, 1, 2000);
+  camera.position.set(0, 140, 260);
+  const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.setSize(width, height);
+  container.appendChild(renderer.domElement);
+  const hemi = new THREE.HemisphereLight(0xffffee, 0x080820, 0.6); scene.add(hemi);
+  const dir = new THREE.DirectionalLight(0xffeedd, 0.9); dir.position.set(-100,300,200); scene.add(dir);
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(4000,4000), new THREE.MeshStandardMaterial({color:0x05060a}));
+  ground.rotation.x = -Math.PI/2; scene.add(ground);
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.12;
+  const geometry = new THREE.BoxGeometry(20,50,20);
+  const material = new THREE.MeshStandardMaterial({color:0x00ffcc});
+  for(let i=0;i<30;i++){const mesh=new THREE.Mesh(geometry,material);mesh.position.set((Math.random()-0.5)*400,25,(Math.random()-0.5)*400);scene.add(mesh);}
+  function animate(){requestAnimationFrame(animate);controls.update();renderer.render(scene,camera);} animate();
+})();
+</script>
+</body>
+</html>

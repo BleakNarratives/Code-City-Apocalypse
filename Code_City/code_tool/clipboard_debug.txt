@@ -1,0 +1,4 @@
+cd /storage/emulated/0/code_tool
+termux-clipboard-get > clipboard_debug.txt
+echo "Clipboard content saved to clipboard_debug.txt"
+cat clipboard_debug.txt

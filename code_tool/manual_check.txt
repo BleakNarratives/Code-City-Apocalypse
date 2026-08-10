@@ -1,0 +1,2 @@
+termux-clipboard-get > manual_check.txt
+wc -c manual_check.txt

@@ -1,0 +1,52 @@
+# Python virtualenv
+venv/
+.venv/
+
+# Secrets — NEVER commit
+secrets/
+.env
+*.pem
+
+# Reference material / dumping ground (not the engine)
+misc/
+Redteaming-Suite-Claude/
+
+# Archives
+*.zip
+*.tar.gz
+*.tar
+
+# Binary assets
+*.mp3
+*.pdf
+*.pkl
+*.pth
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.woff
+*.woff2
+*.ttf
+
+# Node (if any frontend)
+node_modules/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

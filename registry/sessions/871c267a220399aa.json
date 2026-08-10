@@ -1,0 +1,18 @@
+{
+  "session_id": "871c267a220399aa",
+  "agent_id": "test_bot",
+  "granted_levels": [
+    "observer"
+  ],
+  "attempted_challenges": [],
+  "failed_challenges": [
+    {
+      "challenge_id": "ac2131cd5fa1",
+      "timestamp": "2026-06-30T06:09:52.367107+00:00"
+    }
+  ],
+  "created_at": "2026-06-30T06:09:52.355571+00:00",
+  "last_activity": "2026-06-30T06:09:52.372425+00:00",
+  "active": true,
+  "sandbox_escapes": 0
+}

@@ -1,0 +1,98 @@
+{
+  "dna_id": "DNA-1768553422.257007-a053e837",
+  "type": "ProcessDNA",
+  "created_at": "2026-01-16T02:50:22.257334",
+  "version": "1.0",
+  "generation": 1,
+  "fitness_score": 0.841,
+  "mutations": [],
+  "process_type": "customer_onboarding",
+  "name": "Basic Customer Onboarding",
+  "description": "Simple 3-step customer onboarding process",
+  "steps": [
+    {
+      "dna_id": "DNA-1768553422.257369-121dd759",
+      "type": "StepDNA",
+      "created_at": "2026-01-16T02:50:22.257392",
+      "version": "1.0",
+      "generation": 1,
+      "fitness_score": 0.0,
+      "mutations": [],
+      "step_type": "form",
+      "name": "Collect Customer Info",
+      "description": "Gather basic customer information",
+      "parameters": {
+        "fields": [
+          "name",
+          "email",
+          "phone"
+        ],
+        "timeout": 300
+      },
+      "conditions": []
+    },
+    {
+      "dna_id": "DNA-1768553422.257409-15303ac5",
+      "type": "StepDNA",
+      "created_at": "2026-01-16T02:50:22.257423",
+      "version": "1.0",
+      "generation": 1,
+      "fitness_score": 0.0,
+      "mutations": [],
+      "step_type": "verification",
+      "name": "Verify Email",
+      "description": "Send verification email and confirm",
+      "parameters": {
+        "email_template": "welcome",
+        "retries": 3
+      },
+      "conditions": []
+    },
+    {
+      "dna_id": "DNA-1768553422.257433-a5f6cfe6",
+      "type": "StepDNA",
+      "created_at": "2026-01-16T02:50:22.257452",
+      "version": "1.0",
+      "generation": 1,
+      "fitness_score": 0.0,
+      "mutations": [],
+      "step_type": "activation",
+      "name": "Activate Account",
+      "description": "Enable customer account access",
+      "parameters": {
+        "default_role": "customer",
+        "welcome_message": true
+      },
+      "conditions": []
+    }
+  ],
+  "connections": [
+    {
+      "dna_id": "DNA-1768553422.25747-a336b778",
+      "type": "ConnectionDNA",
+      "created_at": "2026-01-16T02:50:22.257484",
+      "version": "1.0",
+      "generation": 1,
+      "fitness_score": 0.0,
+      "mutations": [],
+      "source_step_id": "DNA-1768553422.257369-121dd759",
+      "target_step_id": "DNA-1768553422.257409-15303ac5",
+      "condition": "success",
+      "transition_probability": 1.0
+    },
+    {
+      "dna_id": "DNA-1768553422.257497-c0a9855e",
+      "type": "ConnectionDNA",
+      "created_at": "2026-01-16T02:50:22.257508",
+      "version": "1.0",
+      "generation": 1,
+      "fitness_score": 0.0,
+      "mutations": [],
+      "source_step_id": "DNA-1768553422.257409-15303ac5",
+      "target_step_id": "DNA-1768553422.257433-a5f6cfe6",
+      "condition": "verified",
+      "transition_probability": 1.0
+    }
+  ],
+  "metadata": {}
+}

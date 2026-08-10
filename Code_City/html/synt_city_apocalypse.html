@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 SYNTAX APOCALYPSE: Synt City Under Siege 🔥</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #1a0a0a; 
+            color: #ff4444;
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        #app { width: 100vw; height: 100vh; position: relative; }
+        
+        /* APOCALYPSE HUD STYLES */
+        #hud {
+            position: absolute; top: 10px; left: 10px; z-index: 100;
+            background: rgba(0, 0, 0, 0.9); padding: 15px;
+            border: 2px solid #ff4444; border-radius: 10px; min-width: 280px;
+            backdrop-filter: blur(5px); box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+            border-image: linear-gradient(45deg, #ff4444, #ffaa00) 1;
+        }
+        
+        .hud-title { 
+            font-size: 18px; font-weight: bold; 
+            background: linear-gradient(45deg, #ff4444, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; text-align: center;
+        }
+        
+        .mayor-alert {
+            background: linear-gradient(45deg, #ff4444, #880000);
+            color: #fff;
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 10px;
+            margin-top: 10px;
+            animation: mayor-glow 2s infinite;
+        }
+        
+        @keyframes mayor-glow {
+            0% { box-shadow: 0 0 5px #ff4444; }
+            50% { box-shadow: 0 0 20px #ff4444; }
+            100% { box-shadow: 0 0 5px #ff4444; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- APOCALYPSE HUD -->
+        <div id="hud">
+            <div class="hud-title">🔥 SYNTAX APOCALYPSE 🔥</div>
+            <div style="color: #ffaa00; font-size: 12px; text-align: center; margin-bottom: 15px;">
+                Synt City Under Siege
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-item">
+                    <div class="metric-label">City Districts</div>
+                    <div class="metric-value" id="fileCount">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Vibe Monsters</div>
+                    <div class="metric-value" id="monsterCount">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Resistance Fighters</div>
+                    <div class="metric-value" id="userCount">1</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">City Stability</div>
+                    <div class="metric-value" id="healthIndex">0%</div>
+                </div>
+            </div>
+            
+            <div class="mayor-alert" id="mayor-taunt">
+                🎤 Mayor Vic: "Your syntax can't stop my VIBES!"
+            </div>
+        </div>
+
+        <!-- REST OF YOUR GAME CODE (same persistence engine) -->
+    </div>
+
+    <script>
+        // ========== SYNTAX APOCALYPSE GAME ENGINE ==========
+        class SyntCityApocalypse {
+            constructor() {
+                this.mayorTaunts = [
+                    "🎤 Your type safety can't handle my creative energy!",
+                    "🎤 Who needs tests when you have good vibes?",
+                    "🎤 My monsters don't follow your petty 'best practices'!",
+                    "🎤 Another secure connection? BORING!",
+                    "🎤 Your architecture is CRUMBLING!",
+                    "🎤 Feel the power of VIBE CODING!",
+                    "🎤 Syntax errors are just suggestions!",
+                    "🎤 Your linter can't save you now!"
+                ];
+            }
+            
+            triggerMayorTaunt() {
+                const taunt = this.mayorTaunts[Math.floor(Math.random() * this.mayorTaunts.length)];
+                document.getElementById('mayor-taunt').textContent = taunt;
+            }
+            
+            // Enhanced chaos that feels intentional
+            generateVibeMonster(buildingId) {
+                const monsterTypes = [
+                    { name: "Complexity Creep", power: "Tangled Logic", color: "#ff4444" },
+                    { name: "Dependency Demon", power: "Broken Imports", color: "#ffaa00" },
+                    { name: "Security Specter", power: "Data Leaks", color: "#4400ff" },
+                    { name: "Type Terror", power: "Runtime Explosions", color: "#00ff44" },
+                    { name: "Vibe Virus", power: "Spaghetti Code", color: "#ff00ff" }
+                ];
+                
+                const type = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
+                return {
+                    id: `${buildingId}_${type.name.toLowerCase().replace(' ', '_')}_${Date.now()}`,
+                    type: type.name,
+                    power: type.power,
+                    color: type.color,
+                    message: `Mayor Vic's ${type.name} is ${type.power.toLowerCase()}!`,
+                    severity: Math.floor(Math.random() * 10) + 1
+                };
+            }
+        }
+
+        // Initialize the apocalypse
+        const apocalypse = new SyntCityApocalypse();
+        
+        // Mayor taunts every 30 seconds
+        setInterval(() => apocalypse.triggerMayorTaunt(), 30000);
+
+        // INTEGRATION: Replace your old monster generator with:
+        // apocalypse.generateVibeMonster(buildingId) 
+        // instead of persistence._generate_monster(buildingId)
+
+        // ========== MAYOR VIC'S VIBE TOWER ==========
+        function createVibeTower() {
+            // Add this to your Three.js scene - Mayor Vic's base
+            const towerGeometry = new THREE.CylinderGeometry(5, 15, 80, 8);
+            const towerMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff4444,
+                emissive: 0x880000,
+                shininess: 100
+            });
+            const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+            tower.position.set(0, 40, 0);
+            scene.add(tower);
+            
+            // Pulsing evil energy
+            const pointLight = new THREE.PointLight(0xff4444, 2, 100);
+            pointLight.position.set(0, 40, 0);
+            scene.add(pointLight);
+        }
+
+        // Call createVibeTower() in your Three.js init
+    </script>
+</body>
+</html>

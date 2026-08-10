@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Equinex v1</title>
+    <script>
+        const ws = new WebSocket("ws://localhost:8765");
+
+        ws.onopen = () => {
+            console.log("Connected to WebSocket");
+            document.getElementById("status").textContent = "Connected";
+        };
+
+        ws.onmessage = (event) => {
+            const response = JSON.parse(event.data);
+            document.getElementById("response").textContent = response.response;
+        };
+
+        ws.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            document.getElementById("status").textContent = "WebSocket Error";
+        };
+
+        function sendPrompt() {
+            const prompt = document.getElementById("prompt").value;
+            ws.send(prompt);
+        }
+    </script>
+</head>
+<body>
+    <h1>Equinex v1</h1>
+    <p id="status">Disconnected</p>
+    <input type="text" id="prompt" placeholder="Enter prompt">
+    <button onclick="sendPrompt()">Send</button>
+    <div id="response"></div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+{
+  "meta": {
+    "name": "Access-Dashboard",
+    "path": "/storage/emulated/0/RootBase/Access-Dashboard",
+    "languages": {
+      "typescript": 1239,
+      "html": 2,
+      "javascript": 5390,
+      "css": 139
+    },
+    "entrypoints": [
+      "package.json"
+    ],
+    "package_json": true,
+    "requirements": 0,
+    "readme_excerpt": "<div align=\"center\">\n<img width=\"1200\" height=\"475\" alt=\"GHBanner\" src=\"https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6\" />\n</div>\n\n# Run and deploy your AI Studio app",
+    "last_modified": "2026-06-22T04:14:33.770504"
+  },
+  "runbook": {
+    "commands": [
+      "npm install && npm run dev"
+    ],
+    "env": [],
+    "notes": []
+  },
+  "bard_note": "Node project present. Expect npm hell or a pleasant surprise. (Bardildo: harsh truth incoming)"
+}

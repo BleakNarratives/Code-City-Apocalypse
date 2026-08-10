@@ -1,0 +1,66 @@
+{
+  "name": "JANUS",
+  "version": "0.1.0",
+  "layer": "FOUNDATION",
+  "status": "unfolding",
+  "author": "BleakNarratives",
+  "plugins": {
+    "core": {
+      "file": "core/JANUS.py",
+      "status": "active",
+      "provides": [
+        "deposit_sediment",
+        "read_sediment", 
+        "pack_baton",
+        "catch_baton",
+        "sweep_option",
+        "resurface_option"
+      ]
+    },
+    "janebox": {
+      "file": "plugins/janebox.py",
+      "status": "pending",
+      "depends_on": ["core"],
+      "provides": [
+        "read",
+        "write",
+        "list_session",
+        "hand_off"
+      ]
+    },
+    "hot_potato": {
+      "file": "plugins/hot_potato.py",
+      "status": "unbuilt",
+      "depends_on": ["core", "janebox"]
+    },
+    "janitor": {
+      "file": "plugins/janitor.py", 
+      "status": "unbuilt",
+      "depends_on": ["core", "janebox"]
+    },
+    "drunk_history": {
+      "file": "plugins/drunk_history.py",
+      "status": "unbuilt",
+      "depends_on": ["core", "janebox", "janitor"]
+    },
+    "derby": {
+      "file": "plugins/derby.py",
+      "status": "unbuilt", 
+      "depends_on": ["core", "janebox"]
+    },
+    "puzzle_box": {
+      "file": "plugins/puzzle_box.py",
+      "status": "unbuilt",
+      "depends_on": ["core", "janebox", "janitor"]
+    }
+  },
+  "unfold_sequence": [
+    "core",
+    "janebox",
+    "hot_potato",
+    "janitor", 
+    "drunk_history",
+    "derby",
+    "puzzle_box"
+  ]
+}

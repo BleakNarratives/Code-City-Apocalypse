@@ -1,0 +1,13 @@
+{
+  "task_id": "12ad788e2ea8",
+  "name": "sediment_recall",
+  "prompt": "Write a Python function that calls read_sediment(last_n=3) and returns the most recent agent_id that deposited.",
+  "test_command": "python3 -c 'from solution import *; print(get_last_agent())'",
+  "expected_output": "claude",
+  "style_rules": [
+    "Must import from core.JANUS",
+    "No hardcoded values"
+  ],
+  "created_at": "2026-06-30T06:33:17.659293+00:00",
+  "active": true
+}

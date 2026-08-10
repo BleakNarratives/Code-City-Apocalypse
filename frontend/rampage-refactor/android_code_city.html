@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 CODE CITY APOCALYPSE - ANDROID EDITION</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #0a0a0a; 
+            color: #00ff44;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            touch-action: none;
+        }
+        
+        #app {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+        
+        #hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.95);
+            padding: 15px;
+            border: 2px solid #ff4444;
+            border-radius: 10px;
+            min-width: 280px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .hud-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #ff4444;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .metric-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        
+        .metric {
+            background: rgba(255, 68, 68, 0.15);
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ff4444;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 2px;
+        }
+        
+        .metric-label {
+            font-size: 10px;
+            color: #ccc;
+        }
+        
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px;
+            margin: 4px 0;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            border-radius: 6px;
+            width: 100%;
+            font-size: 12px;
+        }
+        
+        button:hover {
+            background: #ff6666;
+        }
+        
+        #city-info {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #00ff44;
+            max-width: 280px;
+            font-size: 11px;
+        }
+        
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #00ff44;
+            font-size: 16px;
+            z-index: 1000;
+            text-align: center;
+        }
+        
+        .monster-alert {
+            position: absolute;
+            background: rgba(255, 68, 68, 0.95);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            animation: pulse 1s infinite;
+            z-index: 150;
+            font-size: 11px;
+            max-width: 200px;
+            border: 1px solid #ff0000;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        #controls {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+        
+        .control-btn {
+            background: rgba(0, 0, 0, 0.8);
+            color: #00ff44;
+            border: 1px solid #00ff44;
+            padding: 8px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="hud">
+            <div class="hud-title">🦖 CODE CITY APOCALYPSE</div>
+            
+            <div class="metric-grid">
+                <div class="metric">
+                    <div class="metric-value" id="fileCount">0</div>
+                    <div class="metric-label">FILES</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="errorCount">0</div>
+                    <div class="metric-label">ERRORS</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="monsterCount">0</div>
+                    <div class="metric-label">MONSTERS</div>
+                </div>
+                <div class="metric">
+                    <div class="metric-value" id="agentCount">0</div>
+                    <div class="metric-label">AGENTS</div>
+                </div>
+            </div>
+            
+            <button onclick="scanCodebase()">🔍 SCAN CODEBASE</button>
+            <button onclick="deployAgent()">🤖 DEPLOY AGENT</button>
+            <button onclick="nukeAll()">💣 NUKE ALL BUGS</button>
+            
+            <div style="margin-top: 10px; font-size: 10px; color: #ccc; text-align: center;">
+                📱 Tilt to pan • 👆 Tap buildings
+            </div>
+        </div>
+        
+        <div id="city-info">
+            <div>📍 <span id="currentPath">Ready to scan</span></div>
+            <div>📊 <span id="scanStatus">Tap SCAN above</span></div>
+        </div>
+        
+        <div id="controls">
+            <button class="control-btn" onclick="zoomIn()">+</button>
+            <button class="control-btn" onclick="zoomOut()">-</button>
+            <button class="control-btn" onclick="resetView()">⟳</button>
+        </div>
+        
+        <div id="loading">
+            🦖 Loading Code City Apocalypse...<br>
+            <span style="font-size: 12px;">Android Edition</span>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // GAME STATE
+        let buildings = [];
+        let monsters = [];
+        let agents = [];
+        let cameraRotation = 0;
+        let cameraDistance = 200;
+        let tiltX = 0, tiltY = 0;
+
+        // THREE.js SETUP
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050505);
+        scene.fog = new THREE.Fog(0x050505, 50, 500);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('gameCanvas'),
+            antialias: true,
+            alpha: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
+
+        // LIGHTING
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(50, 100, 50);
+        scene.add(directionalLight);
+
+        // GROUND
+        const groundGeometry = new THREE.PlaneGeometry(1000, 1000);
+        const groundMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x111122,
+            transparent: true,
+            opacity: 0.8
+        });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+
+        // GRID
+        const gridHelper = new THREE.GridHelper(1000, 50, 0x444444, 0x222222);
+        scene.add(gridHelper);
+
+        // INITIALIZE
+        function init() {
+            setupInput();
+            gameLoop();
+            scanCodebase(); // Auto-scan on start
+            
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+            }, 2000);
+        }
+
+        // INPUT HANDLING
+        function setupInput() {
+            // Device tilt
+            window.addEventListener('deviceorientation', (event) => {
+                tiltX = (event.gamma || 0) / 45;
+                tiltY = (event.beta || 0 - 45) / 45;
+            });
+            
+            // Touch for rotation
+            let touchStartX = 0;
+            renderer.domElement.addEventListener('touchstart', (event) => {
+                touchStartX = event.touches[0].clientX;
+            });
+            
+            renderer.domElement.addEventListener('touchmove', (event) => {
+                if (event.touches.length === 1) {
+                    const deltaX = event.touches[0].clientX - touchStartX;
+                    cameraRotation += deltaX * 0.01;
+                    touchStartX = event.touches[0].clientX;
+                }
+            });
+            
+            // Building selection
+            renderer.domElement.addEventListener('click', (event) => {
+                const mouse = new THREE.Vector2();
+                const rect = renderer.domElement.getBoundingClientRect();
+                
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(mouse, camera);
+                
+                const buildingMeshes = buildings.map(b => b.mesh);
+                const intersects = raycaster.intersectObjects(buildingMeshes);
+                
+                if (intersects.length > 0) {
+                    selectBuilding(intersects[0].object);
+                }
+            });
+        }
+
+        // SCAN CODEBASE
+        async function scanCodebase() {
+            document.getElementById('scanStatus').textContent = 'Scanning...';
+            
+            try {
+                const response = await fetch('/scan');
+                const data = await response.json();
+                renderCity(data);
+            } catch (error) {
+                document.getElementById('scanStatus').textContent = 'Scan failed - check server';
+                console.error('Scan error:', error);
+            }
+        }
+
+        // RENDER CITY
+        function renderCity(cityData) {
+            // Clear old objects
+            buildings.forEach(b => scene.remove(b.mesh));
+            monsters.forEach(m => scene.remove(m.mesh));
+            agents.forEach(a => scene.remove(a.mesh));
+            
+            buildings = [];
+            monsters = [];
+            agents = [];
+            
+            // Create buildings
+            cityData.buildings.forEach(buildingData => {
+                const building = createBuilding(buildingData);
+                if (building) {
+                    buildings.push(building);
+                    scene.add(building.mesh);
+                }
+            });
+            
+            // Create monsters
+            cityData.monsters.forEach(monsterData => {
+                const monster = createMonster(monsterData);
+                if (monster) {
+                    monsters.push(monster);
+                    scene.add(monster.mesh);
+                }
+            });
+            
+            // Update HUD
+            updateHUD(cityData);
+            
+            // Show alert if monsters found
+            if (monsters.length > 0) {
+                showMonsterAlert(monsters[0]);
+            }
+        }
+
+        function createBuilding(data) {
+            const width = data.dimensions.width;
+            const height = data.dimensions.height;
+            const depth = data.dimensions.depth;
+            
+            const geometry = new THREE.BoxGeometry(width, height, depth);
+            
+            // Color based on complexity
+            let color;
+            if (data.complexity > 20) {
+                color = new THREE.Color(1, 0.3, 0.3); // Red for complex
+            } else if (data.complexity > 10) {
+                color = new THREE.Color(1, 0.7, 0.3); // Orange for medium
+            } else {
+                color = new THREE.Color(0.3, 0.6, 1.0); // Blue for simple
+            }
+            
+            const material = new THREE.MeshPhongMaterial({ 
+                color: color,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(data.position.x, height / 2, data.position.z);
+            mesh.userData = data;
+            
+            return { mesh, data };
+        }
+
+        function createMonster(data) {
+            let geometry;
+            const size = data.severity * 1.5;
+            
+            switch(data.type) {
+                case 'debug_print':
+                    geometry = new THREE.SphereGeometry(size, 8, 6);
+                    break;
+                case 'long_line':
+                    geometry = new THREE.ConeGeometry(size / 2, size * 1.5, 4);
+                    break;
+                case 'todo':
+                    geometry = new THREE.OctahedronGeometry(size);
+                    break;
+                default:
+                    geometry = new THREE.DodecahedronGeometry(size / 2);
+            }
+            
+            const material = new THREE.MeshPhongMaterial({
+                color: 0xff4444,
+                emissive: 0xff0000,
+                emissiveIntensity: 0.3
+            });
+            
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set(data.position.x, data.position.y, data.position.z);
+            mesh.userData = data;
+            
+            return { mesh, data };
+        }
+
+        // GAME ACTIONS
+        function deployAgent() {
+            if (monsters.length === 0) {
+                showAlert("No monsters to fight! Scan first.");
+                return;
+            }
+            
+            const randomMonster = monsters[Math.floor(Math.random() * monsters.length)];
+            
+            const geometry = new THREE.CylinderGeometry(2, 2, 6, 6);
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x00ff44,
+                emissive: 0x00ff44,
+                emissiveIntensity: 0.3
+            });
+            
+            const agentMesh = new THREE.Mesh(geometry, material);
+            agentMesh.position.set(0, 10, 0);
+            
+            agents.push({ mesh: agentMesh, target: randomMonster });
+            scene.add(agentMesh);
+            
+            updateAgentCount();
+            showAlert(`🤖 Agent deployed to fix: ${randomMonster.data.message}`);
+        }
+
+        function nukeAll() {
+            monsters.forEach(monster => scene.remove(monster.mesh));
+            monsters = [];
+            updateMonsterCount();
+            updateErrorCount();
+            showAlert("💣 All bugs nuked!");
+        }
+
+        function selectBuilding(buildingMesh) {
+            const data = buildingMesh.userData;
+            showAlert(`🏢 ${data.name}\nLines: ${data.lines}\nComplexity: ${data.complexity}`);
+        }
+
+        // UI FUNCTIONS
+        function updateHUD(data) {
+            document.getElementById('fileCount').textContent = data.total_files;
+            document.getElementById('errorCount').textContent = data.total_errors;
+            document.getElementById('monsterCount').textContent = data.monsters.length;
+            document.getElementById('scanStatus').textContent = `Scanned: ${data.total_files} files, ${data.total_errors} issues`;
+            document.getElementById('currentPath').textContent = window.location.host;
+        }
+
+        function updateAgentCount() {
+            document.getElementById('agentCount').textContent = agents.length;
+        }
+
+        function updateMonsterCount() {
+            document.getElementById('monsterCount').textContent = monsters.length;
+        }
+
+        function updateErrorCount() {
+            document.getElementById('errorCount').textContent = monsters.length;
+        }
+
+        function showAlert(message) {
+            const alert = document.createElement('div');
+            alert.className = 'monster-alert';
+            alert.style.top = '50%';
+            alert.style.left = '50%';
+            alert.style.transform = 'translate(-50%, -50%)';
+            alert.textContent = message;
+            
+            document.getElementById('app').appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 3000);
+        }
+
+        function showMonsterAlert(monster) {
+            const alert = document.createElement('div');
+            alert.className = 'monster-alert';
+            alert.style.top = Math.random() * 50 + 25 + '%';
+            alert.style.left = Math.random() * 50 + 25 + '%';
+            alert.innerHTML = `🐛 ${monster.data.type.toUpperCase()}<br>${monster.data.message}`;
+            
+            document.getElementById('app').appendChild(alert);
+            
+            setTimeout(() => {
+                alert.remove();
+            }, 4000);
+        }
+
+        // CAMERA CONTROLS
+        function zoomIn() {
+            cameraDistance = Math.max(100, cameraDistance - 30);
+        }
+
+        function zoomOut() {
+            cameraDistance = Math.min(400, cameraDistance + 30);
+        }
+
+        function resetView() {
+            cameraDistance = 200;
+            cameraRotation = 0;
+            tiltX = 0;
+            tiltY = 0;
+        }
+
+        // GAME LOOP
+        function gameLoop() {
+            // Update camera with tilt
+            camera.position.x = Math.cos(cameraRotation) * cameraDistance + tiltX * 40;
+            camera.position.z = Math.sin(cameraRotation) * cameraDistance + tiltY * 40;
+            camera.position.y = 120 + Math.abs(tiltY) * 20;
+            camera.lookAt(0, 0, 0);
+            
+            // Animate monsters
+            monsters.forEach(monster => {
+                monster.mesh.rotation.y += 0.02;
+                monster.mesh.position.y += Math.sin(Date.now() * 0.002 + monster.mesh.id) * 0.3;
+            });
+            
+            // Animate agents toward targets
+            agents.forEach(agent => {
+                agent.mesh.rotation.y += 0.04;
+                
+                if (agent.target) {
+                    const direction = new THREE.Vector3()
+                        .subVectors(agent.target.mesh.position, agent.mesh.position)
+                        .normalize()
+                        .multiplyScalar(0.8);
+                    
+                    agent.mesh.position.add(direction);
+                    
+                    // Remove monster when agent reaches it
+                    if (agent.mesh.position.distanceTo(agent.target.mesh.position) < 10) {
+                        scene.remove(agent.target.mesh);
+                        monsters = monsters.filter(m => m !== agent.target);
+                        updateMonsterCount();
+                        updateErrorCount();
+                    }
+                }
+            });
+            
+            renderer.render(scene, camera);
+            requestAnimationFrame(gameLoop);
+        }
+
+        // Handle resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // START THE APOCALYPSE
+        init();
+    </script>
+</body>
+</html>

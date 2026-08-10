@@ -1,0 +1,628 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code City Apocalypse</title>
+    <style>
+        body { 
+            margin: 0; 
+            background: #1a1a2e; 
+            color: white; 
+            font-family: monospace; 
+            overflow: hidden;
+        }
+        #info { 
+            position: absolute; 
+            top: 10px; 
+            left: 10px; 
+            background: rgba(0,0,0,0.8); 
+            padding: 10px; 
+            border-radius: 5px;
+            z-index: 100;
+        }
+        #stats { 
+            position: absolute; 
+            top: 10px; 
+            right: 10px; 
+            background: rgba(0,0,0,0.8); 
+            padding: 10px; 
+            border-radius: 5px;
+            z-index: 100;
+        }
+        #controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 100;
+        }
+        #controls button {
+            background: #3572A5;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        #controls button:hover {
+            background: #4a8bc2;
+        }
+        .health-bar {
+            height: 3px;
+            width: 100%;
+            background: #333;
+            position: absolute;
+            bottom: 0;
+        }
+        .health-fill {
+            height: 100%;
+            background: #4CAF50;
+        }
+        .damage {
+            position: absolute;
+            color: red;
+            font-weight: bold;
+            pointer-events: none;
+            z-index: 50;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="info">
+        <h2>🏙️ CODE CITY APOCALYPSE</h2>
+        <p>Buildings = Files | Disasters = Errors</p>
+        <p>Click on buildings for details</p>
+    </div>
+    <div id="stats">
+        <h3>Stats</h3>
+        <p>Buildings: <span id="building-count">318</span></p>
+        <p>Disasters: <span id="disaster-count">29</span></p>
+        <p>Monsters: <span id="monster-count">45</span></p>
+        <p>Air Raids: <span id="air-raid-count">39</span></p>
+    </div>
+    <div id="controls">
+        <button id="toggle-disasters">Toggle Disasters</button>
+        <button id="reset-city">Reset City</button>
+        <button id="night-mode">Toggle Night Mode</button>
+    </div>
+    <script>
+        // Scene setup
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        document.body.appendChild(renderer.domElement);
+        
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(50, 100, 50);
+        directionalLight.castShadow = true;
+        directionalLight.shadow.mapSize.width = 2048;
+        directionalLight.shadow.mapSize.height = 2048;
+        scene.add(directionalLight);
+        
+        // Ground
+        const groundGeometry = new THREE.PlaneGeometry(200, 200);
+        const groundMaterial = new THREE.MeshLambertMaterial({ color: 0x2d5a27 });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        ground.receiveShadow = true;
+        scene.add(ground);
+        
+        // Add grid for better visualization
+        const gridHelper = new THREE.GridHelper(200, 20, 0x000000, 0x000000);
+        gridHelper.material.opacity = 0.2;
+        gridHelper.material.transparent = true;
+        scene.add(gridHelper);
+        
+        // City data
+        const cityData = {
+            "metadata": {
+                "generated_at": "2025-10-18T10:06:53.378855",
+                "total_buildings": 318,
+                "total_disasters": 29,
+                "total_monsters": 45,
+                "total_air_raids": 39
+            },
+            "city": {
+                "buildings": [
+                    // Sample of buildings - in a real implementation, all 318 would be here
+                    {"id": 0, "name": "auth.py", "path": "./auth.py", "height": 10, "width": 12, "depth": 14, "x": 26, "z": 26, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 50, "occupants": 6},
+                    {"id": 1, "name": "stream_ready.py", "path": "./stream_ready.py", "height": 10, "width": 14, "depth": 15, "x": 85, "z": 34, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 48, "occupants": 10},
+                    {"id": 2, "name": "advanced_code_bundler_stable_core.py", "path": "./advanced_code_bundler_stable_core.py", "height": 10, "width": 5, "depth": 14, "x": 35, "z": 68, "health": 60, "type": "python_tower", "color": "#3572A5", "windows": 8, "occupants": 1},
+                    {"id": 3, "name": "forge_executor.py", "path": "./forge_executor.py", "height": 10, "width": 7, "depth": 12, "x": 75, "z": 70, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 19, "occupants": 9},
+                    {"id": 4, "name": "file_organizer.py", "path": "./file_organizer.py", "height": 10, "width": 11, "depth": 7, "x": 0, "z": 69, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 40, "occupants": 4},
+                    {"id": 5, "name": "simple_coder.py", "path": "./simple_coder.py", "height": 10, "width": 10, "depth": 5, "x": 21, "z": 84, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 37, "occupants": 2},
+                    {"id": 6, "name": "example_minigame.py", "path": "./example_minigame.py", "height": 10, "width": 7, "depth": 13, "x": 97, "z": 15, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 20, "occupants": 6},
+                    {"id": 7, "name": "advanced_code_bundler_pdf.py", "path": "./advanced_code_bundler_pdf.py", "height": 10, "width": 6, "depth": 13, "x": 11, "z": 16, "health": 60, "type": "python_tower", "color": "#3572A5", "windows": 9, "occupants": 6},
+                    {"id": 8, "name": "code_bundler.py", "path": "./code_bundler.py", "height": 10, "width": 6, "depth": 10, "x": 89, "z": 43, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 42, "occupants": 3},
+                    {"id": 9, "name": "code_bundler_v2.py", "path": "./code_bundler_v2.py", "height": 10, "width": 8, "depth": 13, "x": 27, "z": 86, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 25, "occupants": 6},
+                    {"id": 10, "name": "advanced_code_bundler.py", "path": "./advanced_code_bundler.py", "height": 10, "width": 10, "depth": 11, "x": 35, "z": 62, "health": 60, "type": "python_tower", "color": "#3572A5", "windows": 23, "occupants": 10},
+                    {"id": 11, "name": "app.py", "path": "./app.py", "height": 10, "width": 14, "depth": 5, "x": 92, "z": 55, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 42, "occupants": 10},
+                    {"id": 12, "name": "chat_demon.py", "path": "./chat_demon.py", "height": 10, "width": 15, "depth": 10, "x": 37, "z": 30, "health": 60, "type": "python_tower", "color": "#3572A5", "windows": 30, "occupants": 9},
+                    {"id": 13, "name": "quick_share_v1.py", "path": "./quick_share_v1.py", "height": 10, "width": 6, "depth": 8, "x": 24, "z": 43, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 42, "occupants": 9},
+                    {"id": 14, "name": "stream_setup.py", "path": "./stream_setup.py", "height": 10, "width": 15, "depth": 5, "x": 82, "z": 6, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 25, "occupants": 2},
+                    {"id": 15, "name": "install_plugins.py", "path": "./install_plugins.py", "height": 10, "width": 13, "depth": 7, "x": 13, "z": 17, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 30, "occupants": 1},
+                    {"id": 16, "name": "auto_docs.py", "path": "./auto_docs.py", "height": 10, "width": 15, "depth": 8, "x": 47, "z": 49, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 25, "occupants": 4},
+                    {"id": 17, "name": "performance_monitor.py", "path": "./performance_monitor.py", "height": 10, "width": 9, "depth": 14, "x": 33, "z": 42, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 40, "occupants": 5},
+                    {"id": 18, "name": "collaboration.py", "path": "./collaboration.py", "height": 10, "width": 7, "depth": 5, "x": 45, "z": 27, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 43, "occupants": 6},
+                    {"id": 19, "name": "code_gamification.py", "path": "./code_gamification.py", "height": 10, "width": 11, "depth": 12, "x": 44, "z": 56, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 50, "occupants": 5},
+                    {"id": 20, "name": "deploy_dashboard.py", "path": "./deploy_dashboard.py", "height": 10, "width": 15, "depth": 14, "x": 83, "z": 27, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 46, "occupants": 4},
+                    {"id": 21, "name": "ai_pair.py", "path": "./ai_pair.py", "height": 10, "width": 9, "depth": 12, "x": 30, "z": 75, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 19, "occupants": 8},
+                    {"id": 22, "name": "code_visualizer.py", "path": "./code_visualizer.py", "height": 10, "width": 8, "depth": 5, "x": 73, "z": 72, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 17, "occupants": 6},
+                    {"id": 23, "name": "voice_demon.py", "path": "./voice_demon.py", "height": 10, "width": 5, "depth": 9, "x": 8, "z": 10, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 35, "occupants": 7},
+                    {"id": 24, "name": "FloatingOrbMenu.tsx", "path": "./FloatingOrbMenu.tsx", "height": 10, "width": 8, "depth": 11, "x": 37, "z": 52, "health": 100, "type": "react_dome", "color": "#61DAFB", "windows": 34, "occupants": 4},
+                    {"id": 25, "name": "code_miner.py", "path": "./code_miner.py", "height": 10, "width": 7, "depth": 13, "x": 38, "z": 65, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 7, "occupants": 9},
+                    {"id": 26, "name": "react_decompiler.py", "path": "./react_decompiler.py", "height": 10, "width": 9, "depth": 14, "x": 4, "z": 35, "health": 60, "type": "python_tower", "color": "#3572A5", "windows": 14, "occupants": 4},
+                    {"id": 27, "name": "batch_refiner.py", "path": "./batch_refiner.py", "height": 10, "width": 14, "depth": 10, "x": 89, "z": 14, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 43, "occupants": 10},
+                    {"id": 28, "name": "chat_scraper.py", "path": "./chat_scraper.py", "height": 10, "width": 14, "depth": 6, "x": 17, "z": 62, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 50, "occupants": 9},
+                    {"id": 29, "name": "install_scraper.py", "path": "./install_scraper.py", "height": 10, "width": 11, "depth": 15, "x": 96, "z": 74, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 45, "occupants": 10},
+                    {"id": 30, "name": "real_bundler.py", "path": "./real_bundler.py", "height": 10, "width": 12, "depth": 5, "x": 10, "z": 46, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 28, "occupants": 4},
+                    {"id": 31, "name": "file_forensics.py", "path": "./file_forensics.py", "height": 13, "width": 10, "depth": 11, "x": 9, "z": 62, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 36, "occupants": 9},
+                    {"id": 32, "name": "bleakdev_quick_scan.py", "path": "./bleakdev_quick_scan.py", "height": 10, "width": 8, "depth": 9, "x": 36, "z": 17, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 13, "occupants": 1},
+                    {"id": 33, "name": "tts_announcer.py", "path": "./tts_announcer.py", "height": 10, "width": 9, "depth": 8, "x": 7, "z": 32, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 31, "occupants": 4},
+                    {"id": 34, "name": "file_forensics_tts.py", "path": "./file_forensics_tts.py", "height": 10, "width": 10, "depth": 5, "x": 68, "z": 83, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 37, "occupants": 10},
+                    {"id": 35, "name": "stream_commander.py", "path": "./stream_commander.py", "height": 10, "width": 8, "depth": 13, "x": 96, "z": 4, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 31, "occupants": 6},
+                    {"id": 36, "name": "install_tts.py", "path": "./install_tts.py", "height": 10, "width": 14, "depth": 14, "x": 64, "z": 38, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 30, "occupants": 6},
+                    {"id": 37, "name": "coder_miner.py", "path": "./coder_miner.py", "height": 10, "width": 8, "depth": 8, "x": 61, "z": 58, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 24, "occupants": 10},
+                    {"id": 38, "name": "quick_share.py", "path": "./quick_share.py", "height": 10, "width": 7, "depth": 13, "x": 97, "z": 29, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 45, "occupants": 8},
+                    {"id": 39, "name": "share_ideal.py", "path": "./share_ideal.py", "height": 10, "width": 9, "depth": 10, "x": 100, "z": 68, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 11, "occupants": 10},
+                    {"id": 40, "name": "tts_termux.py", "path": "./tts_termux.py", "height": 10, "width": 12, "depth": 9, "x": 90, "z": 77, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 50, "occupants": 4},
+                    {"id": 41, "name": "syntax_slayer.py", "path": "./syntax_slayer.py", "height": 14, "width": 6, "depth": 6, "x": 47, "z": 2, "health": 20, "type": "python_tower", "color": "#3572A5", "windows": 6, "occupants": 3},
+                    {"id": 42, "name": "termux_tts.py", "path": "./termux_tts.py", "height": 10, "width": 10, "depth": 11, "x": 33, "z": 0, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 14, "occupants": 5},
+                    {"id": 43, "name": "plugin_loader.py", "path": "./plugin_loader.py", "height": 10, "width": 7, "depth": 12, "x": 85, "z": 32, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 33, "occupants": 10},
+                    {"id": 44, "name": "code_miner_fixed.py", "path": "./code_miner_fixed.py", "height": 10, "width": 12, "depth": 6, "x": 61, "z": 72, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 24, "occupants": 1},
+                    {"id": 45, "name": "termux_turbo.py", "path": "./termux_turbo.py", "height": 10, "width": 5, "depth": 14, "x": 49, "z": 91, "health": 20, "type": "python_tower", "color": "#3572A5", "windows": 10, "occupants": 2},
+                    {"id": 46, "name": "voice_demon_light.py", "path": "./voice_demon_light.py", "height": 10, "width": 11, "depth": 13, "x": 9, "z": 22, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 47, "occupants": 6},
+                    {"id": 47, "name": "termux_tts_turbo.py", "path": "./termux_tts_turbo.py", "height": 10, "width": 7, "depth": 13, "x": 70, "z": 29, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 46, "occupants": 7},
+                    {"id": 48, "name": "quick_share_fixed.py", "path": "./quick_share_fixed.py", "height": 10, "width": 7, "depth": 14, "x": 56, "z": 78, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 36, "occupants": 6},
+                    {"id": 49, "name": "voice_light.py", "path": "./voice_light.py", "height": 10, "width": 14, "depth": 8, "x": 23, "z": 43, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 26, "occupants": 4},
+                    {"id": 50, "name": "tts_light.py", "path": "./tts_light.py", "height": 10, "width": 11, "depth": 15, "x": 22, "z": 75, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 40, "occupants": 10},
+                    {"id": 51, "name": "chat_light.py", "path": "./chat_light.py", "height": 10, "width": 15, "depth": 12, "x": 37, "z": 44, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 20, "occupants": 3},
+                    {"id": 52, "name": "instant_system.py", "path": "./instant_system.py", "height": 10, "width": 15, "depth": 5, "x": 66, "z": 80, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 26, "occupants": 9},
+                    {"id": 53, "name": "voice_system.py", "path": "./voice_system.py", "height": 10, "width": 12, "depth": 10, "x": 66, "z": 1, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 25, "occupants": 7},
+                    {"id": 54, "name": "tts_system.py", "path": "./tts_system.py", "height": 10, "width": 10, "depth": 12, "x": 75, "z": 88, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 48, "occupants": 3},
+                    {"id": 55, "name": "chat_system.py", "path": "./chat_system.py", "height": 10, "width": 7, "depth": 15, "x": 5, "z": 41, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 21, "occupants": 8},
+                    {"id": 56, "name": "code_fixer.py", "path": "./code_fixer.py", "height": 10, "width": 13, "depth": 8, "x": 48, "z": 56, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 15, "occupants": 6},
+                    {"id": 57, "name": "auto_docs_clean.py", "path": "./auto_docs_clean.py", "height": 10, "width": 9, "depth": 11, "x": 35, "z": 46, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 5, "occupants": 7},
+                    {"id": 58, "name": "generated_6051.py", "path": "./generated_6051.py", "height": 10, "width": 13, "depth": 8, "x": 93, "z": 62, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 35, "occupants": 7},
+                    {"id": 59, "name": "Component8000.tsx", "path": "./Component8000.tsx", "height": 10, "width": 6, "depth": 8, "x": 37, "z": 5, "health": 100, "type": "react_dome", "color": "#61DAFB", "windows": 12, "occupants": 7},
+                    {"id": 60, "name": "generated_4749.py", "path": "./generated_4749.py", "height": 10, "width": 14, "depth": 14, "x": 25, "z": 25, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 41, "occupants": 4},
+                    {"id": 61, "name": "Component2860.tsx", "path": "./Component2860.tsx", "height": 10, "width": 6, "depth": 7, "x": 44, "z": 12, "health": 100, "type": "react_dome", "color": "#61DAFB", "windows": 12, "occupants": 4},
+                    {"id": 62, "name": "generated_114.py", "path": "./generated_114.py", "height": 10, "width": 15, "depth": 8, "x": 60, "z": 19, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 31, "occupants": 8},
+                    {"id": 63, "name": "Component7571.tsx", "path": "./Component7571.tsx", "height": 10, "width": 6, "depth": 9, "x": 29, "z": 72, "health": 100, "type": "react_dome", "color": "#61DAFB", "windows": 22, "occupants": 7},
+                    {"id": 64, "name": "generated_2024.py", "path": "./generated_2024.py", "height": 10, "width": 8, "depth": 14, "x": 80, "z": 92, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 39, "occupants": 7},
+                    {"id": 65, "name": "Component2385.tsx", "path": "./Component2385.tsx", "height": 10, "width": 12, "depth": 7, "x": 95, "z": 80, "health": 100, "type": "react_dome", "color": "#61DAFB", "windows": 38, "occupants": 6},
+                    {"id": 66, "name": "project_memory.py", "path": "./project_memory.py", "height": 10, "width": 10, "depth": 14, "x": 37, "z": 60, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 30, "occupants": 7},
+                    {"id": 67, "name": "smart_coder.py", "path": "./smart_coder.py", "height": 17, "width": 15, "depth": 10, "x": 75, "z": 35, "health": 40, "type": "python_tower", "color": "#3572A5", "windows": 19, "occupants": 6},
+                    {"id": 68, "name": "offline_commander.py", "path": "./offline_commander.py", "height": 10, "width": 15, "depth": 13, "x": 70, "z": 33, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 40, "occupants": 4},
+                    {"id": 69, "name": "dashboard.py", "path": "./dashboard.py", "height": 10, "width": 6, "depth": 10, "x": 22, "z": 46, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 25, "occupants": 2},
+                    {"id": 70, "name": "api_server.py", "path": "./api_server.py", "height": 10, "width": 8, "depth": 6, "x": 93, "z": 77, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 35, "occupants": 3},
+                    {"id": 71, "name": "form_handler.py", "path": "./form_handler.py", "height": 10, "width": 14, "depth": 14, "x": 32, "z": 7, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 20, "occupants": 2},
+                    {"id": 72, "name": "Navigation.tsx", "path": "./Navigation.tsx", "height": 10, "width": 12, "depth": 9, "x": 77, "z": 74, "health": 100, "type": "react_dome", "color": "#61DAFB", "windows": 8, "occupants": 7},
+                    {"id": 73, "name": "termux_voice.py", "path": "./termux_voice.py", "height": 10, "width": 14, "depth": 9, "x": 38, "z": 84, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 31, "occupants": 6},
+                    {"id": 74, "name": "chat_scanner.py", "path": "./chat_scanner.py", "height": 10, "width": 6, "depth": 15, "x": 7, "z": 41, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 30, "occupants": 8},
+                    {"id": 75, "name": "live_monitor.py", "path": "./live_monitor.py", "height": 10, "width": 8, "depth": 15, "x": 0, "z": 19, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 40, "occupants": 10},
+                    {"id": 76, "name": "no_voice_commander.py", "path": "./no_voice_commander.py", "height": 10, "width": 12, "depth": 10, "x": 60, "z": 62, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 16, "occupants": 2},
+                    {"id": 77, "name": "code_city_apocalypse.py", "path": "./code_city_apocalypse.py", "height": 18, "width": 10, "depth": 15, "x": 18, "z": 33, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 49, "occupants": 4},
+                    {"id": 78, "name": "code_city_apocalypse_v2.py", "path": "./code_city_apocalypse_v2.py", "height": 11, "width": 10, "depth": 9, "x": 92, "z": 65, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 31, "occupants": 10},
+                    {"id": 79, "name": "apocalypse_integration.py", "path": "./apocalypse_integration.py", "height": 10, "width": 10, "depth": 5, "x": 33, "z": 56, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 40, "occupants": 5},
+                    {"id": 80, "name": "code_city_apocalypse_v3.py", "path": "./code_city_apocalypse_v3.py", "height": 11, "width": 8, "depth": 13, "x": 0, "z": 39, "health": 80, "type": "python_tower", "color": "#3572A5", "windows": 9, "occupants": 8},
+                    {"id": 81, "name": "chat_code_capture.py", "path": "./chat_code_capture.py", "height": 10, "width": 8, "depth": 6, "x": 84, "z": 96, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 10, "occupants": 3},
+                    {"id": 82, "name": "voice_code_capture.py", "path": "./voice_code_capture.py", "height": 10, "width": 15, "depth": 14, "x": 53, "z": 9, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 50, "occupants": 6},
+                    {"id": 83, "name": "immediate_extractor.py", "path": "./immediate_extractor.py", "height": 10, "width": 11, "depth": 13, "x": 73, "z": 84, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 21, "occupants": 4},
+                    {"id": 84, "name": "extracted_code_1.py", "path": "./extracted_code_1.py", "height": 10, "width": 8, "depth": 7, "x": 15, "z": 55, "health": 100, "type": "python_tower", "color": "#3572A5", "windows": 25, "occupants": 5}
+                ]
+            }
+        };
+
+        // Create buildings
+        const buildings = [];
+        const buildingMeshes = [];
+        
+        cityData.city.buildings.forEach(building => {
+            const geometry = new THREE.BoxGeometry(
+                building.width, 
+                building.height, 
+                building.depth
+            );
+            
+            // Determine color based on health
+            let color;
+            if (building.health <= 20) {
+                color = 0xff0000; // Red for critical health
+            } else if (building.health <= 60) {
+                color = 0xffa500; // Orange for damaged
+            } else {
+                color = parseInt(building.color.substring(1), 16); // Use building's color
+            }
+            
+            const material = new THREE.MeshLambertMaterial({ color });
+            const mesh = new THREE.Mesh(geometry, material);
+            
+            // Position the building
+            mesh.position.x = building.x - 100; // Center the city
+            mesh.position.y = building.height / 2;
+            mesh.position.z = building.z - 100;
+            
+            mesh.castShadow = true;
+            mesh.receiveShadow = true;
+            
+            // Store building data with the mesh
+            mesh.userData = building;
+            
+            scene.add(mesh);
+            buildings.push(building);
+            buildingMeshes.push(mesh);
+            
+            // Add windows as small boxes on the building faces
+            addWindows(mesh, building);
+        });
+        
+        // Function to add windows to buildings
+        function addWindows(buildingMesh, buildingData) {
+            const windowCount = Math.min(buildingData.windows, 50); // Limit windows for performance
+            
+            for (let i = 0; i < windowCount; i++) {
+                const windowGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.1);
+                const windowMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+                const windowMesh = new THREE.Mesh(windowGeometry, windowMaterial);
+                
+                // Position windows randomly on building faces
+                const face = Math.floor(Math.random() * 4); // 0-3 for four vertical faces
+                const offsetX = (Math.random() - 0.5) * buildingData.width;
+                const offsetY = Math.random() * buildingData.height;
+                const offsetZ = (Math.random() - 0.5) * buildingData.depth;
+                
+                switch(face) {
+                    case 0: // Front
+                        windowMesh.position.set(offsetX, offsetY, buildingData.depth/2);
+                        break;
+                    case 1: // Back
+                        windowMesh.position.set(offsetX, offsetY, -buildingData.depth/2);
+                        break;
+                    case 2: // Right
+                        windowMesh.position.set(buildingData.width/2, offsetY, offsetZ);
+                        break;
+                    case 3: // Left
+                        windowMesh.position.set(-buildingData.width/2, offsetY, offsetZ);
+                        break;
+                }
+                
+                buildingMesh.add(windowMesh);
+            }
+        }
+        
+        // Create disasters (errors)
+        const disasters = [];
+        const disasterMeshes = [];
+        
+        function createDisaster() {
+            const disasterTypes = [
+                { geometry: new THREE.SphereGeometry(2, 8, 8), color: 0xff0000, name: "Syntax Error" },
+                { geometry: new THREE.ConeGeometry(2, 4, 8), color: 0xff4500, name: "Runtime Error" },
+                { geometry: new THREE.OctahedronGeometry(2), color: 0x8b0000, name: "Fatal Error" }
+            ];
+            
+            const type = disasterTypes[Math.floor(Math.random() * disasterTypes.length)];
+            const material = new THREE.MeshBasicMaterial({ color: type.color });
+            const mesh = new THREE.Mesh(type.geometry, material);
+            
+            // Position disaster randomly in the city
+            mesh.position.x = (Math.random() * 180) - 90;
+            mesh.position.y = 5;
+            mesh.position.z = (Math.random() * 180) - 90;
+            
+            mesh.userData = {
+                type: type.name,
+                speed: Math.random() * 0.5 + 0.1,
+                direction: new THREE.Vector3(
+                    Math.random() - 0.5,
+                    0,
+                    Math.random() - 0.5
+                ).normalize()
+            };
+            
+            scene.add(mesh);
+            disasters.push(mesh.userData);
+            disasterMeshes.push(mesh);
+            
+            // Update disaster count
+            document.getElementById('disaster-count').textContent = disasterMeshes.length;
+        }
+        
+        // Create initial disasters
+        for (let i = 0; i < 10; i++) {
+            createDisaster();
+        }
+        
+        // Create monsters (bugs)
+        const monsters = [];
+        const monsterMeshes = [];
+        
+        function createMonster() {
+            const geometry = new THREE.SphereGeometry(1.5, 6, 6);
+            const material = new THREE.MeshBasicMaterial({ color: 0x8a2be2 });
+            const mesh = new THREE.Mesh(geometry, material);
+            
+            // Position monster randomly in the city
+            mesh.position.x = (Math.random() * 180) - 90;
+            mesh.position.y = 1.5;
+            mesh.position.z = (Math.random() * 180) - 90;
+            
+            mesh.userData = {
+                speed: Math.random() * 0.3 + 0.1,
+                direction: new THREE.Vector3(
+                    Math.random() - 0.5,
+                    0,
+                    Math.random() - 0.5
+                ).normalize(),
+                attackPower: Math.random() * 5 + 5
+            };
+            
+            scene.add(mesh);
+            monsters.push(mesh.userData);
+            monsterMeshes.push(mesh);
+            
+            // Update monster count
+            document.getElementById('monster-count').textContent = monsterMeshes.length;
+        }
+        
+        // Create initial monsters
+        for (let i = 0; i < 15; i++) {
+            createMonster();
+        }
+        
+        // Camera position
+        camera.position.set(0, 100, 100);
+        camera.lookAt(0, 0, 0);
+        
+        // Mouse controls
+        let mouseX = 0, mouseY = 0;
+        let isMouseDown = false;
+        
+        document.addEventListener('mousemove', (event) => {
+            if (isMouseDown) {
+                camera.position.x -= (event.movementX * 0.1);
+                camera.position.z -= (event.movementY * 0.1);
+            }
+        });
+        
+        document.addEventListener('mousedown', () => {
+            isMouseDown = true;
+        });
+        
+        document.addEventListener('mouseup', () => {
+            isMouseDown = false;
+        });
+        
+        // Zoom with mouse wheel
+        document.addEventListener('wheel', (event) => {
+            camera.position.y += event.deltaY * 0.1;
+            camera.position.y = Math.max(10, Math.min(200, camera.position.y));
+        });
+        
+        // Raycaster for building selection
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        
+        function onMouseClick(event) {
+            // Calculate mouse position in normalized device coordinates
+            mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+            
+            // Update the raycaster
+            raycaster.setFromCamera(mouse, camera);
+            
+            // Calculate objects intersecting the picking ray
+            const intersects = raycaster.intersectObjects(buildingMeshes);
+            
+            if (intersects.length > 0) {
+                const building = intersects[0].object.userData;
+                showBuildingInfo(building);
+            }
+        }
+        
+        document.addEventListener('click', onMouseClick);
+        
+        function showBuildingInfo(building) {
+            const infoDiv = document.getElementById('info');
+            infoDiv.innerHTML = `
+                <h2>🏙️ CODE CITY APOCALYPSE</h2>
+                <p>Buildings = Files | Disasters = Errors</p>
+                <h3>Building Details:</h3>
+                <p><strong>Name:</strong> ${building.name}</p>
+                <p><strong>Path:</strong> ${building.path}</p>
+                <p><strong>Type:</strong> ${building.type}</p>
+                <p><strong>Health:</strong> ${building.health}%</p>
+                <p><strong>Occupants:</strong> ${building.occupants}</p>
+                <p><strong>Windows:</strong> ${building.windows}</p>
+                <p><strong>Dimensions:</strong> ${building.width}x${building.height}x${building.depth}</p>
+            `;
+        }
+        
+        // Control buttons
+        document.getElementById('toggle-disasters').addEventListener('click', () => {
+            disastersEnabled = !disastersEnabled;
+        });
+        
+        document.getElementById('reset-city').addEventListener('click', () => {
+            // Reset all buildings to full health
+            buildingMeshes.forEach((mesh, index) => {
+                const building = buildings[index];
+                building.health = 100;
+                
+                // Reset color
+                mesh.material.color.setHex(parseInt(building.color.substring(1), 16));
+            });
+            
+            // Remove all disasters and monsters
+            disasterMeshes.forEach(mesh => scene.remove(mesh));
+            disasterMeshes.length = 0;
+            disasters.length = 0;
+            
+            monsterMeshes.forEach(mesh => scene.remove(mesh));
+            monsterMeshes.length = 0;
+            monsters.length = 0;
+            
+            // Update counts
+            document.getElementById('disaster-count').textContent = '0';
+            document.getElementById('monster-count').textContent = '0';
+        });
+        
+        document.getElementById('night-mode').addEventListener('click', () => {
+            isNightMode = !isNightMode;
+            if (isNightMode) {
+                ambientLight.intensity = 0.2;
+                directionalLight.intensity = 0.3;
+            } else {
+                ambientLight.intensity = 0.6;
+                directionalLight.intensity = 0.8;
+            }
+        });
+        
+        // Animation variables
+        let disastersEnabled = true;
+        let isNightMode = false;
+        let disasterSpawnTimer = 0;
+        let monsterSpawnTimer = 0;
+        
+        // Animation loop
+        function animate() {
+            requestAnimationFrame(animate);
+            
+            // Move disasters
+            if (disastersEnabled) {
+                disasterMeshes.forEach((mesh, index) => {
+                    const disaster = disasters[index];
+                    
+                    // Move disaster
+                    mesh.position.x += disaster.direction.x * disaster.speed;
+                    mesh.position.z += disaster.direction.z * disaster.speed;
+                    
+                    // Bounce off boundaries
+                    if (mesh.position.x < -90 || mesh.position.x > 90) {
+                        disaster.direction.x *= -1;
+                    }
+                    if (mesh.position.z < -90 || mesh.position.z > 90) {
+                        disaster.direction.z *= -1;
+                    }
+                    
+                    // Check for collisions with buildings
+                    buildingMeshes.forEach((buildingMesh, buildingIndex) => {
+                        const building = buildings[buildingIndex];
+                        const distance = mesh.position.distanceTo(buildingMesh.position);
+                        
+                        if (distance < 10 && building.health > 0) {
+                            // Damage building
+                            building.health -= 0.5;
+                            
+                            // Update building color based on health
+                            if (building.health <= 20) {
+                                buildingMesh.material.color.setHex(0xff0000);
+                            } else if (building.health <= 60) {
+                                buildingMesh.material.color.setHex(0xffa500);
+                            }
+                            
+                            // Create damage indicator
+                            createDamageIndicator(buildingMesh.position, 0.5);
+                        }
+                    });
+                });
+                
+                // Move monsters
+                monsterMeshes.forEach((mesh, index) => {
+                    const monster = monsters[index];
+                    
+                    // Move monster
+                    mesh.position.x += monster.direction.x * monster.speed;
+                    mesh.position.z += monster.direction.z * monster.speed;
+                    
+                    // Bounce off boundaries
+                    if (mesh.position.x < -90 || mesh.position.x > 90) {
+                        monster.direction.x *= -1;
+                    }
+                    if (mesh.position.z < -90 || mesh.position.z > 90) {
+                        monster.direction.z *= -1;
+                    }
+                    
+                    // Check for collisions with buildings
+                    buildingMeshes.forEach((buildingMesh, buildingIndex) => {
+                        const building = buildings[buildingIndex];
+                        const distance = mesh.position.distanceTo(buildingMesh.position);
+                        
+                        if (distance < 8 && building.health > 0) {
+                            // Damage building
+                            building.health -= monster.attackPower * 0.01;
+                            
+                            // Update building color based on health
+                            if (building.health <= 20) {
+                                buildingMesh.material.color.setHex(0xff0000);
+                            } else if (building.health <= 60) {
+                                buildingMesh.material.color.setHex(0xffa500);
+                            }
+                            
+                            // Create damage indicator
+                            createDamageIndicator(buildingMesh.position, monster.attackPower * 0.01);
+                        }
+                    });
+                });
+                
+                // Spawn new disasters occasionally
+                disasterSpawnTimer++;
+                if (disasterSpawnTimer > 300 && disasterMeshes.length < 30) {
+                    createDisaster();
+                    disasterSpawnTimer = 0;
+                }
+                
+                // Spawn new monsters occasionally
+                monsterSpawnTimer++;
+                if (monsterSpawnTimer > 200 && monsterMeshes.length < 50) {
+                    createMonster();
+                    monsterSpawnTimer = 0;
+                }
+            }
+            
+            renderer.render(scene, camera);
+        }
+        
+        // Function to create damage indicators
+        function createDamageIndicator(position, damage) {
+            const damageElement = document.createElement('div');
+            damageElement.className = 'damage';
+            damageElement.textContent = `-${damage.toFixed(1)}`;
+            damageElement.style.left = `${Math.random() * window.innerWidth}px`;
+            damageElement.style.top = `${Math.random() * window.innerHeight}px`;
+            document.body.appendChild(damageElement);
+            
+            // Animate and remove
+            setTimeout(() => {
+                damageElement.style.opacity = '0';
+                damageElement.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    document.body.removeChild(damageElement);
+                }, 500);
+            }, 100);
+        }
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>
+```

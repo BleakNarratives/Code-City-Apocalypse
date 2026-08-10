@@ -1,0 +1,8 @@
+/storage/emulated/0/sd/BleakDev
+/storage/emulated/0/sd/BleakDev/odds-of-the-gods/Odds of the Gods/unsorted_codebase
+/storage/emulated/0/sd/BleakDev/sinister_agents_v1/scripts
+/storage/emulated/0/post_roast
+/storage/emulated/0/post_roast/html_creep
+/storage/emulated/0/post_roast/modmind-framework
+/storage/emulated/0/post_roast/devide_syntax_swd
+/storage/emulated/0/scripts

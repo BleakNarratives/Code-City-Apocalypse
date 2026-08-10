@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 SYNTAX APOCALYPSE: Mayor Vic's Vibe Rebellion 🔥</title>
+    <!-- Keep all your existing Three.js and styles -->
+</head>
+<body>
+    <div id="app">
+        <div id="hud">
+            <div class="hud-title">🔥 SYNTAX APOCALYPSE 🔥</div>
+            <div style="color: #ffaa00; font-size: 12px; text-align: center;">
+                Mayor Vic's Vibe Rebellion vs aFiREFLY Resistance
+            </div>
+            
+            <!-- ADD THIS NEW ELEMENT -->
+            <div id="lm-playground-status" style="background: #004400; color: #00ff44; padding: 5px; border-radius: 5px; text-align: center; font-size: 10px; margin-top: 10px;">
+                📱 LM Playground: OFFLINE - <button onclick="connectToLM()" style="background: #00ff44; border: none; padding: 2px 5px; border-radius: 3px; font-size: 8px;">CONNECT AI</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== LM PLAYGROUND INTEGRATION ==========
+        class LMPlaygroundConnector {
+            constructor() {
+                this.connected = false;
+                this.model = null;
+            }
+            
+            async connect() {
+                // LM Playground runs on localhost:3000 typically
+                try {
+                    const response = await fetch('http://localhost:3000/api/status');
+                    if (response.ok) {
+                        this.connected = true;
+                        document.getElementById('lm-playground-status').innerHTML = 
+                            '📱 LM Playground: <span style="color:#00ff44">ONLINE</span> - aFiREFLY AI Ready';
+                        return true;
+                    }
+                } catch (error) {
+                    console.log('LM Playground not detected - running in offline mode');
+                }
+                return false;
+            }
+            
+            async deployAIAgent(problemCode, agentType) {
+                if (!this.connected) {
+                    showInGameAlert('⚠️ Connect LM Playground first!', 'error');
+                    return null;
+                }
+                
+                const prompt = this.buildPrompt(problemCode, agentType);
+                
+                try {
+                    const response = await fetch('http://localhost:3000/api/generate', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            model: 'TinyLlama-1.1B-Chat-v1.0',
+                            prompt: prompt,
+                            max_tokens: 500
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    return result.text;
+                } catch (error) {
+                    showInGameAlert('❌ AI Agent deployment failed', 'error');
+                    return null;
+                }
+            }
+            
+            buildPrompt(problemCode, agentType) {
+                const agentPrompts = {
+                    'aFiREFLY Refactor': `Fix this code architecture and reduce complexity:\n\n${problemCode}\n\nOptimized solution:`,
+                    'EquiLex Security': `Find and fix security vulnerabilities in this code:\n\n${problemCode}\n\nSecure solution:`,
+                    'Blue Sky Architect': `Design a better architecture for this code:\n\n${problemCode}\n\nImproved architecture:`
+                };
+                
+                return agentPrompts[agentType] || `Fix this code:\n\n${problemCode}\n\nSolution:`;
+            }
+        }
+
+        // Initialize AI connector
+        const aiConnector = new LMPlaygroundConnector();
+        
+        function connectToLM() {
+            aiConnector.connect().then(success => {
+                if (success) {
+                    showInGameAlert('🚀 aFiREFLY AI Connected! Real AI agents ready!', 'success');
+                } else {
+                    showInGameAlert('❌ LM Playground not found - check it\'s running!', 'error');
+                }
+            });
+        }
+
+        // Enhanced agent deployment with real AI
+        async function deployAgentWithAI(agentName) {
+            if (!currentBuildingId) {
+                showInGameAlert('Select a building to target!', 'error');
+                return;
+            }
+            
+            const building = persistence.state.buildings.find(b => b.id === currentBuildingId);
+            if (building) {
+                // Simulate problem code based on building metrics
+                const problemCode = this.generateProblemCode(building);
+                
+                // Use real AI if connected, otherwise fallback
+                const aiFix = await aiConnector.deployAIAgent(problemCode, agentName);
+                
+                if (aiFix) {
+                    showInGameAlert(`🤖 ${agentName} deployed REAL AI fix!`, 'success');
+                    // Apply the fix - remove monsters, heal building
+                    building.monsters.forEach(monster => {
+                        persistence.removeMonster(currentBuildingId, monster.id);
+                    });
+                    persistence.updateBuilding(currentBuildingId, { health: 100 });
+                } else {
+                    // Fallback to simulated fix
+                    deployAgent(agentName);
+                }
+                
+                updateDetailPanel(currentBuildingId);
+            }
+        }
+
+        // Update your agent buttons to use AI
+        function setupAgentButtons() {
+            const container = document.getElementById('agent-buttons');
+            AGENT_SWARM.forEach(agent => {
+                const btn = document.createElement('button');
+                btn.className = 'swarm-btn';
+                btn.textContent = agent;
+                btn.onclick = () => deployAgentWithAI(agent); // CHANGED THIS LINE
+                container.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>

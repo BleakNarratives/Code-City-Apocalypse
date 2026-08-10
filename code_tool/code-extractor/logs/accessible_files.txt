@@ -1,0 +1,6 @@
+/storage/emulated/0/scripts/code-extractor/logs/target_folders.txt
+/storage/emulated/0/scripts/code-extractor/logs/targeted_code_files.txt
+/storage/emulated/0/scripts/code-extractor/logs/accessible_files.txt
+/storage/emulated/0/scripts/code-extractor/simple_extractor.py
+/storage/emulated/0/scripts/enhanced_extractor.py
+/storage/emulated/0/scripts/simple_extractor.py

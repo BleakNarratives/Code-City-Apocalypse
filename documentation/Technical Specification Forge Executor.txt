@@ -1,0 +1,38 @@
+Technical Specification: Forge Executor & CJP (Carrot Juice Protocol)
+1. System Components
+| Component | Role | Function | Technology Stack |
+|---|---|---|---|
+| Loom SDK | Client/Data Preparation | Segments raw data into Fibers, initiates Weaving/Unwinding requests. | [Go/Rust/TypeScript] |
+| Forge Executor (FE) | Core Service | Manages Knot creation, entanglement logic, and access via zrok. | [Go/C++] |
+| Carrot Juice Protocol (CJP) | Transport Layer | Minimalist, zero-trust overlay data transfer. | OpenZiti/zrok Private Share |
+| Spindle | Storage Abstraction | Secure, keyless storage interface (e.g., S3, Firestore, Local KV). | [Interface Definition] |
+2. Data Fiber Structure
+A Data Fiber (F) is a D-byte atomic unit.
+ * D: Data Block (e.g., D=256 bytes).
+ * N: Path Nonce (Unique, deterministic value based on Knot location).
+ * E: Entanglement Marker (Cryptographic signature verifying state with adjacent Fibers).
+ * H: Header/Metadata (Owner ID, Fiber Index, Knot ID).
+3. Celtic Knot Cryptography (CKC)
+CKC utilizes a Knot Polynomial, K(t), where the knot's invariant polynomial defines the difficulty of resolution.
+Weaving (W): The process of creating entanglement markers.
+$$ F_{i}.E = Hash( F_{i}.D \oplus F_{j}.D \oplus \text{WeaveOp}(N_i, N_j) )$$
+Where F_j are adjacent or intersecting fibers. The WeaveOp is a non-commutative function ensuring ordering is critical.
+Unwinding (U): The recursive resolution of the Knot.
+
+
+If any F_i is missing or tampered with, the result of the algebraic resolution \to 0 (random noise).
+4. Carrot Juice Protocol (CJP)
+CJP is the application-layer protocol for F transmission.
+ * Mode: Statefully established over a secure, private zero-trust tunnel (zrok Private Share).
+ * Packet Structure: Stripped down for minimal overhead.
+   * Header (32-bit): Packet Type (Weave/Unwind/Acknowledge), Fiber Count.
+   * Payload: Raw concatenated Fibers (F_1 || F_2 || ...).
+   * Trailer (16-bit): CRC Checksum (specific to the aggregated Fibers).
+ * Efficiency: Achieved by minimizing ACK overhead and relying on the underlying OpenZiti/zrok network for session integrity and zero-trust authentication. This is crucial for resource-constrained environments.
+5. Deployment Architecture (Zrok)
+| Layer | Component | Implementation Detail |
+|---|---|---|
+| Access Layer | Zrok Private Frontend | Client side (zrok access private [token]). Creates a local HTTP/TCP listener. |
+| Network Layer | OpenZiti Overlay | Provides the dark, identity-based network tunnel. No public ports opened. |
+| Execution Layer | Forge Executor (FE) | Server side (zrok share private http://localhost:[port]). FE runs as a dedicated daemon. |
+| Storage Layer | Spindle (abstract) | FE interacts with a local or network-attached storage layer (not publicly exposed). |

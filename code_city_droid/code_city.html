@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code City Apocalypse</title>
+    <style>
+        body { margin: 0; background: #1a1a2e; color: white; font-family: monospace; }
+        #info { position: absolute; top: 10px; left: 10px; background: rgba(0,0,0,0.8); padding: 10px; }
+        #stats { position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.8); padding: 10px; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <div id="info">
+        <h2>🏙️ CODE CITY APOCALYPSE</h2>
+        <p>Buildings = Files | Disasters = Errors</p>
+    </div>
+    <div id="stats">
+        <h3>Stats</h3>
+        <p>Buildings: 3</p>
+        <p>Disasters: 2</p>
+    </div>
+    <script>
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        
+        scene.add(new THREE.AmbientLight(0x404040));
+        const ground = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshBasicMaterial({ color: 0x2d5a27 }));
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+        
+        const cityData = {"metadata": {"generated_at": "2026-05-02T09:49:45.292513", "total_buildings": 3, "total_disasters": 2, "total_monsters": 2, "total_air_raids": 6}, "city": {"buildings": [{"id": 0, "name": "_storage_emulated_0_code_city_code_city_debug_v2.py", "path": "./_storage_emulated_0_code_city_code_city_debug_v2.py", "height": 10, "width": 9, "depth": 5, "x": 63, "z": 45, "health": 0, "type": "python_tower", "color": "#3572A5", "windows": 50, "occupants": 1}, {"id": 1, "name": "android_code_city.py", "path": "./android_code_city.py", "height": 10, "width": 9, "depth": 14, "x": 4, "z": 18, "health": 60, "type": "python_tower", "color": "#3572A5", "windows": 5, "occupants": 4}, {"id": 2, "name": "code_city_server.py", "path": "./code_city_server.py", "height": 12, "width": 6, "depth": 10, "x": 32, "z": 85, "health": 40, "type": "python_tower", "color": "#3572A5", "windows": 9, "occupants": 3}], "disasters": [{"type": "fire", "building_id": 1, "intensity": 4, "position": {"x": 2, "y": 10, "z": 22}, "particles": 38}, {"type": "fire", "building_id": 2, "intensity": 6, "position": {"x": 29, "y": 10, "z": 82}, "particles": 44}], "monsters": [{"type": "monster", "species": "gorilla", "building_id": 0, "position": {"x": 63, "y": 0, "z": 45}, "scale": 2.0056406346952578, "health": 67, "damage": 4}, {"type": "monster", "species": "lizard", "building_id": 1, "position": {"x": 4, "y": 0, "z": 18}, "scale": 2.8048791137197027, "health": 50, "damage": 5}], "air_raids": [{"type": "air_raid", "pilot": "red_baron", "building_id": 0, "position": {"x": 42, "y": 33, "z": 62}, "velocity": {"x": -1.2148110757443908, "y": 0, "z": -1.190012192217004}, "bombs": 1}, {"type": "air_raid", "pilot": "red_baron", "building_id": 0, "position": {"x": 50, "y": 36, "z": 70}, "velocity": {"x": 1.1054024030724583, "y": 0, "z": 1.5170015903766783}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 0, "position": {"x": 68, "y": 33, "z": 40}, "velocity": {"x": -1.015114669278629, "y": 0, "z": 1.2781214611047798}, "bombs": 2}, {"type": "air_raid", "pilot": "red_baron", "building_id": 0, "position": {"x": 48, "y": 45, "z": 71}, "velocity": {"x": 0.6723284471267403, "y": 0, "z": -1.1437653500697498}, "bombs": 3}, {"type": "air_raid", "pilot": "red_baron", "building_id": 2, "position": {"x": 37, "y": 47, "z": 77}, "velocity": {"x": 1.446437694985192, "y": 0, "z": -1.8716545590991038}, "bombs": 1}, {"type": "air_raid", "pilot": "red_baron", "building_id": 2, "position": {"x": 86, "y": 46, "z": 92}, "velocity": {"x": 1.2463584296959032, "y": 0, "z": 1.1085694650234292}, "bombs": 2}]}};
+        
+        cityData.city.buildings.forEach(b => {
+            const geom = new THREE.BoxGeometry(b.width, b.height, b.depth);
+            const mat = new THREE.MeshBasicMaterial({ color: b.color });
+            const mesh = new THREE.Mesh(geom, mat);
+            mesh.position.set(b.x, b.height / 2, b.z);
+            scene.add(mesh);
+        });
+        
+        camera.position.set(50, 50, 50);
+        camera.lookAt(0, 0, 0);
+        
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+</body>
+</html>
+        

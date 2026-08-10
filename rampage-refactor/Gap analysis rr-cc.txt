@@ -1,0 +1,12 @@
+ModMind / EquiNex Strategic Gap Analysis
+The current Cyber-Ops Dashboard (Code City) is a successful MVP for engagement and visualization. However, several critical gaps must be closed to realize the stated vision of a Universal Integration Hub for all fields.
+| Area | Stated Vision Goal (ModMind / EquiNex) | Current Implementation (Code City) | Critical Gaps |
+|---|---|---|---|
+| Persistence | Multi-user, persistent state management across sessions. | Single-user, in-memory state. Monsters/health reset on server restart. | No Database. Requires immediate integration of Firestore to manage user data, city state, and fix history. |
+| Scope | Universal hub for most if not all applications/fields of industry/commerce. | Limited to file system scanning and code metric analysis. | Data Source Limitation. Must build and document APIs to integrate non-code data (e.g., financial, logistics, hardware health). |
+| Multi-User | Collaborative oversight, cross-platform integration identification. | Single-user dashboard view. | No Auth/Users. Requires Firebase Authentication (__initial_auth_token) and user-specific data isolation/sharing logic in Firestore rules. |
+| Language Support | Full code analysis across all major languages. | Python-based simulation. Limited actual metric extraction beyond LOC/hashing. | Static Analysis Integration. Must replace mock metric functions with real static analysis tools (e.g., static code analysis libraries) for genuine debt measurement. |
+| UI/UX Consistency | Guaranteeing UI/UX consistency across all integrated applications. | Single 3D visualization is highly consistent, but only one component. | Style/Component Library. Need a formal style guide and React/Angular components to be ported across integrated applications (the "mask" of EquiNex). |
+Immediate Action Items:
+ * Integrate Firestore: Establish the database connection and move buildings/monsters state from memory to persistent storage.
+ * Develop ModMindDataConnector API: Abstract the data input layer so the server can accept data from sources other than file system scans.

@@ -1,0 +1,2 @@
+[2026-02-21 11:29:38] Welcome product_mind! Your role: Breaks features into tiny shippable chunks.
+[2026-02-21 11:29:38] New task assigned: List the 3 smallest shippable features for MVP

@@ -1,0 +1,243 @@
+{% extends "base.html" %}
+
+{% block title %}Process Marketplace{% endblock %}
+
+{% block head %}
+<style>
+    .marketplace-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .marketplace-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .marketplace-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .marketplace-card {
+        background: var(--bg-darker);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        overflow: hidden;
+        transition: var(--transition);
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .marketplace-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(108, 92, 231, 0.2);
+        border-color: var(--primary-color);
+    }
+    
+    .marketplace-card-header {
+        padding: 1rem;
+        background: rgba(108, 92, 231, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .marketplace-card-type {
+        background: var(--primary-color);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+    
+    .marketplace-card-rating {
+        color: var(--warning-color);
+        font-weight: 700;
+    }
+    
+    .marketplace-card-body {
+        padding: 1rem;
+        flex: 1;
+    }
+    
+    .marketplace-card-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .marketplace-card-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        flex: 1;
+    }
+    
+    .marketplace-card-metrics {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 1rem;
+    }
+    
+    .marketplace-card-footer {
+        padding: 1rem;
+        background: rgba(108, 92, 231, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .marketplace-card-price {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--success-color);
+    }
+    
+    .no-processes {
+        text-align: center;
+        padding: 2rem;
+        color: var(--text-secondary);
+    }
+    
+    .no-processes i {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="marketplace-container">
+    <!-- Header -->
+    <section class="marketplace-header">
+        <div>
+            <h1>🛒 Process DNA Marketplace</h1>
+            <p class="subtitle">Buy and sell high-performing business process DNA</p>
+        </div>
+        <div>
+            <input type="text" placeholder="Search processes..." class="form-control" style="width: 300px;">
+        </div>
+    </section>
+    
+    <!-- Categories -->
+    <section class="marketplace-categories">
+        <h2>Browse by Category</h2>
+        <div class="category-tags">
+            <button class="btn btn-sm btn-secondary active">All</button>
+            <button class="btn btn-sm btn-secondary">Customer Onboarding</button>
+            <button class="btn btn-sm btn-secondary">Sales Pipeline</button>
+            <button class="btn btn-sm btn-secondary">Support</button>
+            <button class="btn btn-sm btn-secondary">HR</button>
+            <button class="btn btn-sm btn-secondary">Marketing</button>
+            <button class="btn btn-sm btn-secondary">Operations</button>
+        </div>
+    </section>
+    
+    <!-- Process Grid -->
+    <section class="marketplace-processes">
+        <h2>Available Processes</h2>
+        <div class="marketplace-grid" id="marketplaceGrid">
+            <div class="no-processes">
+                <i class="fas fa-spinner fa-spin"></i>
+                <p>Loading processes from marketplace...</p>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Initialize marketplace page
+function initMarketplacePage() {
+    console.log('Initializing Marketplace Page');
+    loadMarketplaceItems();
+}
+
+// Load marketplace items
+async function loadMarketplaceItems() {
+    try {
+        const response = await fetch('/api/marketplace/list');
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            displayMarketplaceItems(data.processes);
+        } else {
+            showError('Error: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error loading marketplace:', error);
+        showError('Failed to load marketplace: ' + error.message);
+    }
+}
+
+// Display marketplace items
+function displayMarketplaceItems(processes) {
+    const marketplaceGrid = document.getElementById('marketplaceGrid');
+    marketplaceGrid.innerHTML = '';
+    
+    if (processes.length === 0) {
+        marketplaceGrid.innerHTML = `
+            <div class="no-processes">
+                <i class="fas fa-box-open"></i>
+                <p>No processes available in the marketplace.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    processes.forEach(process => {
+        const processCard = document.createElement('div');
+        processCard.className = 'marketplace-card';
+        processCard.innerHTML = `
+            <div class="marketplace-card-header">
+                <div class="marketplace-card-type">${formatProcessType(process.type)}</div>
+                <div class="marketplace-card-rating">
+                    <i class="fas fa-star"></i> ${process.rating}
+                </div>
+            </div>
+            <div class="marketplace-card-body">
+                <h3 class="marketplace-card-title">${process.name}</h3>
+                <p class="marketplace-card-description">${process.description}</p>
+                <div class="marketplace-card-metrics">
+                    <span><i class="fas fa-chart-line"></i> Fitness: ${process.fitness}</span>
+                    <span><i class="fas fa-download"></i> ${process.downloads} downloads</span>
+                </div>
+            </div>
+            <div class="marketplace-card-footer">
+                <div class="marketplace-card-price">$${process.price.toFixed(2)}</div>
+                <button class="btn btn-primary btn-sm" onclick="purchaseProcess('${process.id}')">
+                    <i class="fas fa-shopping-cart"></i> Purchase
+                </button>
+            </div>
+        `;
+        
+        marketplaceGrid.appendChild(processCard);
+    });
+}
+
+// Format process type
+function formatProcessType(type) {
+    return type.replace(/_/g, ' ').replace(/\w\S*/g, txt => 
+        txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+}
+
+// Purchase process
+function purchaseProcess(processId) {
+    alert(`Process ${processId} purchased! (Demo only)`);
+    addActivityLog('Process purchased', `Acquired process ${processId} from marketplace`);
+}
+
+// Call init when page loads
+initMarketplacePage();
+</script>
+{% endblock %}

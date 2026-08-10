@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+<title>ROOT CHAOS — THE REPO WARS</title>
+<style>
+  html,body{height:100%;margin:0;background:#05050a;color:#ddd;font-family:Inter,system-ui,Arial;}
+  #container{width:100%;height:100%;position:relative;overflow:hidden;}
+  #overlay{position:absolute;left:12px;top:12px;z-index:30;max-width:46%;min-width:220px}
+  .title{font-weight:800;font-size:22px;line-height:1.05;color:#fff;text-shadow:0 6px 20px rgba(0,0,0,0.9)}
+  .subtitle{opacity:0.7;font-size:12px;margin-top:4px}
+  .controls{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+  .btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:8px;color:#fff;font-weight:600;cursor:pointer}
+  .btn:active{transform:translateY(1px) scale(0.995)}
+  #panel{position:absolute;right:12px;top:12px;z-index:30;width:320px;max-width:46%;background:linear-gradient(180deg,rgba(0,0,0,0.35),rgba(0,0,0,0.15));border-radius:10px;padding:12px;color:#ddd;backdrop-filter: blur(6px);}
+  #info{font-size:13px;line-height:1.3;max-height:60vh;overflow:auto}
+  #splash{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:40;text-align:center;padding:18px;border-radius:12px;min-width:320px}
+  #splash h1{font-size:34px;margin:0;color:#fff;letter-spacing:1px;text-shadow:0 10px 40px rgba(0,0,0,0.9)}
+  #splash p{opacity:0.75;margin-top:8px}
+  #closeSplash{margin-top:12px;background:#fff;color:#111;padding:8px 12px;border-radius:8px;border:none;cursor:pointer}
+  #metadata{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);z-index:35;background:rgba(0,0,0,0.45);padding:12px;border-radius:8px;min-width:280px;max-width:90%;display:none}
+  @media (max-width:720px){#overlay{max-width:60%} #panel{display:none}}
+</style>
+</head>
+<body>
+<div id="container"></div>
+<div id="overlay">
+  <div class="title">ROOT CHAOS — THE REPO WARS</div>
+  <div class="subtitle">The machines are writing back · City generated from your repo</div>
+  <div class="controls">
+    <button class="btn" id="toggleOps">OPS MODE</button>
+    <button class="btn" id="detailLow">LOW</button>
+    <button class="btn" id="detailMed">MED</button>
+    <button class="btn" id="detailHigh">HIGH</button>
+    <button class="btn" id="snapshot">SNAPSHOT</button>
+    <button class="btn" id="toggleSplash">SPLASH</button>
+  </div>
+</div>
+<div id="panel">
+  <div style="display:flex;align-items:center;justify-content:space-between">
+    <div style="font-weight:800">City Panel</div>
+    <div style="opacity:0.7;font-size:12px">Buildings: <span id="count">--</span></div>
+  </div>
+  <hr style="opacity:0.06;margin:8px 0">
+  <div id="info">Click a building to inspect. Use OPS MODE to show debug lines and spawners.</div>
+</div>
+<div id="metadata"></div>
+<div id="splash">
+  <h1>ROOT CHAOS</h1>
+  <p style="font-weight:700">THE REPO WARS — Your root folder made physical</p>
+  <p style="opacity:0.7">Click to drop into the city. Buildings = files · Towers = modules · Agents = coming soon</p>
+  <button id="closeSplash">ENTER THE CITY</button>
+</div>
+
+<!-- The script will attempt to fetch /mnt/data/Codeshitty.txt if served under the same domain.
+     If you're running locally from file:// it will fallback to scanning an embedded sample dataset. -->
+<script>
+/* ---------- dataset loader ---------- */
+async function loadRemoteList() {
+  // If you host this file alongside Codeshitty.txt, the script will fetch it.
+  try {
+    const resp = await fetch('Codeshitty.txt');
+    if (!resp.ok) throw new Error('no remote file');
+    const txt = await resp.text();
+    const lines = txt.split('\\n').map(s=>s.trim()).filter(Boolean);
+    return lines.map((l,i)=>({name:l,lines: Math.max(1,(l.length%400)+1),size: Math.max(100, (l.length%5000))}));
+  } catch (e) {
+    return null;
+  }
+}
+
+function makeDeterministicCity(entries) {
+  // convert lines into building objects with deterministic positions
+  function md5hash(s){ // tiny md5 fallback (not cryptographically critical) - use built-in if available
+    // simple hash -> number
+    let h=0;
+    for(let i=0;i<s.length;i++){ h = ((h<<5)-h) + s.charCodeAt(i); h |= 0; }
+    return Math.abs(h);
+  }
+  const city = [];
+  for(let i=0;i<entries.length;i++){
+    const e = entries[i];
+    const h = md5hash(e.name||('file'+i));
+    const x = ((h % 37) - 18 + ((h>>3)%100)/100.0) * 6;
+    const z = (((h>>8) % 37) - 18 + ((h>>13)%100)/100.0) * 6;
+    const height = Math.max(6, Math.min(140, Math.floor(Math.pow((e.lines||1),0.9) + (e.size||100)/800)));
+    const width = 4 + (h % 8);
+    const depth = 4 + ((h>>5) % 8);
+    const color = '#' + ((h * 1234567) & 0xFFFFFF).toString(16).padStart(6,'0');
+    city.push({id:'b'+i,name: e.name||('file'+i),size:e.size||0,lines:e.lines||0,x: x.toFixed(3), z: z.toFixed(3), width, depth, height, color, meta: {source:'Codeshitty or fallback'}});
+  }
+  return city;
+}
+
+/* ---------- Three.js city renderer ---------- */
+function injectCity(city) {
+  document.getElementById('count').textContent = city.length;
+  const container = document.getElementById('container');
+  let width = container.clientWidth, height = container.clientHeight;
+  const scene = new THREE.Scene();
+  scene.fog = new THREE.FogExp2(0x0a0a0a, 0.0025);
+
+  const camera = new THREE.PerspectiveCamera(45, width/height, 1, 2000);
+  camera.position.set(0, 140, 260);
+
+  const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  renderer.setSize(width, height);
+  renderer.shadowMap.enabled = true;
+  container.appendChild(renderer.domElement);
+
+  const hemi = new THREE.HemisphereLight(0xffffee, 0x080820, 0.6);
+  scene.add(hemi);
+  const dir = new THREE.DirectionalLight(0xffeedd, 0.9);
+  dir.position.set(-100,300,200);
+  dir.castShadow = true;
+  scene.add(dir);
+
+  const ground = new THREE.Mesh(new THREE.PlaneGeometry(4000,4000), new THREE.MeshStandardMaterial({color:0x05060a,metalness:0.1,roughness:0.9}));
+  ground.rotation.x = -Math.PI/2; ground.receiveShadow = true; scene.add(ground);
+
+  const controls = new THREE.OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.dampingFactor = 0.12; controls.maxPolarAngle = Math.PI*0.495;
+
+  const raycaster = new THREE.Raycaster(); const mouse = new THREE.Vector2();
+  const metadata = document.getElementById('metadata'); const info = document.getElementById('info');
+  const cityGroup = new THREE.Group(); scene.add(cityGroup);
+
+  function makeWindowTexture() {
+    const c = document.createElement('canvas'); c.width = 32; c.height = 32;
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#0a0a0a'; ctx.fillRect(0,0,32,32);
+    for(let y=0;y<4;y++){ for(let x=0;x<4;x++){ ctx.fillStyle = Math.random() > 0.6 ? '#ffd980' : '#223344'; ctx.fillRect(1+x*8,1+y*8,6,6); } }
+    const t = new THREE.CanvasTexture(c); t.wrapS = t.wrapT = THREE.RepeatWrapping; return t;
+  }
+  const windowTex = makeWindowTexture();
+
+  const objects = [];
+  for(let b of city){
+    const w = Math.max(2,b.width), d = Math.max(2,b.depth), h = Math.max(6,b.height);
+    const geom = new THREE.BoxGeometry(w, h, d);
+    const mat = new THREE.MeshStandardMaterial({color: b.color, metalness:0.12, roughness:0.7});
+    const mesh = new THREE.Mesh(geom, mat);
+    mesh.position.set(b.x, h/2, b.z);
+    mesh.userData = b;
+    mesh.castShadow = true; mesh.receiveShadow = true;
+    const winMat = new THREE.MeshStandardMaterial({map: windowTex, emissiveMap: windowTex, emissiveIntensity:0.48, emissive:0xffffff, transparent:true, opacity:0.95});
+    const winGeom = new THREE.BoxGeometry(w*0.98, h*0.98, d*0.98);
+    const winMesh = new THREE.Mesh(winGeom, winMat);
+    winMesh.position.copy(mesh.position); winMesh.userData = b; winMesh.renderOrder = 1;
+    cityGroup.add(mesh); cityGroup.add(winMesh); objects.push(mesh); objects.push(winMesh);
+  }
+
+  const opsTower = new THREE.Mesh(new THREE.ConeGeometry(8,40,8), new THREE.MeshStandardMaterial({color:0xff4444,metalness:0.3,roughness:0.4}));
+  opsTower.position.set(0,20,-30); opsTower.userData = {name:"OPS TOWER",desc:"Mother node - spawn agents here (placeholder)"}; scene.add(opsTower); objects.push(opsTower);
+
+  const smokeGeo = new THREE.SphereGeometry(1,8,8);
+  const smokeMat = new THREE.MeshStandardMaterial({color:0x444455,transparent:true,opacity:0.08});
+  const smokeGroup = new THREE.Group();
+  for(let i=0;i<30;i++){ const s = new THREE.Mesh(smokeGeo, smokeMat); s.scale.setScalar(4+Math.random()*20); s.position.set((Math.random()-0.5)*600,20+Math.random()*80,(Math.random()-0.5)*600); smokeGroup.add(s); }
+  scene.add(smokeGroup);
+
+  let opsMode = false; let detailLevel='med';
+  function setDetail(level){
+    detailLevel = level;
+    if(level==='low') renderer.setPixelRatio(1);
+    else if(level==='med') renderer.setPixelRatio(Math.min(1.5, window.devicePixelRatio || 1));
+    else renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+    windowTex.repeat.set(level==='low'?1:(level==='med'?2:3), level==='low'?1:(level==='med'?2:3)); windowTex.needsUpdate = true;
+  }
+  setDetail('med');
+
+  function showMeta(data, screenPos){
+    metadata.style.display='block';
+    metadata.style.left = Math.min(window.innerWidth-20, Math.max(12, screenPos.x)) + 'px';
+    metadata.style.bottom = Math.max(18, window.innerHeight - screenPos.y + 12) + 'px';
+    metadata.innerHTML = '<strong>'+data.name+'</strong><div style="opacity:0.8;font-size:12px;margin-top:6px">lines: '+data.lines+' | size: '+data.size+'</div><div style="margin-top:8px;font-size:12px;color:#cfcfcf">'+(data.meta&&data.meta.path?data.meta.path:'')+'</div>';
+    setTimeout(()=>{metadata.style.opacity=1},20);
+  }
+  function hideMeta(){ metadata.style.display='none'; }
+
+  function onPointerDown(e){
+    const rect = renderer.domElement.getBoundingClientRect();
+    mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects([].concat(cityGroup.children, [opsTower]), true);
+    if(intersects.length){
+      const it = intersects[0].object;
+      const data = it.userData;
+      const v = it.getWorldPosition(new THREE.Vector3()).project(camera);
+      const sx = (v.x * 0.5 + 0.5) * window.innerWidth;
+      const sy = (-v.y * 0.5 + 0.5) * window.innerHeight;
+      showMeta(data, {x: sx, y: sy});
+    } else hideMeta();
+  }
+  renderer.domElement.addEventListener('pointerdown', onPointerDown);
+
+  document.getElementById('snapshot').addEventListener('click', ()=>{ const link=document.createElement('a'); link.download='code_city_snapshot.png'; link.href=renderer.domElement.toDataURL('image/png'); link.click(); });
+  document.getElementById('toggleOps').addEventListener('click', ()=>{ opsMode=!opsMode; for(let c of cityGroup.children){ if(c.material) c.material.wireframe = opsMode && Math.random()>0.6 ? true:false; } opsTower.material.wireframe = opsMode; info.textContent = opsMode ? 'OPS MODE ENABLED — debug visuals active' : 'Click a building to inspect. Use OPS MODE to show debug lines and spawners.'; });
+  document.getElementById('detailLow').addEventListener('click', ()=>setDetail('low'));
+  document.getElementById('detailMed').addEventListener('click', ()=>setDetail('med'));
+  document.getElementById('detailHigh').addEventListener('click', ()=>setDetail('high'));
+
+  const splash = document.getElementById('splash');
+  document.getElementById('closeSplash').addEventListener('click', ()=>{ splash.style.display='none'; });
+  document.getElementById('toggleSplash').addEventListener('click', ()=>{ splash.style.display = splash.style.display === 'none' ? 'block' : 'none'; });
+
+  window.addEventListener('resize', ()=>{ width = container.clientWidth; height = container.clientHeight; camera.aspect = width/height; camera.updateProjectionMatrix(); renderer.setSize(width,height); });
+
+  let t=0;
+  function animate(){
+    requestAnimationFrame(animate);
+    t += 0.005;
+    camera.position.x = Math.sin(t*0.2)*140;
+    camera.position.z = Math.cos(t*0.15)*240;
+    camera.lookAt(0,40,0);
+    controls.update();
+    smokeGroup.children.forEach((s,i)=>{ s.position.y += Math.sin(t + i)*0.03; s.rotation.y += 0.001; });
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  // Minimal agent hook
+  window.__codeCity = { city: city, scene: scene, renderer: renderer, camera: camera, spawnAgent: (name)=>{ console.log("spawnAgent hook:",name); alert("Spawn request: "+name); } };
+}
+
+/* ---------- bootstrap: try to load Codeshitty.txt then fallback ---------- */
+(async () => {
+  // Basic library load guard (we rely on three.js libs being loaded below)
+  // If user is offline, we include a simple loader to pull libs dynamically.
+  function ensureLibs(cb){
+    if(window.THREE && window.THREE.OrbitControls) return cb();
+    const s1 = document.createElement('script');
+    s1.src = 'https://unpkg.com/three@0.152.2/build/three.min.js';
+    s1.onload = ()=> {
+      const s2 = document.createElement('script');
+      s2.src = 'https://unpkg.com/three@0.152.2/examples/js/controls/OrbitControls.js';
+      s2.onload = cb;
+      document.head.appendChild(s2);
+    };
+    document.head.appendChild(s1);
+  }
+
+  const remote = await loadRemoteList();
+  let raw;
+  if(remote && remote.length) raw = remote;
+  else {
+    // fallback sample dataset built from current location (can't access local fs from browser)
+    raw = [
+      {name:'main.py', lines:200, size:1200},
+      {name:'server.py', lines:420, size:3400},
+      {name:'utils/helpers.py', lines:80, size:2200},
+      {name:'README.md', lines:12, size:800},
+      {name:'docker-compose.yml', lines:32, size:400},
+      {name:'assets/sprite.png', lines:1, size:1400}
+    ];
+  }
+
+  const city = makeDeterministicCity(raw);
+
+  ensureLibs(()=>{ injectCity(city); });
+})();
+</script>
+</body>
+</html>

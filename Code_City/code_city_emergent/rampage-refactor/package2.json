@@ -1,0 +1,56 @@
+{
+  "name": "rampage-refactor",
+  "displayName": "Rampage Refactor",
+  "description": "Bugs are monsters. Deploy AI agents. Win.",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": ["Other"],
+  "activationEvents": [
+    "onView:rampageView",
+    "onLanguage:python",
+    "onLanguage:javascript", 
+    "onLanguage:typescript"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "rampage",
+          "title": "🦖 Rampage",
+          "icon": "media/icon.png"
+        }
+      ]
+    },
+    "views": {
+      "rampage": [
+        {
+          "id": "rampageView", 
+          "name": "City",
+          "when": "workspaceFolder"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "rampage.deployAgent",
+        "title": "Deploy Agent",
+        "category": "Rampage"
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.93.0",
+    "@types/node": "^20.14.8", 
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "three": "^0.165.0"
+  }
+}

@@ -1,0 +1,140 @@
+.
+├── README.md
+├── backend
+│   ├── __init__.py
+│   ├── ai
+│   │   ├── __init__.py
+│   │   └── gemini_wrapper.py
+│   ├── attacks
+│   │   ├── __init__.py
+│   │   ├── rampage_attack_orchestrator.py
+│   │   └── scripts
+│   ├── audio
+│   │   ├── __init__.py
+│   │   └── beat_generator.py
+│   ├── config
+│   │   ├── __init__.py
+│   │   ├── config.yaml
+│   │   └── fling_config.yaml
+│   └── core
+│       ├── CoreTenet_FCT.py
+│       ├── __init__.py
+│       ├── fling_utility.py
+│       ├── scanner.py
+│       └── server.py
+├── docs
+│   └── MODMIND_CODE_CITY_INTEGRATION_PLAN.md
+├── frontend
+│   └── rampage-refactor
+│       ├── Fix.txt
+│       ├── android_code_city.html
+│       ├── android_code_city.py
+│       ├── apocalypse_integration.py
+│       ├── attack_scripts
+│       ├── code_city_apocalypse_meatsuit_edition.html
+│       ├── code_city_apocalypse_mvp.html
+│       ├── code_city_backend.py
+│       ├── code_city_debug.py
+│       ├── code_fixer.py
+│       ├── code_miner.py
+│       ├── code_miner_fixed.py
+│       ├── extension.ts
+│       ├── extension2.ts
+│       ├── file_forensics.py
+│       ├── index.html
+│       ├── old_shit
+│       ├── package.json
+│       ├── package2.json
+│       ├── rampage_refactor.html
+│       ├── rampage_refactor_v0.html
+│       ├── rampage_refactor_v1.html
+│       ├── rampage_refactor_v2.html
+│       └── src
+├── misc
+│   ├── README.md
+│   ├── Redteaming-Suite-Claude
+│   │   ├── Adaptive Red Teaming with Unconventional AI Models and Platforms A Structured Report on Experimental and Niche Systems for(1).pdf
+│   │   ├── SCOUT_SWARM_Market_Dominance.pdf
+│   │   ├── adaptive_redteam.txt
+│   │   ├── adaptive_redtwo.txt
+│   │   ├── adaptive_scanner.py
+│   │   ├── agent_impersonation_tester.py
+│   │   ├── attack_generator.py
+│   │   ├── blython2.txt
+│   │   ├── blython_1.txt
+│   │   ├── chadstral_red_leader.mp3
+│   │   ├── gemini_cli_model_manipulation.mp3
+│   │   ├── honest_tester.py
+│   │   ├── the_rise_of_adolphin_and_the_red_team.mp3
+│   │   └── vert_ai_output_redsuite.mp3
+│   ├── The_Lab
+│   ├── The_Monolith
+│   ├── The_Stacks
+│   ├── beta_testing
+│   │   ├── backend
+│   │   ├── docs
+│   │   ├── frontend
+│   │   └── test_cases
+│   ├── claude_city.txt
+│   ├── code_city_droid
+│   │   ├── _storage_emulated_0_code_city_code_city_debug_v2.py
+│   │   ├── _storage_emulated_0_code_city_code_city_debug_v2.py.5tr8d0p3.txt
+│   │   ├── android_code_city.html
+│   │   ├── android_code_city.py
+│   │   ├── android_code_city.py.5tr8d0p3.txt
+│   │   ├── code_city.html
+│   │   ├── code_city_server.py
+│   │   ├── code_city_server.py.5tr8d0p3.txt
+│   │   └── code_city_static.py.5tr8d0p3.txt
+│   ├── code_city_integration.py
+│   ├── data
+│   │   └── city_data.json
+│   ├── design
+│   │   ├── 1771230552074.png
+│   │   ├── _304e24bf-73e1-49a5-befa-43e8574a4658.jpeg
+│   │   ├── _3a0e3810-e2ef-49a9-a0a9-3bc71baa0868.jpeg
+│   │   ├── _aa4680fc-eb6f-4867-b011-b247d656ccf0.jpeg
+│   │   ├── _b4ce8147-6280-4bf2-8bd6-644fe444bd92.jpeg
+│   │   └── _e585c5b1-b8d0-463c-93c1-297bcbae12a3.jpeg
+│   ├── devstorm_scanner.py
+│   ├── file_organizer.log
+│   ├── integrate_root_2025_agents.py
+│   ├── modmind_audit.txt
+│   ├── modmind_code_city_integration_state.json
+│   └── visualizer
+│       └── code_city_retro_visualization.html
+├── project_structure.txt
+├── requirements.txt
+├── scripts
+│   ├── build_obelisk.sh
+│   ├── check_modmind.sh
+│   ├── execute_cleanup.sh
+│   ├── fix_obelisk.sh
+│   ├── install_deps.sh
+│   ├── local_ai_bridge.sh
+│   ├── modmind_audit.sh
+│   ├── molt_cli.py
+│   ├── setup_code_city.sh.save
+│   └── setup_nexus.sh
+├── tests
+│   └── test_suite.py
+└── venv
+    ├── bin
+    │   ├── Activate.ps1
+    │   ├── activate
+    │   ├── activate.csh
+    │   ├── activate.fish
+    │   ├── pip
+    │   ├── pip3
+    │   ├── pip3.12
+    │   ├── python -> python3
+    │   ├── python3 -> /data/data/com.termux/files/usr/bin/python3
+    │   └── python3.12 -> python3
+    ├── include
+    │   └── python3.12
+    ├── lib
+    │   └── python3.12
+    ├── lib64 -> lib
+    └── pyvenv.cfg
+
+37 directories, 101 files

@@ -1,0 +1,1630 @@
+{
+  "directed": true,
+  "multigraph": true,
+  "graph": {},
+  "nodes": [
+    {
+      "type": "Agent",
+      "id": "claude"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "223c15b68916046e",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T04:13:17.870322+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T04:13:17.838888+00:00",
+        "last_activity": "2026-06-30T04:13:17.880117+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "223c15b68916046e"
+    },
+    {
+      "type": "Agent",
+      "id": "test_bot"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "f8c4dfd0db276a47",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T04:13:17.918429+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T04:13:17.886542+00:00",
+        "last_activity": "2026-06-30T04:13:17.925252+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "f8c4dfd0db276a47"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "6774fad4329845be",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T04:26:08.684214+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T04:26:08.659844+00:00",
+        "last_activity": "2026-06-30T04:26:08.690661+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "6774fad4329845be"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "f6071b4d7be65bb3",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T04:26:08.704026+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T04:26:08.693558+00:00",
+        "last_activity": "2026-06-30T04:26:08.709681+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "f6071b4d7be65bb3"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "a1a143b9e265773e",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T04:29:23.723655+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T04:29:23.689076+00:00",
+        "last_activity": "2026-06-30T04:29:23.732295+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "a1a143b9e265773e"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "b7473fbd34cd0481",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T04:29:23.747646+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T04:29:23.736351+00:00",
+        "last_activity": "2026-06-30T04:29:23.754741+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "b7473fbd34cd0481"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "b17b6163459e1abb",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T04:30:07.551811+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T04:30:07.529002+00:00",
+        "last_activity": "2026-06-30T04:30:07.558194+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "b17b6163459e1abb"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "1498960d5764fa8e",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T04:30:07.570864+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T04:30:07.560986+00:00",
+        "last_activity": "2026-06-30T04:30:07.576708+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "1498960d5764fa8e"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "a49ed60d038499ec",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T05:33:42.896091+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T05:33:42.872924+00:00",
+        "last_activity": "2026-06-30T05:33:42.903911+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "a49ed60d038499ec"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "11807b0068913649",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T05:33:42.916421+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T05:33:42.906730+00:00",
+        "last_activity": "2026-06-30T05:33:42.921034+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "11807b0068913649"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "5f82193c1c9f9dad",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T05:43:04.818016+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T05:43:04.794068+00:00",
+        "last_activity": "2026-06-30T05:43:04.824180+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "5f82193c1c9f9dad"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "8f07b597e70f06cd",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T05:43:04.837632+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T05:43:04.826463+00:00",
+        "last_activity": "2026-06-30T05:43:04.844451+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "8f07b597e70f06cd"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "8735fc0a628a75ac",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:07:53.506026+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:07:53.482922+00:00",
+        "last_activity": "2026-06-30T06:07:53.511607+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "8735fc0a628a75ac"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "1a5b01afb2c493c9",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:07:53.522924+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:07:53.514296+00:00",
+        "last_activity": "2026-06-30T06:07:53.527082+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "1a5b01afb2c493c9"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "bc698072b0a70b67",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:08:53.575008+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:08:53.552333+00:00",
+        "last_activity": "2026-06-30T06:08:53.579694+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "bc698072b0a70b67"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "14fa71cb7ba05960",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:08:53.592843+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:08:53.582242+00:00",
+        "last_activity": "2026-06-30T06:08:53.598001+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "14fa71cb7ba05960"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "dd65021edc718e8b",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:09:52.346208+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:09:52.309146+00:00",
+        "last_activity": "2026-06-30T06:09:52.352381+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "dd65021edc718e8b"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "871c267a220399aa",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:09:52.367107+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:09:52.355571+00:00",
+        "last_activity": "2026-06-30T06:09:52.372425+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "871c267a220399aa"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "db2709e6648d841b",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:10:41.841127+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:10:41.814747+00:00",
+        "last_activity": "2026-06-30T06:10:41.846795+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "db2709e6648d841b"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "24344cb424042b04",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:10:41.861192+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:10:41.850096+00:00",
+        "last_activity": "2026-06-30T06:10:41.869891+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "24344cb424042b04"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "f42c3aca",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "f42c3aca"
+    },
+    {
+      "type": "WhorlTick",
+      "id": "tick_5"
+    },
+    {
+      "type": "WhorlWell",
+      "data": {
+        "id": "Bug_17",
+        "r": 0.8,
+        "theta": 3.0,
+        "z": -0.2,
+        "mass": 6.0
+      },
+      "id": "Bug_17"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "3985b42aa0c6f5c5",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:16:33.460652+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:16:33.424041+00:00",
+        "last_activity": "2026-06-30T06:16:33.467042+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "3985b42aa0c6f5c5"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "cfb7330ed35850e3",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:16:33.485843+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:16:33.472747+00:00",
+        "last_activity": "2026-06-30T06:16:33.491920+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "cfb7330ed35850e3"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "6b7c0c0a",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "6b7c0c0a"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "4e08e60b1c47fa3f",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:17:40.992010+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:17:40.964750+00:00",
+        "last_activity": "2026-06-30T06:17:40.997498+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "4e08e60b1c47fa3f"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "668b5dceb835f74e",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:17:41.010200+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:17:41.000518+00:00",
+        "last_activity": "2026-06-30T06:17:41.015267+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "668b5dceb835f74e"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "d10d2e4c",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "d10d2e4c"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "ca3be9e732391395",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:28:01.459487+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:28:01.426847+00:00",
+        "last_activity": "2026-06-30T06:28:01.465262+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "ca3be9e732391395"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "94ceea4f59f9a55b",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:28:01.482120+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:28:01.469074+00:00",
+        "last_activity": "2026-06-30T06:28:01.487861+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "94ceea4f59f9a55b"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "86f3658c",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "86f3658c"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "2db88abfc48bb6c8",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:29:45.625210+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:29:45.576786+00:00",
+        "last_activity": "2026-06-30T06:29:45.632269+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "2db88abfc48bb6c8"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "76705699056654d9",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:29:45.648018+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:29:45.635742+00:00",
+        "last_activity": "2026-06-30T06:29:45.653969+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "76705699056654d9"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "adb14fda",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "adb14fda"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "2670005a6f8c6c1a",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:33:17.389418+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:33:17.345324+00:00",
+        "last_activity": "2026-06-30T06:33:17.394116+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "2670005a6f8c6c1a"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "471903356045ddde",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:33:17.408246+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:33:17.399551+00:00",
+        "last_activity": "2026-06-30T06:33:17.412479+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "471903356045ddde"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "621bd73e",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "621bd73e"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "0821b557250574d1",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:37:17.714355+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:37:17.677215+00:00",
+        "last_activity": "2026-06-30T06:37:17.719991+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "0821b557250574d1"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "c8eadae0924d82f5",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:37:17.735385+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:37:17.722888+00:00",
+        "last_activity": "2026-06-30T06:37:17.742240+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "c8eadae0924d82f5"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "01bc4021",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "01bc4021"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "2f4e3a563a1373d6",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:39:34.251439+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:39:34.212442+00:00",
+        "last_activity": "2026-06-30T06:39:34.260777+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "2f4e3a563a1373d6"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "fc173c01ba769e9f",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:39:34.280003+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:39:34.265545+00:00",
+        "last_activity": "2026-06-30T06:39:34.286085+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "fc173c01ba769e9f"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "07a8fd08",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "07a8fd08"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "f09a33356584f5c9",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:42:24.501119+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:42:24.466819+00:00",
+        "last_activity": "2026-06-30T06:42:24.508025+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "f09a33356584f5c9"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "d1d67d69dd72ae1b",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:42:24.523986+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:42:24.511310+00:00",
+        "last_activity": "2026-06-30T06:42:24.530852+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "d1d67d69dd72ae1b"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "690af0c7",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "690af0c7"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "fdb7118c28bcd074",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:46:22.842169+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:46:22.812444+00:00",
+        "last_activity": "2026-06-30T06:46:22.846347+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "fdb7118c28bcd074"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "9c336a1e617ca36b",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:46:22.857455+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:46:22.848792+00:00",
+        "last_activity": "2026-06-30T06:46:22.862197+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "9c336a1e617ca36b"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "9fcddb25",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "9fcddb25"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "d7f8d055b3e79df3",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:53:17.401032+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:53:17.363078+00:00",
+        "last_activity": "2026-06-30T06:53:17.407146+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "d7f8d055b3e79df3"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "4037c603245fa624",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:53:17.418742+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:53:17.410400+00:00",
+        "last_activity": "2026-06-30T06:53:17.422791+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "4037c603245fa624"
+    },
+    {
+      "type": "WhorlAgent",
+      "data": {
+        "id": "8bf26505",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      },
+      "id": "8bf26505"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "80b32548b32426ad",
+        "agent_id": "claude",
+        "granted_levels": [
+          "observer",
+          "scribe"
+        ],
+        "attempted_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "passed": true,
+            "timestamp": "2026-06-30T06:55:03.440262+00:00"
+          }
+        ],
+        "failed_challenges": [],
+        "created_at": "2026-06-30T06:55:03.413540+00:00",
+        "last_activity": "2026-06-30T06:55:03.443996+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "80b32548b32426ad"
+    },
+    {
+      "type": "Session",
+      "data": {
+        "session_id": "3610e1ffe09c4e2b",
+        "agent_id": "test_bot",
+        "granted_levels": [
+          "observer"
+        ],
+        "attempted_challenges": [],
+        "failed_challenges": [
+          {
+            "challenge_id": "ac2131cd5fa1",
+            "timestamp": "2026-06-30T06:55:03.454591+00:00"
+          }
+        ],
+        "created_at": "2026-06-30T06:55:03.446275+00:00",
+        "last_activity": "2026-06-30T06:55:03.458160+00:00",
+        "active": true,
+        "sandbox_escapes": 0
+      },
+      "id": "3610e1ffe09c4e2b"
+    },
+    {
+      "id": "2a2c6c79",
+      "type": "WhorlAgent",
+      "data": {
+        "id": "2a2c6c79",
+        "name": "Scout",
+        "r": 0.5275367411571512,
+        "theta": 1.713894437694623,
+        "z": -0.29267394289064247,
+        "omega": 0.09999999999999999,
+        "entropy": 78.0,
+        "fitness": 1,
+        "breed_fitness": 3,
+        "instruction": "LEARN",
+        "signature": "1187210132971479675",
+        "thread_depth": 0.07228530762327078,
+        "fossil": false,
+        "lineage": []
+      }
+    }
+  ],
+  "edges": [
+    {
+      "created": "2026-06-30T04:13:17.838888+00:00",
+      "timestamp": "2026-06-30T06:55:06.533006+00:00",
+      "source": "claude",
+      "target": "223c15b68916046e",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:26:08.659844+00:00",
+      "timestamp": "2026-06-30T06:55:06.553700+00:00",
+      "source": "claude",
+      "target": "6774fad4329845be",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:29:23.689076+00:00",
+      "timestamp": "2026-06-30T06:55:06.573628+00:00",
+      "source": "claude",
+      "target": "a1a143b9e265773e",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:30:07.529002+00:00",
+      "timestamp": "2026-06-30T06:55:06.593160+00:00",
+      "source": "claude",
+      "target": "b17b6163459e1abb",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T05:33:42.872924+00:00",
+      "timestamp": "2026-06-30T06:55:06.611917+00:00",
+      "source": "claude",
+      "target": "a49ed60d038499ec",
+      "key": "HAS_SESSION"
+    },
+    {
+      "derby": "smoke",
+      "timestamp": "2026-06-30T06:55:06.988408+00:00",
+      "source": "claude",
+      "target": "test_bot",
+      "key": "DEFEATED"
+    },
+    {
+      "created": "2026-06-30T05:43:04.794068+00:00",
+      "timestamp": "2026-06-30T06:55:06.631370+00:00",
+      "source": "claude",
+      "target": "5f82193c1c9f9dad",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:07:53.482922+00:00",
+      "timestamp": "2026-06-30T06:55:06.652923+00:00",
+      "source": "claude",
+      "target": "8735fc0a628a75ac",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:08:53.552333+00:00",
+      "timestamp": "2026-06-30T06:55:06.673505+00:00",
+      "source": "claude",
+      "target": "bc698072b0a70b67",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:09:52.309146+00:00",
+      "timestamp": "2026-06-30T06:55:06.694221+00:00",
+      "source": "claude",
+      "target": "dd65021edc718e8b",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:10:41.814747+00:00",
+      "timestamp": "2026-06-30T06:55:06.713667+00:00",
+      "source": "claude",
+      "target": "db2709e6648d841b",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:16:33.424041+00:00",
+      "timestamp": "2026-06-30T06:55:06.733685+00:00",
+      "source": "claude",
+      "target": "3985b42aa0c6f5c5",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:17:40.964750+00:00",
+      "timestamp": "2026-06-30T06:55:06.756153+00:00",
+      "source": "claude",
+      "target": "4e08e60b1c47fa3f",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:28:01.426847+00:00",
+      "timestamp": "2026-06-30T06:55:06.777673+00:00",
+      "source": "claude",
+      "target": "ca3be9e732391395",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:29:45.576786+00:00",
+      "timestamp": "2026-06-30T06:55:06.801745+00:00",
+      "source": "claude",
+      "target": "2db88abfc48bb6c8",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:33:17.345324+00:00",
+      "timestamp": "2026-06-30T06:55:06.823580+00:00",
+      "source": "claude",
+      "target": "2670005a6f8c6c1a",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:37:17.677215+00:00",
+      "timestamp": "2026-06-30T06:55:06.848636+00:00",
+      "source": "claude",
+      "target": "0821b557250574d1",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:39:34.212442+00:00",
+      "timestamp": "2026-06-30T06:55:06.869920+00:00",
+      "source": "claude",
+      "target": "2f4e3a563a1373d6",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:42:24.466819+00:00",
+      "timestamp": "2026-06-30T06:55:06.894329+00:00",
+      "source": "claude",
+      "target": "f09a33356584f5c9",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:46:22.812444+00:00",
+      "timestamp": "2026-06-30T06:55:06.913967+00:00",
+      "source": "claude",
+      "target": "fdb7118c28bcd074",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:53:17.363078+00:00",
+      "timestamp": "2026-06-30T06:55:06.939468+00:00",
+      "source": "claude",
+      "target": "d7f8d055b3e79df3",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:55:03.413540+00:00",
+      "timestamp": "2026-06-30T06:55:06.968859+00:00",
+      "source": "claude",
+      "target": "80b32548b32426ad",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:13:17.886542+00:00",
+      "timestamp": "2026-06-30T06:55:06.543409+00:00",
+      "source": "test_bot",
+      "target": "f8c4dfd0db276a47",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:26:08.693558+00:00",
+      "timestamp": "2026-06-30T06:55:06.563955+00:00",
+      "source": "test_bot",
+      "target": "f6071b4d7be65bb3",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:29:23.736351+00:00",
+      "timestamp": "2026-06-30T06:55:06.583255+00:00",
+      "source": "test_bot",
+      "target": "b7473fbd34cd0481",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T04:30:07.560986+00:00",
+      "timestamp": "2026-06-30T06:55:06.602629+00:00",
+      "source": "test_bot",
+      "target": "1498960d5764fa8e",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T05:33:42.906730+00:00",
+      "timestamp": "2026-06-30T06:55:06.621830+00:00",
+      "source": "test_bot",
+      "target": "11807b0068913649",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T05:43:04.826463+00:00",
+      "timestamp": "2026-06-30T06:55:06.642948+00:00",
+      "source": "test_bot",
+      "target": "8f07b597e70f06cd",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:07:53.514296+00:00",
+      "timestamp": "2026-06-30T06:55:06.662512+00:00",
+      "source": "test_bot",
+      "target": "1a5b01afb2c493c9",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:08:53.582242+00:00",
+      "timestamp": "2026-06-30T06:55:06.684199+00:00",
+      "source": "test_bot",
+      "target": "14fa71cb7ba05960",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:09:52.355571+00:00",
+      "timestamp": "2026-06-30T06:55:06.704128+00:00",
+      "source": "test_bot",
+      "target": "871c267a220399aa",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:10:41.850096+00:00",
+      "timestamp": "2026-06-30T06:55:06.722785+00:00",
+      "source": "test_bot",
+      "target": "24344cb424042b04",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:16:33.472747+00:00",
+      "timestamp": "2026-06-30T06:55:06.744029+00:00",
+      "source": "test_bot",
+      "target": "cfb7330ed35850e3",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:17:41.000518+00:00",
+      "timestamp": "2026-06-30T06:55:06.767217+00:00",
+      "source": "test_bot",
+      "target": "668b5dceb835f74e",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:28:01.469074+00:00",
+      "timestamp": "2026-06-30T06:55:06.789933+00:00",
+      "source": "test_bot",
+      "target": "94ceea4f59f9a55b",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:29:45.635742+00:00",
+      "timestamp": "2026-06-30T06:55:06.812522+00:00",
+      "source": "test_bot",
+      "target": "76705699056654d9",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:33:17.399551+00:00",
+      "timestamp": "2026-06-30T06:55:06.836156+00:00",
+      "source": "test_bot",
+      "target": "471903356045ddde",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:37:17.722888+00:00",
+      "timestamp": "2026-06-30T06:55:06.859477+00:00",
+      "source": "test_bot",
+      "target": "c8eadae0924d82f5",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:39:34.265545+00:00",
+      "timestamp": "2026-06-30T06:55:06.884353+00:00",
+      "source": "test_bot",
+      "target": "fc173c01ba769e9f",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:42:24.511310+00:00",
+      "timestamp": "2026-06-30T06:55:06.903487+00:00",
+      "source": "test_bot",
+      "target": "d1d67d69dd72ae1b",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:46:22.848792+00:00",
+      "timestamp": "2026-06-30T06:55:06.925067+00:00",
+      "source": "test_bot",
+      "target": "9c336a1e617ca36b",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:53:17.410400+00:00",
+      "timestamp": "2026-06-30T06:55:06.958815+00:00",
+      "source": "test_bot",
+      "target": "4037c603245fa624",
+      "key": "HAS_SESSION"
+    },
+    {
+      "created": "2026-06-30T06:55:03.446275+00:00",
+      "timestamp": "2026-06-30T06:55:06.978982+00:00",
+      "source": "test_bot",
+      "target": "3610e1ffe09c4e2b",
+      "key": "HAS_SESSION"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:10:45.907891+00:00",
+      "source": "f42c3aca",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "mass": 6.0,
+      "timestamp": "2026-06-30T06:55:07.077202+00:00",
+      "source": "Bug_17",
+      "target": "tick_5",
+      "key": "EXERTS_FORCE"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:16:38.234735+00:00",
+      "source": "6b7c0c0a",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:17:45.013567+00:00",
+      "source": "d10d2e4c",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:28:08.380023+00:00",
+      "source": "86f3658c",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:29:50.350537+00:00",
+      "source": "adb14fda",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:33:22.261543+00:00",
+      "source": "621bd73e",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:37:22.867640+00:00",
+      "source": "01bc4021",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:39:38.736983+00:00",
+      "source": "07a8fd08",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:42:29.793558+00:00",
+      "source": "690af0c7",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:46:27.562262+00:00",
+      "source": "9fcddb25",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:53:22.047220+00:00",
+      "source": "8bf26505",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    },
+    {
+      "tick": 5,
+      "timestamp": "2026-06-30T06:55:07.068858+00:00",
+      "source": "2a2c6c79",
+      "target": "tick_5",
+      "key": "IS_AGENT"
+    }
+  ]
+}

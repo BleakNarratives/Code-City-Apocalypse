@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 CODE CITY APOCALYPSE - REPO WARS</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #0a0a0a; 
+            color: #00ff44;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            touch-action: none;
+        }
+        
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        #hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border: 2px solid #ff4444;
+            border-radius: 8px;
+            min-width: 300px;
+        }
+        
+        #buildingInfo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            border: 2px solid #00ff44;
+            border-radius: 8px;
+            min-width: 300px;
+            display: none;
+        }
+        
+        .ops-mode {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .ops-mode button {
+            background: #333;
+            color: #ccc;
+            border: 1px solid #666;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        .ops-mode button.active {
+            background: #ff4444;
+            color: white;
+            border-color: #ff0000;
+        }
+        
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px 0;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            border-radius: 4px;
+            width: 100%;
+        }
+        
+        button:hover {
+            background: #ff6666;
+        }
+        
+        .stats {
+            margin-top: 10px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .error-layer {
+            position: absolute;
+            background: rgba(255, 68, 68, 0.1);
+            pointer-events: none;
+        }
+        
+        #tiltInfo {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="hud">
+            <h2>🦖 CODE CITY APOCALYPSE</h2>
+            <div class="ops-mode">
+                <button onclick="setOpsMode('low')">LOW</button>
+                <button onclick="setOpsMode('med')" class="active">MED</button>
+                <button onclick="setOpsMode('high')">HIGH</button>
+            </div>
+            <div>
+                <button onclick="scanRepo()">🔍 SCAN REPO</button>
+                <button onclick="deployAgent()">🤖 DEPLOY AGENT</button>
+                <button onclick="toggleDebug()">🐛 DEBUG LINES</button>
+            </div>
+            <div class="stats">
+                <div>🏢 BUILDINGS: <span id="buildingCount">0</span></div>
+                <div>🚨 ERRORS: <span id="errorCount">0</span></div>
+                <div>🐛 MONSTERS: <span id="monsterCount">0</span></div>
+                <div>🤖 AGENTS: <span id="agentCount">0</span></div>
+                <div>💰 BOUNTY: $<span id="bounty">0</span></div>
+            </div>
+        </div>
+        
+        <div id="buildingInfo">
+            <h3>🏢 BUILDING INSPECTOR</h3>
+            <div id="buildingDetails"></div>
+        </div>
+        
+        <div id="tiltInfo">📱 Tilt device to pan camera | Swipe to rotate</div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+    <script>
+        // REAL CODEBASE DATA STRUCTURE
+        const codebaseStructure = {
+            name: "root",
+            path: "./",
+            type: "directory",
+            size: 0,
+            children: [
+                {
+                    name: "src",
+                    path: "./src",
+                    type: "directory", 
+                    size: 0,
+                    children: [
+                        { name: "index.js", path: "./src/index.js", type: "file", size: 1520, lines: 45, errors: 3 },
+                        { name: "utils.js", path: "./src/utils.js", type: "file", size: 890, lines: 28, errors: 1 },
+                        { name: "components.js", path: "./src/components.js", type: "file", size: 2340, lines: 67, errors: 0 }
+                    ]
+                },
+                {
+                    name: "public",
+                    path: "./public", 
+                    type: "directory",
+                    size: 0,
+                    children: [
+                        { name: "index.html", path: "./public/index.html", type: "file", size: 560, lines: 18, errors: 2 },
+                        { name: "styles.css", path: "./public/styles.css", type: "file", size: 1280, lines: 42, errors: 1 }
+                    ]
+                },
+                {
+                    name: "node_modules",
+                    path: "./node_modules",
+                    type: "directory", 
+                    size: 0,
+                    children: [] // This would be huge irl
+                },
+                { name: "package.json", path: "./package.json", type: "file", size: 450, lines: 15, errors: 0 },
+                { name: "README.md", path: "./README.md", type: "file", size: 320, lines: 10, errors: 0 },
+                { name: "config.js", path: "./config.js", type: "file", size: 780, lines: 25, errors: 2 }
+            ]
+        };
+
+        // GAME STATE
+        let buildings = [];
+        let monsters = [];
+        let agents = [];
+        let selectedBuilding = null;
+        let opsMode = 'med';
+        let showDebug = false;
+        let cameraRotation = 0;
+        let tiltX = 0;
+        let tiltY = 0;
+
+        // THREE.js SETUP
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000);
+        const renderer = new THREE.WebGLRenderer({ 
+            canvas: document.getElementById('gameCanvas'), 
+            antialias: true,
+            alpha: true
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x050505, 1);
+        
+        // LIGHTING
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        scene.add(ambientLight);
+        
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(100, 200, 100);
+        scene.add(directionalLight);
+
+        // GROUND PLANE
+        const groundGeometry = new THREE.PlaneGeometry(2000, 2000);
+        const groundMaterial = new THREE.MeshBasicMaterial({ 
+            color: 0x111122,
+            transparent: true,
+            opacity: 0.8
+        });
+        const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+        ground.rotation.x = -Math.PI / 2;
+        scene.add(ground);
+
+        // GRID FOR SCALE
+        const gridHelper = new THREE.GridHelper(2000, 100, 0x444444, 0x222222);
+        scene.add(gridHelper);
+
+        // BUILD CODE CITY FROM REPO STRUCTURE
+        function buildCodeCity() {
+            // Clear existing buildings
+            buildings.forEach(building => scene.remove(building));
+            buildings = [];
+            
+            let x = -800;
+            let z = -800;
+            const spacing = 120;
+            
+            function processDirectory(dir, depth = 0) {
+                if (dir.type === 'file') {
+                    createBuilding(dir, x, 0, z, depth);
+                    x += spacing;
+                    if (x > 800) {
+                        x = -800;
+                        z += spacing;
+                    }
+                } else if (dir.children) {
+                    // Directory - create larger foundation
+                    createDistrict(dir, x, z, depth);
+                    x += spacing * 2;
+                    
+                    dir.children.forEach(child => {
+                        processDirectory(child, depth + 1);
+                    });
+                }
+            }
+            
+            processDirectory(codebaseStructure);
+            updateBuildingCount();
+        }
+
+        function createBuilding(file, x, y, z, depth) {
+            // Scale building by file size and complexity
+            const baseHeight = Math.max(20, file.size / 50);
+            const width = Math.max(8, file.lines / 5);
+            const depthSize = Math.max(8, (file.errors + 1) * 3);
+            
+            const geometry = new THREE.BoxGeometry(width, baseHeight, depthSize);
+            
+            // Color based on file type and errors
+            let color;
+            if (file.errors > 2) {
+                color = 0xff4444; // Red for high errors
+            } else if (file.errors > 0) {
+                color = 0xffaa00; // Orange for some errors
+            } else {
+                color = file.name.endsWith('.js') ? 0x4444ff : 
+                       file.name.endsWith('.html') ? 0x44ff44 :
+                       file.name.endsWith('.css') ? 0x8844ff : 0x666666;
+            }
+            
+            const material = new THREE.MeshPhongMaterial({ 
+                color: color,
+                emissive: color,
+                emissiveIntensity: file.errors > 0 ? 0.3 : 0.1,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            const building = new THREE.Mesh(geometry, material);
+            building.position.set(x, baseHeight / 2, z);
+            building.userData = {
+                type: 'building',
+                file: file,
+                health: 100 - (file.errors * 15),
+                originalHeight: baseHeight
+            };
+            
+            // ADD ERROR LAYERS - RED STRIPES WHERE CODE IS FUCKED UP
+            if (file.errors > 0) {
+                for (let i = 0; i < file.errors; i++) {
+                    const errorHeight = 2;
+                    const errorGeometry = new THREE.BoxGeometry(width + 1, errorHeight, depthSize + 1);
+                    const errorMaterial = new THREE.MeshBasicMaterial({
+                        color: 0xff0000,
+                        transparent: true,
+                        opacity: 0.7
+                    });
+                    
+                    const errorLayer = new THREE.Mesh(errorGeometry, errorMaterial);
+                    errorLayer.position.set(0, (i * 4) + 5, 0);
+                    building.add(errorLayer);
+                }
+            }
+            
+            // Add windows based on lines of code
+            addWindows(building, file.lines, width, baseHeight, depthSize);
+            
+            scene.add(building);
+            buildings.push(building);
+            
+            return building;
+        }
+
+        function addWindows(building, lineCount, width, height, depth) {
+            const windowCount = Math.min(50, Math.floor(lineCount / 2));
+            const windowColor = 0xffff00;
+            
+            for (let i = 0; i < windowCount; i++) {
+                const windowGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.1);
+                const windowMaterial = new THREE.MeshBasicMaterial({ color: windowColor });
+                const window = new THREE.Mesh(windowGeometry, windowMaterial);
+                
+                // Position windows on building faces
+                const face = Math.floor(Math.random() * 4);
+                const verticalPos = (Math.random() * (height - 2)) - (height / 2) + 1;
+                const horizontalPos = (Math.random() * (width - 1)) - (width / 2) + 0.5;
+                
+                switch(face) {
+                    case 0: // Front
+                        window.position.set(horizontalPos, verticalPos, depth / 2 + 0.1);
+                        break;
+                    case 1: // Back
+                        window.position.set(horizontalPos, verticalPos, -depth / 2 - 0.1);
+                        break;
+                    case 2: // Left
+                        window.position.set(-width / 2 - 0.1, verticalPos, horizontalPos - width / 2);
+                        break;
+                    case 3: // Right
+                        window.position.set(width / 2 + 0.1, verticalPos, horizontalPos - width / 2);
+                        break;
+                }
+                
+                building.add(window);
+            }
+        }
+
+        function createDistrict(dir, x, z, depth) {
+            // Create a district foundation for directories
+            const districtSize = Math.max(50, dir.children.length * 10);
+            const geometry = new THREE.BoxGeometry(districtSize, 5, districtSize);
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x333355,
+                wireframe: false
+            });
+            
+            const district = new THREE.Mesh(geometry, material);
+            district.position.set(x, 2.5, z);
+            district.userData = { type: 'district', directory: dir };
+            
+            scene.add(district);
+            buildings.push(district);
+        }
+
+        // MONSTER SPAWNING FROM ERRORS
+        function spawnMonsters() {
+            // Clear existing monsters
+            monsters.forEach(monster => scene.remove(monster));
+            monsters = [];
+            
+            buildings.forEach(building => {
+                if (building.userData.file && building.userData.file.errors > 0) {
+                    const file = building.userData.file;
+                    
+                    for (let i = 0; i < file.errors; i++) {
+                        const monsterType = getMonsterTypeForError(file);
+                        spawnMonsterAtBuilding(monsterType, building, i);
+                    }
+                }
+            });
+            
+            updateMonsterCount();
+        }
+
+        function getMonsterTypeForError(file) {
+            const types = ['syntax', 'runtime', 'logic', 'memory'];
+            return types[Math.floor(Math.random() * types.length)];
+        }
+
+        function spawnMonsterAtBuilding(type, building, index) {
+            const monsterSize = 5 + (Math.random() * 10);
+            let geometry;
+            
+            switch(type) {
+                case 'syntax':
+                    geometry = new THREE.ConeGeometry(3, monsterSize, 4);
+                    break;
+                case 'runtime':
+                    geometry = new THREE.SphereGeometry(monsterSize / 2, 8, 6);
+                    break;
+                case 'logic':
+                    geometry = new THREE.OctahedronGeometry(monsterSize / 2);
+                    break;
+                case 'memory':
+                    geometry = new THREE.DodecahedronGeometry(monsterSize / 2);
+                    break;
+            }
+            
+            const material = new THREE.MeshPhongMaterial({
+                color: 0xff4444,
+                emissive: 0xff0000,
+                emissiveIntensity: 0.5
+            });
+            
+            const monster = new THREE.Mesh(geometry, material);
+            
+            // Position monster around the building
+            const angle = (index / building.userData.file.errors) * Math.PI * 2;
+            const distance = 15;
+            monster.position.set(
+                building.position.x + Math.cos(angle) * distance,
+                monsterSize / 2 + 5,
+                building.position.z + Math.sin(angle) * distance
+            );
+            
+            monster.userData = {
+                type: 'monster',
+                monsterType: type,
+                target: building,
+                damage: 0.1,
+                speed: 0.5 + Math.random()
+            };
+            
+            scene.add(monster);
+            monsters.push(monster);
+        }
+
+        // AGENT SYSTEM
+        function deployAgent() {
+            if (monsters.length === 0) {
+                alert("No monsters to fight! Scan your repo for errors first.");
+                return;
+            }
+            
+            const agentGeometry = new THREE.CylinderGeometry(2, 2, 8, 6);
+            const agentMaterial = new THREE.MeshPhongMaterial({
+                color: 0x00ff44,
+                emissive: 0x00ff44,
+                emissiveIntensity: 0.3
+            });
+            
+            const agent = new THREE.Mesh(agentGeometry, agentMaterial);
+            agent.position.set(
+                Math.random() * 200 - 100,
+                5,
+                Math.random() * 200 - 100
+            );
+            
+            agent.userData = {
+                type: 'agent',
+                target: monsters[0],
+                damage: 2,
+                cooldown: 0
+            };
+            
+            scene.add(agent);
+            agents.push(agent);
+            updateAgentCount();
+        }
+
+        // INPUT HANDLING - TILT AND SWIPE
+        function setupInput() {
+            // Device tilt for camera pan
+            window.addEventListener('deviceorientation', (event) => {
+                tiltX = (event.gamma || 0) / 45; // -1 to 1
+                tiltY = (event.beta || 0 - 45) / 45; // -1 to 1
+            });
+            
+            // Swipe for camera rotation
+            const hammer = new Hammer(document.getElementById('gameContainer'));
+            hammer.get('pan').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+            
+            hammer.on('pan', (event) => {
+                cameraRotation += event.deltaX * 0.01;
+            });
+            
+            // Click building selection
+            renderer.domElement.addEventListener('click', (event) => {
+                const mouse = new THREE.Vector2();
+                const rect = renderer.domElement.getBoundingClientRect();
+                
+                mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+                
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(mouse, camera);
+                
+                const intersects = raycaster.intersectObjects(buildings);
+                
+                if (intersects.length > 0) {
+                    selectBuilding(intersects[0].object);
+                } else {
+                    deselectBuilding();
+                }
+            });
+        }
+
+        function selectBuilding(building) {
+            if (selectedBuilding) {
+                selectedBuilding.material.emissive.setHex(selectedBuilding.userData.originalEmissive || 0x000000);
+            }
+            
+            selectedBuilding = building;
+            building.userData.originalEmissive = building.material.emissive.getHex();
+            building.material.emissive.setHex(0xffff00);
+            
+            // Show building info panel
+            const details = document.getElementById('buildingDetails');
+            const file = building.userData.file;
+            
+            if (file) {
+                details.innerHTML = `
+                    <strong>${file.name}</strong><br>
+                    Path: ${file.path}<br>
+                    Type: ${file.type}<br>
+                    Size: ${file.size} bytes<br>
+                    Lines: ${file.lines}<br>
+                    Errors: <span style="color: ${file.errors > 0 ? '#ff4444' : '#00ff44'}">${file.errors}</span><br>
+                    Health: ${Math.round(building.userData.health)}%
+                `;
+            } else {
+                details.innerHTML = `<strong>${building.userData.directory.name}</strong><br>Directory`;
+            }
+            
+            document.getElementById('buildingInfo').style.display = 'block';
+        }
+
+        function deselectBuilding() {
+            if (selectedBuilding) {
+                selectedBuilding.material.emissive.setHex(selectedBuilding.userData.originalEmissive || 0x000000);
+                selectedBuilding = null;
+            }
+            document.getElementById('buildingInfo').style.display = 'none';
+        }
+
+        // GAME LOOP
+        function gameLoop() {
+            // Update camera based on tilt and rotation
+            camera.position.x = Math.cos(cameraRotation) * 300 + tiltX * 100;
+            camera.position.z = Math.sin(cameraRotation) * 300 + tiltY * 100;
+            camera.position.y = 150 + Math.abs(tiltY) * 50;
+            camera.lookAt(0, 0, 0);
+            
+            // Monster behavior
+            monsters.forEach(monster => {
+                if (monster.userData.target) {
+                    const target = monster.userData.target;
+                    const direction = new THREE.Vector3()
+                        .subVectors(target.position, monster.position)
+                        .normalize()
+                        .multiplyScalar(monster.userData.speed * 0.1);
+                    
+                    monster.position.add(direction);
+                    
+                    // Damage building
+                    if (monster.position.distanceTo(target.position) < 20) {
+                        target.userData.health -= monster.userData.damage;
+                        
+                        // Visual damage effect
+                        target.scale.y = Math.max(0.1, target.userData.health / 100);
+                        target.position.y = (target.userData.originalHeight * target.scale.y) / 2;
+                    }
+                }
+            });
+            
+            // Agent behavior
+            agents.forEach(agent => {
+                if (agent.userData.cooldown > 0) {
+                    agent.userData.cooldown--;
+                    return;
+                }
+                
+                if (!agent.userData.target || !monsters.includes(agent.userData.target)) {
+                    // Find new target
+                    agent.userData.target = monsters[0];
+                }
+                
+                if (agent.userData.target) {
+                    const target = agent.userData.target;
+                    const direction = new THREE.Vector3()
+                        .subVectors(target.position, agent.position)
+                        .normalize()
+                        .multiplyScalar(0.8);
+                    
+                    agent.position.add(direction);
+                    agent.lookAt(target.position);
+                    
+                    if (agent.position.distanceTo(target.position) < 15) {
+                        // Attack monster
+                        scene.remove(target);
+                        monsters = monsters.filter(m => m !== target);
+                        agent.userData.cooldown = 60;
+                        updateMonsterCount();
+                        updateBounty();
+                    }
+                }
+            });
+            
+            renderer.render(scene, camera);
+            requestAnimationFrame(gameLoop);
+        }
+
+        // UI CONTROLS
+        function scanRepo() {
+            buildCodeCity();
+            spawnMonsters();
+            updateErrorCount();
+        }
+
+        function setOpsMode(mode) {
+            opsMode = mode;
+            document.querySelectorAll('.ops-mode button').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Adjust visualization based on ops mode
+            gridHelper.visible = mode !== 'low';
+            // Add more visual effects based on mode
+        }
+
+        function toggleDebug() {
+            showDebug = !showDebug;
+            // Toggle debug visuals
+        }
+
+        // UPDATE DISPLAYS
+        function updateBuildingCount() { document.getElementById('buildingCount').textContent = buildings.length; }
+        function updateErrorCount() { 
+            const totalErrors = buildings.reduce((sum, b) => sum + (b.userData.file?.errors || 0), 0);
+            document.getElementById('errorCount').textContent = totalErrors; 
+        }
+        function updateMonsterCount() { document.getElementById('monsterCount').textContent = monsters.length; }
+        function updateAgentCount() { document.getElementById('agentCount').textContent = agents.length; }
+        function updateBounty() { 
+            const bounty = monsters.length * 10 + agents.length * 5;
+            document.getElementById('bounty').textContent = bounty; 
+        }
+
+        // INITIALIZE
+        function init() {
+            buildCodeCity();
+            setupInput();
+            gameLoop();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+            
+            // Auto-scan after a moment
+            setTimeout(scanRepo, 1000);
+        }
+
+        // START THE APOCALYPSE
+        init();
+    </script>
+</body>
+</html>

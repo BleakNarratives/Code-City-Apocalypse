@@ -1,0 +1,5 @@
+Let me build a calculator!
+
+And here is some bash:
+
+This is the vibe - simple but functional.

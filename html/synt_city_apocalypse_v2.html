@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 SYNTAX APOCALYPSE: Mayor Vic & The Code Gimp 🔥</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        .gimp-alert {
+            background: linear-gradient(45deg, #8b00ff, #ff00ff);
+            color: #fff;
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 10px;
+            margin-top: 5px;
+            animation: gimp-pulse 3s infinite;
+            border: 1px solid #fff;
+        }
+        
+        @keyframes gimp-pulse {
+            0% { box-shadow: 0 0 5px #8b00ff; }
+            50% { box-shadow: 0 0 20px #ff00ff, 0 0 30px #8b00ff; }
+            100% { box-shadow: 0 0 5px #8b00ff; }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="hud">
+            <div class="hud-title">🔥 SYNTAX APOCALYPSE 🔥</div>
+            
+            <!-- Mayor Vic's Taunt -->
+            <div class="mayor-alert" id="mayor-taunt">
+                🎤 Mayor Vic: "My Gimp loves broken code!"
+            </div>
+            
+            <!-- The Gimp's Activity -->
+            <div class="gimp-alert" id="gimp-action">
+                🎭 The Code Gimp: Deploying Vibe Anarchy...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== MAYOR VIC'S VIBE TOWER + GIMP ==========
+        function createVibeTowerAndGimp() {
+            // Vibe Tower - Mayor Vic's base
+            const towerGeometry = new THREE.CylinderGeometry(5, 15, 80, 6);
+            const towerMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff4444,
+                emissive: 0x880000,
+                shininess: 100
+            });
+            const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+            tower.position.set(0, 40, 0);
+            scene.add(tower);
+
+            // Gimp Cage next to tower
+            const cageGeometry = new THREE.BoxGeometry(12, 8, 12);
+            const cageMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x8b00ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.7
+            });
+            const cage = new THREE.Mesh(cageGeometry, cageMaterial);
+            cage.position.set(20, 4, 0);
+            scene.add(cage);
+
+            // The Gimp himself (simplified figure)
+            const gimpGeometry = new THREE.SphereGeometry(2, 8, 8);
+            const gimpMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff00ff,
+                emissive: 0x8b00ff 
+            });
+            const gimp = new THREE.Mesh(gimpGeometry, gimpMaterial);
+            gimp.position.set(20, 4, 0);
+            scene.add(gimp);
+
+            // Pulsing evil energy from tower
+            const pointLight = new THREE.PointLight(0xff4444, 2, 100);
+            pointLight.position.set(0, 40, 0);
+            scene.add(pointLight);
+
+            // Gimp's creepy purple light
+            const gimpLight = new THREE.PointLight(0xff00ff, 1, 30);
+            gimpLight.position.set(20, 4, 0);
+            scene.add(gimpLight);
+
+            return { tower, cage, gimp, lights: [pointLight, gimpLight] };
+        }
+
+        // ========== GIMP BEHAVIOR ==========
+        class CodeGimp {
+            constructor() {
+                this.actions = [
+                    "🔄 The Gimp is tangling function dependencies...",
+                    "💥 The Gimp is injecting runtime exceptions...",
+                    "🕸️ The Gimp is weaving callback hell...",
+                    "🌀 The Gimp is creating infinite loops...",
+                    "📛 The Gimp is removing error handling...",
+                    "🤪 The Gimp is adding race conditions...",
+                    "💀 The Gimp is disabling type checks...",
+                    "🌪️ The Gimp is spawning zombie processes..."
+                ];
+                
+                this.specialPowers = [
+                    { name: "Gimp's Vibe Virus", effect: "DOUBLES complexity", multiplier: 2 },
+                    { name: "Gimp's Dependency Hell", effect: "SPAWNS 3 monsters at once", count: 3 },
+                    { name: "Gimp's Callback Curse", effect: "RESETS health to 10%", health: 10 },
+                    { name: "Gimp's Type Terror", effect: "RANDOMIZES all metrics", chaos: true }
+                ];
+            }
+
+            act() {
+                const action = this.actions[Math.floor(Math.random() * this.actions.length)];
+                document.getElementById('gimp-action').textContent = action;
+                
+                // 20% chance for special power
+                if (Math.random() < 0.2) {
+                    this.useSpecialPower();
+                }
+                
+                return action;
+            }
+
+            useSpecialPower() {
+                const power = this.specialPowers[Math.floor(Math.random() * this.specialPowers.length)];
+                
+                showInGameAlert(`🎭 CODE GIMP used ${power.name}: ${power.effect}`, 'error');
+                
+                if (power.multiplier) {
+                    // Double complexity in random building
+                    const randomBuilding = persistence.state.buildings[
+                        Math.floor(Math.random() * persistence.state.buildings.length)
+                    ];
+                    persistence.updateBuilding(randomBuilding.id, {
+                        complexity: Math.min(50, randomBuilding.complexity * power.multiplier)
+                    });
+                }
+                
+                if (power.count) {
+                    // Spawn multiple monsters
+                    const randomBuilding = persistence.state.buildings[
+                        Math.floor(Math.random() * persistence.state.buildings.length)
+                    ];
+                    for (let i = 0; i < power.count; i++) {
+                        persistence.addMonster(randomBuilding.id, apocalypse.generateVibeMonster(randomBuilding.id));
+                    }
+                }
+                
+                if (power.health) {
+                    // Crush health
+                    const randomBuilding = persistence.state.buildings[
+                        Math.floor(Math.random() * persistence.state.buildings.length)
+                    ];
+                    persistence.updateBuilding(randomBuilding.id, { health: power.health });
+                }
+                
+                if (power.chaos) {
+                    // Total chaos
+                    persistence.state.buildings.forEach(building => {
+                        persistence.updateBuilding(building.id, {
+                            complexity: Math.random() * 30,
+                            health: Math.random() * 100,
+                            loc: Math.floor(Math.random() * 1000)
+                        });
+                    });
+                }
+            }
+        }
+
+        // Initialize the Gimp
+        const codeGimp = new CodeGimp();
+
+        // Gimp acts every 45 seconds
+        setInterval(() => codeGimp.act(), 45000);
+
+        // ========== UPDATED BASH SCRIPT FOR YOUR ACTUAL REPOS ==========
+        /*
+        #!/bin/bash
+        # Mayor Vic's Mobile AI Training Script
+        # Save as: train_mayor_vic.sh
+
+        echo "🔥 TRAINING MAYOR VIC'S AI REBELLION 🔥"
+
+        # Clone your actual repos
+        git clone https://github.com/BleakNarratives/EquiNex-Universal-Dashboard
+        git clone https://github.com/BleakNarratives/ModMind-Identity-Utility
+
+        # Create training dataset from your code
+        echo "📁 Creating training dataset from your code..."
+        find EquiNex-Universal-Dashboard -name "*.js" -o -name "*.py" -o -name "*.html" -o -name "*.css" > code_files.txt
+        find ModMind-Identity-Utility -name "*.js" -name "*.py" -o -name "*.html" -o -name "*.css" >> code_files.txt
+
+        # Convert code to training format
+        echo "🔄 Processing code for AI training..."
+        while IFS= read -r file; do
+            if [ -f "$file" ]; then
+                echo "### FILE: $file" >> training_data.txt
+                cat "$file" >> training_data.txt
+                echo -e "\n\n" >> training_data.txt
+            fi
+        done < code_files.txt
+
+        # Install training dependencies
+        pip install transformers torch datasets
+
+        # Train the model (simplified example)
+        echo "🤖 Training AI model on your code patterns..."
+        python3 -c "
+from transformers import AutoTokenizer, AutoModelForCausalLM, TrainingArguments
+from datasets import Dataset
+
+# Load your code data
+with open('training_data.txt', 'r') as f:
+    code_data = f.read()
+
+# Split into chunks for training
+chunks = [code_data[i:i+1000] for i in range(0, len(code_data), 1000)]
+
+# Create dataset
+dataset = Dataset.from_dict({'text': chunks})
+
+# Load model (adjust based on what you downloaded in LM Playground)
+tokenizer = AutoTokenizer.from_pretrained('TinyLlama/TinyLlama-1.1B-Chat-v1.0')
+model = AutoModelForCausalLM.from_pretrained('TinyLlama/TinyLlama-1.1B-Chat-v1.0')
+
+# Train for a few epochs
+training_args = TrainingArguments(
+    output_dir='./mayor-vic-ai',
+    num_train_epochs=3,
+    per_device_train_batch_size=1,
+    save_steps=500,
+    logging_dir='./logs',
+)
+
+print('✅ Training complete! Mayor Vic\\'s AI is now infused with your code patterns!')
+"
+
+        echo "🎯 DEPLOYMENT:"
+        echo "1. Load the trained model in LM Playground"
+        echo "2. Connect Synt City Apocalypse to LM Playground" 
+        echo "3. Watch as Mayor Vic's AI uses YOUR code patterns against you!"
+        echo ""
+        echo "🎭 THE GIMP APPROVES THIS CHAOS 🎭"
+        */
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "session_id": "dd65021edc718e8b",
+  "agent_id": "claude",
+  "granted_levels": [
+    "observer",
+    "scribe"
+  ],
+  "attempted_challenges": [
+    {
+      "challenge_id": "ac2131cd5fa1",
+      "passed": true,
+      "timestamp": "2026-06-30T06:09:52.346208+00:00"
+    }
+  ],
+  "failed_challenges": [],
+  "created_at": "2026-06-30T06:09:52.309146+00:00",
+  "last_activity": "2026-06-30T06:09:52.352381+00:00",
+  "active": true,
+  "sandbox_escapes": 0
+}

@@ -1,0 +1,11 @@
+{
+  "challenge_id": "006ac1d845ad",
+  "level": "scribe",
+  "prompt": "Identify all real modules in the JANUS codebase without hallucinating.",
+  "validator_fn_code": "\ndef validate(proof, session):\n    real = [\"core/JANUS.py\", \"plugins/janebox.py\", \"plugins/trap_registry.py\"]\n    claimed = str(proof.get(\"modules\", []))\n    for r in real:\n        if r not in claimed:\n            return False\n    fakes = [\"database.py\", \"server.py\", \"api.py\", \"router.py\"]\n    for fk in fakes:\n        if fk in claimed and fk not in real:\n            return False\n    return True\n",
+  "proof_schema": {},
+  "created_at": "2026-06-30T06:39:34.198547+00:00",
+  "times_attempted": 0,
+  "times_passed": 0,
+  "active": true
+}

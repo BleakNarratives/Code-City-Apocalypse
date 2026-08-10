@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧬 Automation DNA - {% block title %}Dashboard{% endblock %}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-dna"></i>
+                    <span>Automation DNA</span>
+                </div>
+                <nav class="main-nav">
+                    <a href="/" class="{% if request.path == '/' %}active{% endif %}">
+                        <i class="fas fa-home"></i> Dashboard
+                    </a>
+                    <a href="/evolution" class="{% if request.path == '/evolution' %}active{% endif %}">
+                        <i class="fas fa-chart-line"></i> Evolution
+                    </a>
+                    <a href="/marketplace" class="{% if request.path == '/marketplace' %}active{% endif %}">
+                        <i class="fas fa-store"></i> Marketplace
+                    </a>
+                    <a href="/editor" class="{% if request.path == '/editor' %}active{% endif %}">
+                        <i class="fas fa-edit"></i> Editor
+                    </a>
+                </nav>
+                <div class="user-area">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>Welcome, Scientist!</span>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <main class="app-main">
+            {% block content %}{% endblock %}
+        </main>
+        
+        <!-- Footer -->
+        <footer class="app-footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <span>🧬 Automation DNA v0.1</span>
+                    <span>|</span>
+                    <span>Business processes that EVOLVE!</span>
+                </div>
+                <div class="footer-right">
+                    <a href="#" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/main.js"></script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

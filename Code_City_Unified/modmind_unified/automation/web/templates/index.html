@@ -1,0 +1,454 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1>🧬 Welcome to Automation DNA</h1>
+            <p class="subtitle">Business processes that evolve like living organisms</p>
+            <div class="hero-actions">
+                <button class="btn btn-primary" id="startEvolutionBtn">
+                    <i class="fas fa-play"></i> Start Evolution
+                </button>
+                <button class="btn btn-secondary" id="loadProcessBtn">
+                    <i class="fas fa-upload"></i> Load Process
+                </button>
+                <button class="btn btn-secondary" id="createProcessBtn">
+                    <i class="fas fa-plus"></i> Create New
+                </button>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="dna-animation">
+                <div class="dna-strand"></div>
+                <div class="dna-strand"></div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="stat-card">
+            <div class="stat-icon bg-blue">
+                <i class="fas fa-flask"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value" id="totalProcesses">0</div>
+                <div class="stat-label">Total Processes</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-green">
+                <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value" id="currentGeneration">0</div>
+                <div class="stat-label">Current Generation</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-purple">
+                <i class="fas fa-star"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value" id="bestFitness">0.00</div>
+                <div class="stat-label">Best Fitness</div>
+            </div>
+        </div>
+        
+        <div class="stat-card">
+            <div class="stat-icon bg-orange">
+                <i class="fas fa-layer-group"></i>
+            </div>
+            <div class="stat-info">
+                <div class="stat-value" id="populationSize">0</div>
+                <div class="stat-label">Population Size</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Quick Actions -->
+    <section class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="actions-grid">
+            <div class="action-card" onclick="window.location.href='/evolution'">
+                <div class="action-icon bg-blue">
+                    <i class="fas fa-dna"></i>
+                </div>
+                <div class="action-title">Evolve Processes</div>
+                <div class="action-description">Run evolutionary algorithms on your processes</div>
+            </div>
+            
+            <div class="action-card" onclick="window.location.href='/marketplace'">
+                <div class="action-icon bg-green">
+                    <i class="fas fa-store"></i>
+                </div>
+                <div class="action-title">Browse Marketplace</div>
+                <div class="action-description">Discover high-performing process DNA</div>
+            </div>
+            
+            <div class="action-card" onclick="window.location.href='/editor'">
+                <div class="action-icon bg-purple">
+                    <i class="fas fa-edit"></i>
+                </div>
+                <div class="action-title">Design Processes</div>
+                <div class="action-description">Create and modify process DNA</div>
+            </div>
+            
+            <div class="action-card" id="aiSuggestionsBtn">
+                <div class="action-icon bg-orange">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="action-title">AI Suggestions</div>
+                <div class="action-description">Get AI-powered optimization ideas</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recent Activity -->
+    <section class="recent-activity">
+        <h2>Recent Activity</h2>
+        <div class="activity-list" id="activityList">
+            <div class="activity-item">
+                <div class="activity-icon">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">Welcome to Automation DNA!</div>
+                    <div class="activity-time">Just now</div>
+                    <div class="activity-description">
+                        Your journey to evolvable business processes begins here. 
+                        <a href="/evolution">Start evolving</a> or 
+                        <a href="/editor">create a new process</a>.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Start Evolution Modal -->
+<div class="modal" id="startEvolutionModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Start Evolution</h3>
+            <button class="modal-close" id="closeStartModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="startEvolutionForm">
+                <div class="form-group">
+                    <label for="processType">Process Type</label>
+                    <select id="processType" class="form-control">
+                        <option value="customer_onboarding">Customer Onboarding</option>
+                        <option value="sales_pipeline">Sales Pipeline</option>
+                        <option value="support_ticket">Support Ticket</option>
+                        <option value="inventory_management">Inventory Management</option>
+                        <option value="hr_onboarding">HR Onboarding</option>
+                        <option value="marketing_campaign">Marketing Campaign</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="processName">Process Name</label>
+                    <input type="text" id="processName" class="form-control" 
+                           placeholder="e.g., E-Commerce Onboarding" value="My Process">
+                </div>
+                
+                <div class="form-group">
+                    <label for="populationSize">Population Size</label>
+                    <input type="number" id="populationSize" class="form-control" 
+                           value="20" min="10" max="100">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="mutationRate">Mutation Rate</label>
+                        <input type="number" id="mutationRate" class="form-control" 
+                               value="0.3" min="0.1" max="1" step="0.1">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="breedingRate">Breeding Rate</label>
+                        <input type="number" id="breedingRate" class="form-control" 
+                               value="0.4" min="0.1" max="1" step="0.1">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" class="form-control" rows="3"
+                              placeholder="Describe your process..."></textarea>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelStartEvolution">Cancel</button>
+            <button class="btn btn-primary" id="confirmStartEvolution">Start Evolution</button>
+        </div>
+    </div>
+</div>
+
+<!-- AI Suggestions Modal -->
+<div class="modal" id="aiSuggestionsModal">
+    <div class="modal-content large-modal">
+        <div class="modal-header">
+            <h3>AI Optimization Suggestions</h3>
+            <button class="modal-close" id="closeAISuggestions">&times;</button>
+        </div>
+        <div class="modal-body" id="aiSuggestionsContent">
+            <div class="loading-spinner">
+                <i class="fas fa-spinner fa-spin"></i>
+                <span>Analyzing your processes...</span>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="closeAISuggestionsBtn">Close</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Dashboard functionality
+let currentEngine = null;
+
+// DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Set up button handlers
+    document.getElementById('startEvolutionBtn').addEventListener('click', openStartEvolutionModal);
+    document.getElementById('closeStartModal').addEventListener('click', closeStartEvolutionModal);
+    document.getElementById('cancelStartEvolution').addEventListener('click', closeStartEvolutionModal);
+    document.getElementById('confirmStartEvolution').addEventListener('click', startEvolution);
+    document.getElementById('aiSuggestionsBtn').addEventListener('click', getAISuggestions);
+    document.getElementById('closeAISuggestions').addEventListener('click', closeAISuggestionsModal);
+    document.getElementById('closeAISuggestionsBtn').addEventListener('click', closeAISuggestionsModal);
+    
+    // Load any existing engine
+    loadEngineState();
+});
+
+// Modal functions
+function openStartEvolutionModal() {
+    document.getElementById('startEvolutionModal').style.display = 'block';
+}
+
+function closeStartEvolutionModal() {
+    document.getElementById('startEvolutionModal').style.display = 'none';
+}
+
+function closeAISuggestionsModal() {
+    document.getElementById('aiSuggestionsModal').style.display = 'none';
+}
+
+// Start evolution
+async function startEvolution() {
+    const processType = document.getElementById('processType').value;
+    const processName = document.getElementById('processName').value;
+    const populationSize = document.getElementById('populationSize').value;
+    const mutationRate = document.getElementById('mutationRate').value;
+    const breedingRate = document.getElementById('breedingRate').value;
+    const description = document.getElementById('description').value;
+    
+    try {
+        const response = await fetch('/api/init_engine', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                process_type: processType,
+                process_name: processName,
+                population_size: parseInt(populationSize),
+                mutation_rate: parseFloat(mutationRate),
+                breeding_rate: parseFloat(breedingRate),
+                description: description
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'success') {
+            currentEngine = {
+                generation: data.generation,
+                populationSize: data.population_size
+            };
+            
+            updateDashboardStats();
+            addActivity('Evolution started', `Initialized ${processType} evolution with ${populationSize} processes`);
+            
+            closeStartEvolutionModal();
+            
+            // Redirect to evolution page
+            window.location.href = '/evolution';
+        } else {
+            alert('Error: ' + data.message);
+        }
+    } catch (error) {
+        console.error('Error starting evolution:', error);
+        alert('Failed to start evolution: ' + error.message);
+    }
+}
+
+// Get AI suggestions
+async function getAISuggestions() {
+    if (!currentEngine) {
+        alert('Please start an evolution first!');
+        return;
+    }
+    
+    document.getElementById('aiSuggestionsModal').style.display = 'block';
+    
+    try {
+        // In a real app, we'd select a specific process
+        // For demo, we'll just show sample suggestions
+        
+        // Simulate API call delay
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        const suggestions = [
+            {
+                type: 'parameter_optimization',
+                step_name: 'Collect Customer Info',
+                parameter: 'timeout',
+                current_value: 300,
+                suggested_value: 240,
+                reason: 'Reduce timeout to improve user experience',
+                impact: 'medium'
+            },
+            {
+                type: 'new_step',
+                suggested_step: {
+                    step_type: 'notification',
+                    name: 'Send Welcome Email',
+                    description: 'Send personalized welcome email to new customers'
+                },
+                reason: 'Improve customer engagement and retention',
+                impact: 'high'
+            },
+            {
+                type: 'connection_optimization',
+                reason: 'Add parallel processing for verification and activation',
+                suggested_changes: [
+                    {connection_type: 'parallel', description: 'Run verification and activation in parallel'}
+                ],
+                impact: 'medium'
+            }
+        ];
+        
+        displaySuggestions(suggestions);
+    } catch (error) {
+        console.error('Error getting AI suggestions:', error);
+        document.getElementById('aiSuggestionsContent').innerHTML = 
+            `<div class="error-message">Failed to get suggestions: ${error.message}</div>`;
+    }
+}
+
+function displaySuggestions(suggestions) {
+    let html = '<div class="suggestions-container">';
+    
+    suggestions.forEach((suggestion, index) => {
+        const impactClass = `impact-${suggestion.impact}`;
+        
+        html += `<div class="suggestion-card">`;
+        html += `<div class="suggestion-header">`;
+        html += `<span class="suggestion-type">${formatSuggestionType(suggestion.type)}</span>`;
+        html += `<span class="suggestion-impact ${impactClass}">${suggestion.impact.toUpperCase()} IMPACT</span>`;
+        html += `</div>`;
+        html += `<div class="suggestion-body">`;
+        
+        if (suggestion.type === 'parameter_optimization') {
+            html += `<p><strong>Step:</strong> ${suggestion.step_name}</p>`;
+            html += `<p><strong>Parameter:</strong> ${suggestion.parameter}</p>`;
+            html += `<p><strong>Current:</strong> ${suggestion.current_value}</p>`;
+            html += `<p><strong>Suggested:</strong> ${suggestion.suggested_value}</p>`;
+        } else if (suggestion.type === 'new_step') {
+            html += `<p><strong>Suggested Step:</strong> ${suggestion.suggested_step.name}</p>`;
+            html += `<p><strong>Type:</strong> ${suggestion.suggested_step.step_type}</p>`;
+            html += `<p>${suggestion.suggested_step.description}</p>`;
+        } else if (suggestion.type === 'connection_optimization') {
+            html += `<p>${suggestion.reason}</p>`;
+            html += `<ul>`;
+            suggestion.suggested_changes.forEach(change => {
+                html += `<li>${change.description}</li>`;
+            });
+            html += `</ul>`;
+        }
+        
+        html += `<p><strong>Reason:</strong> ${suggestion.reason}</p>`;
+        html += `</div>`;
+        html += `<div class="suggestion-footer">`;
+        html += `<button class="btn btn-sm btn-primary" onclick="applySuggestion(${index})">Apply</button>`;
+        html += `<button class="btn btn-sm btn-secondary" onclick="dismissSuggestion(${index})">Dismiss</button>`;
+        html += `</div>`;
+        html += `</div>`;
+    });
+    
+    html += '</div>';
+    document.getElementById('aiSuggestionsContent').innerHTML = html;
+}
+
+function formatSuggestionType(type) {
+    return type.replace(/_/g, ' ').replace(/\w\S*/g, txt => 
+        txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+    );
+}
+
+function applySuggestion(index) {
+    alert(`Suggestion ${index + 1} applied! (Demo only)`);
+}
+
+function dismissSuggestion(index) {
+    alert(`Suggestion ${index + 1} dismissed! (Demo only)`);
+}
+
+// Update dashboard statistics
+function updateDashboardStats() {
+    if (currentEngine) {
+        document.getElementById('currentGeneration').textContent = currentEngine.generation;
+        document.getElementById('populationSize').textContent = currentEngine.populationSize;
+    }
+    
+    // Demo data for other stats
+    document.getElementById('totalProcesses').textContent = '5';
+    document.getElementById('bestFitness').textContent = '0.85';
+}
+
+// Add activity to list
+function addActivity(title, description) {
+    const activityList = document.getElementById('activityList');
+    const time = new Date().toLocaleTimeString();
+    
+    const activityItem = document.createElement('div');
+    activityItem.className = 'activity-item';
+    activityItem.innerHTML = `
+        <div class="activity-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <div class="activity-content">
+            <div class="activity-title">${title}</div>
+            <div class="activity-time">${time}</div>
+            <div class="activity-description">${description}</div>
+        </div>
+    `;
+    
+    activityList.insertBefore(activityItem, activityList.firstChild);
+}
+
+// Load engine state
+function loadEngineState() {
+    // In a real app, this would load from localStorage or API
+    // For demo, we'll just set some default values
+    updateDashboardStats();
+}
+
+// Window onload
+window.onload = function() {
+    console.log('🧬 Automation DNA Dashboard loaded!');
+};
+</script>
+{% endblock %}

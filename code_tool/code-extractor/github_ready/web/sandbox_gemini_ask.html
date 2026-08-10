@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An Irresistible Proposition</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='-.1em' font-size='100'%3E❤️%3C/text%3E%3C/svg%3E" />
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #f0e68c, #ffd700, #ff6347); /* Gold/Orange Gradient */
+            color: #333;
+            overflow: hidden; /* Prevent scroll for mouse friend */
+            text-align: center;
+            position: relative;
+        }
+
+        #container {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 60px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            position: relative;
+            z-index: 10;
+            animation: fadeInScale 1s ease-out;
+            border: 3px solid #ff4500; /* OrangeRed border */
+        }
+
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            color: #ff4500;
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px #f0e68c;
+            cursor: pointer; /* Hint for hidden easter egg */
+            transition: color 0.3s ease;
+        }
+
+        .main-message {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .question-text {
+            font-size: 2em;
+            margin-top: 30px;
+            margin-bottom: 40px;
+            color: #008080; /* Teal */
+            font-weight: bold;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 30px;
+            position: relative; /* For button juking */
+            min-height: 80px; /* Ensure space for juking */
+            align-items: center;
+        }
+
+        .action-btn {
+            padding: 18px 35px;
+            font-size: 1.8em;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+            letter-spacing: 1px;
+            min-width: 150px;
+            outline: none;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .yes {
+            background-color: #4CAF50; /* Green */
+            color: white;
+            z-index: 2; /* Ensure yes button is on top initially */
+        }
+
+        .yes:hover {
+            background-color: #45a049;
+        }
+
+        .no {
+            background-color: #f44336; /* Red */
+            color: white;
+            position: absolute; /* Crucial for juking */
+            right: 0; /* Initial position relative to container */
+            left: auto; /* Allow right positioning */
+            z-index: 1;
+        }
+
+        .no:hover {
+            background-color: #da190b;
+        }
+
+        #joke-container {
+            margin-top: 40px;
+            min-height: 50px; /* Ensure space for jokes */
+        }
+
+        #current-joke {
+            font-style: italic;
+            color: #888;
+            font-size: 1.1em;
+            animation: slideUpFadeIn 0.8s ease-out forwards;
+        }
+
+        @keyframes slideUpFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #mouse-friend {
+            position: absolute;
+            font-size: 3em;
+            pointer-events: none; /* Allows clicks to pass through */
+            transition: transform 0.1s linear; /* Smooth follow */
+            z-index: 5; /* Below main content but above background */
+            text-shadow: 2px 2px rgba(0,0,0,0.1);
+            cursor: pointer; /* Hint for hidden easter egg */
+        }
+
+        /* Easter Egg styling */
+        #easter-egg-content {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.8);
+            z-index: 1000;
+            font-size: 1.5em;
+            text-align: center;
+            display: none; /* Hidden by default */
+            animation: eggPopIn 0.5s ease-out;
+        }
+
+        @keyframes eggPopIn {
+            from { opacity: 0; transform: translate(-50%, -50%) scale(0.7); }
+            to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+        }
+
+        #easter-egg-content button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #ffd700;
+            color: #333;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+        }
+
+        /* Confetti for success */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            top: -10px; /* Start above viewport */
+            border-radius: 50%;
+            opacity: 0;
+            animation: fall 5s linear forwards;
+            z-index: 999;
+        }
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        /* Pulse effect for success message */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Hey, <span class="placeholder-name">[Her Name Here]</span>!</h1>
+        <p class="main-message">My CPU is running at optimal temperature when I'm around you. My heart rate monitor is spiking like a DDoS attack... in a good way!</p>
+        <p class="main-message">I've run the simulations, optimized the algorithms, and the conclusion is crystal clear:</p>
+        <p class="question-text">Will you go out with me?</p>
+
+        <div class="button-container">
+            <button id="yesBtn" class="action-btn yes">YES!</button>
+            <button id="noBtn" class="action-btn no">No.</button>
+        </div>
+
+        <div id="joke-container">
+            <p id="current-joke"></p>
+        </div>
+
+        <div id="mouse-friend">🐭</div> <!-- Cute mouse follower -->
+
+        <!-- Easy Easter Egg Trigger (a subtle, almost invisible dot) -->
+        <div id="easy-easter-egg-trigger" style="position: fixed; bottom: 10px; right: 10px; font-size: 0.8em; color: rgba(0,0,0,0.05); cursor: pointer; user-select: none;">.</div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const yesBtn = document.getElementById('yesBtn');
+            const noBtn = document.getElementById('noBtn');
+            const jokeContainer = document.getElementById('joke-container');
+            const currentJoke = document.getElementById('current-joke');
+            const mouseFriend = document.getElementById('mouse-friend');
+            const h1Element = document.querySelector('h1');
+
+            const jokes = [
+                "Why did the programmer quit his job? Because he didn't get arrays!",
+                "You and I should probably refactor later. For optimal performance, of course.",
+                "My love for you is like a `while(true)` loop: endless.",
+                "Are you a 0 or a 1? Because you're the only byte I need!",
+                "Why was 6 afraid of 7? Because 7 ate 9... and because 7 was a registered 6 offender.",
+                "I'm not trying to crash your system, just trying to make a connection.",
+                "Let's make like a 'C: F: ###' and connect our networks.",
+                "Our compatibility score is 100%, like a perfect database query.",
+                "Is your name Google? Because you have everything I've been searching for.",
+                "If you were a data type, you'd be a 'boolean' because you're either 'true' or 'false' – and you're definitely TRUE.",
+                "My RAM usage goes up significantly whenever you're in my vicinity.",
+                "Are we going to `git commit` to this or what?",
+                "Don't worry, my love for you isn't in beta. It's a stable release.",
+                "My heart functions on a multithreaded architecture, and one thread is permanently dedicated to you.",
+                "You make my compiler produce no errors, just pure execution.",
+                "Our connection is encrypted end-to-end, just like our future dates.",
+                "Let's not just talk about our 'data models', let's build something real.",
+            ];
+
+            let lastJokeIndex = -1;
+            let jokeInterval; // Declare jokeInterval here
+
+            function displayRandomJoke() {
+                let newIndex;
+                do {
+                    newIndex = Math.floor(Math.random() * jokes.length);
+                } while (newIndex === lastJokeIndex); // Ensure different joke
+                lastJokeIndex = newIndex;
+                currentJoke.style.opacity = '0';
+                currentJoke.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    currentJoke.textContent = jokes[newIndex];
+                    currentJoke.style.opacity = '1';
+                    currentJoke.style.transform = 'translateY(0)';
+                }, 300); // Wait for fade out
+            }
+
+            // Initial joke display and then periodic updates
+            displayRandomJoke();
+            jokeInterval = setInterval(displayRandomJoke, 8000); // Change joke every 8 seconds
+
+            // --- "No" button juking and manipulation ---
+            function jukeNoButton() {
+                const btnRect = noBtn.getBoundingClientRect();
+                const containerRect = noBtn.parentElement.getBoundingClientRect();
+
+                let newX, newY;
+                const padding = 20; // Keep button slightly within container boundaries
+                const maxAttempts = 50; // Prevent infinite loop in tricky layouts
+
+                for (let i = 0; i < maxAttempts; i++) {
+                    newX = Math.random() * (containerRect.width - btnRect.width - padding * 2) + padding;
+                    newY = Math.random() * (containerRect.height - btnRect.height - padding * 2) + padding;
+
+                    // Check for overlap with yesBtn
+                    const yesBtnRect = yesBtn.getBoundingClientRect();
+                    // Convert yesBtnRect to be relative to the button-container
+                    const yesBtnRelativeLeft = yesBtn.offsetLeft;
+                    const yesBtnRelativeTop = yesBtn.offsetTop;
+                    const yesBtnRelativeRight = yesBtnRelativeLeft + yesBtn.offsetWidth;
+                    const yesBtnRelativeBottom = yesBtnRelativeTop + yesBtn.offsetHeight;
+
+
+                    if (newX + btnRect.width < yesBtnRelativeLeft || // noBtn right is less than yesBtn left
+                        newX > yesBtnRelativeRight ||                // noBtn left is greater than yesBtn right
+                        newY + btnRect.height < yesBtnRelativeTop ||  // noBtn bottom is less than yesBtn top
+                        newY > yesBtnRelativeBottom) {               // noBtn top is greater than yesBtn bottom
+                        // No overlap, good position found
+                        break;
+                    }
+                }
+
+                noBtn.style.position = 'absolute'; // Ensure it can move freely
+                noBtn.style.left = `${newX}px`;
+                noBtn.style.top = `${newY}px`;
+                noBtn.style.transform = 'scale(1.1) rotate(' + (Math.random() * 10 - 5) + 'deg)'; // Slight scale and rotate for effect
+                setTimeout(() => noBtn.style.transform = 'scale(1) rotate(0deg)', 150); // Scale back
+            }
+
+            noBtn.addEventListener('mouseover', jukeNoButton);
+            noBtn.addEventListener('click', (event) => {
+                event.preventDefault(); // Stop default button action
+                noBtn.textContent = 'Oops! I meant YES!';
+                noBtn.style.backgroundColor = '#4CAF50'; // Change to green
+                noBtn.style.color = 'white';
+                noBtn.style.pointerEvents = 'none'; // Make it unclickable after this
+                noBtn.style.cursor = 'default';
+                
+                // Animate to align with Yes button
+                noBtn.style.width = yesBtn.offsetWidth + 'px';
+                noBtn.style.height = yesBtn.offsetHeight + 'px';
+                noBtn.style.left = yesBtn.offsetLeft + 'px';
+                noBtn.style.top = yesBtn.offsetTop + 'px';
+                noBtn.style.zIndex = '3'; // Ensure it's on top of yesBtn
+                noBtn.style.transition = 'all 0.5s ease-in-out, background-color 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    yesBtn.click(); // Trigger the 'yes' action
+                    noBtn.style.opacity = '0';
+                    setTimeout(() => noBtn.remove(), 500); // Fully remove after fade
+                }, 600);
+            });
+
+            // --- "Yes" button success logic ---
+            yesBtn.addEventListener('click', () => {
+                const buttonContainer = document.querySelector('.button-container');
+                buttonContainer.innerHTML = `
+                    <p style="font-size: 2em; color: #4CAF50; font-weight: bold; animation: pulse 1s infinite alternate;">YOWZA! I KNEW IT!</p>
+                    <p style="font-size: 1.5em; margin-top: 15px;">Excellent choice. My circuits are tingling! Get ready for some unforgettable debugging sessions... I mean, dates!</p>
+                    <p style="font-size: 1.2em; margin-top: 20px;">I'll connect with you soon to finalize the deployment!</p>
+                `;
+                buttonContainer.style.flexDirection = 'column';
+                buttonContainer.style.gap = '15px';
+                
+                // Remove joke interval
+                clearInterval(jokeInterval);
+                currentJoke.style.display = 'none';
+
+                // Remove mouse friend
+                mouseFriend.remove();
+
+                // Additional celebration animations
+                createConfetti();
+            });
+
+            // Confetti effect for success
+            function createConfetti() {
+                const colors = ['#f0e68c', '#ffd700', '#ff6347', '#ff4500', '#4CAF50', '#008080'];
+                for (let i = 0; i < 100; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.left = `${Math.random() * 100}vw`;
+                    confetti.style.animationDelay = `${Math.random() * 2}s`;
+                    confetti.style.animationDuration = `${Math.random() * 3 + 2}s`; // 2-5s
+                    document.body.appendChild(confetti);
+                }
+            }
+
+            // --- Mouse Follower Animation ---
+            let mouseX = 0, mouseY = 0;
+            let friendX = 0, friendY = 0;
+            const speed = 0.08; // How fast the friend catches up
+
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateMouseFriend() {
+                friendX += (mouseX - friendX) * speed;
+                friendY += (mouseY - friendY) * speed;
+                mouseFriend.style.transform = `translate(${friendX - mouseFriend.offsetWidth / 2}px, ${friendY - mouseFriend.offsetHeight / 2}px)`;
+                requestAnimationFrame(animateMouseFriend);
+            }
+            animateMouseFriend();
+
+            // --- Easter Eggs ---
+
+            // Easy Easter Egg: Click the invisible dot in the bottom right
+            const easyEggTrigger = document.getElementById('easy-easter-egg-trigger');
+            easyEggTrigger.addEventListener('click', () => {
+                alert('EASY EASTER EGG! You found a hidden message! \n\n"May your code be clean, your bugs be few, and your heart be full!"');
+            });
+
+            // Hidden Easter Egg: Click 'h1' 3 times quickly, then click the 'mouse friend'
+            let h1ClickCount = 0;
+            let lastH1ClickTime = 0;
+            const clickThreshold = 500; // milliseconds for quick clicks
+
+            h1Element.addEventListener('click', () => {
+                const currentTime = new Date().getTime();
+                if (currentTime - lastH1ClickTime < clickThreshold) {
+                    h1ClickCount++;
+                } else {
+                    h1ClickCount = 1; // Reset if too slow
+                }
+                lastH1ClickTime = currentTime;
+
+                if (h1ClickCount === 3) {
+                    h1Element.style.color = '#ff8c00'; // Change color as a hint
+                    alert('You feel a static charge... now, try clicking your little mouse friend!');
+                    h1ClickCount = 0; // Reset after hint
+                }
+            });
+
+            mouseFriend.addEventListener('click', () => {
+                // Check if the H1 hint color is active (meaning step 1 was done)
+                if (h1Element.style.color === 'rgb(255, 140, 0)') { 
+                    const eggContent = document.createElement('div');
+                    eggContent.id = 'easter-egg-content';
+                    eggContent.innerHTML = `
+                        <p><strong>YOWZA! HIDDEN EASTER EGG!</strong></p>
+                        <p>You're smarter than a recursive algorithm! Here's a secret message just for you:</p>
+                        <p style="margin-top: 15px; font-style: italic;">"The best connections aren't always wired."</p>
+                        <button onclick="this.parentElement.style.display='none';">Got it!</button>
+                    `;
+                    document.body.appendChild(eggContent);
+                    eggContent.style.display = 'block'; // Make it visible
+                    h1Element.style.color = '#ff4500'; // Reset H1 color
+                }
+            });
+        });
+    </script>
+</body>
+</html>

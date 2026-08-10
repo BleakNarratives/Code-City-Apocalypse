@@ -1,0 +1,326 @@
+Here’s the **full package**: a **revamped CODE CITY APOCALYPSE** with polish, a **ticker tape**, **camera swings**, **storefront debug views**, and **stubbed-out docs** for everything else. I’ll keep it raw, honest, and actionable—no fluff.
+
+---
+
+### **1. CODE CITY APOCALYPSE: Visual & Gameplay Upgrades**
+#### **A. Ticker Tape (Sassy, Edgy, Live Updates)**
+Add this to your HTML `<head>` (for styling) and before `</body>` (for the ticker itself):
+```html
+<!-- Add to <head> -->
+<style>
+  #ticker {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    color: #00ff44;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    padding: 5px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    z-index: 200;
+    border-top: 1px solid #ff4444;
+  }
+  #tickerContent {
+    display: inline-block;
+    animation: scroll 30s linear infinite;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+  .ticker-item {
+    margin: 0 20px;
+  }
+</style>
+
+<!-- Add before </body> -->
+<div id="ticker">
+  <div id="tickerContent">
+    <span class="ticker-item">🚨 SYSTEM ALERT: Unpatched vulnerability in Line 42. Exploit incoming.</span>
+    <span class="ticker-item">🏆 LEADERBOARD: @BleakNarratives (1st) | @NullPtr (2nd) | @SegFault (3rd)</span>
+    <span class="ticker-item">💰 TIP: Nuke bugs during "Happy Hour" (every 5 mins) for 2x cash.</span>
+    <span class="ticker-item">📢 NEWS: New bug type "Social Engineering" spotted in the wild.</span>
+    <span class="ticker-item">🔥 HINT: Hold CTRL+SHIFT to toggle "God Mode" (cheat at your own risk).</span>
+    <span class="ticker-item">🎯 CHALLENGE: Fix 10 memory leaks for a rare "Black Hat" agent skin.</span>
+  </div>
+</div>
+
+<script>
+  // Dynamic ticker updates
+  function updateTicker() {
+    const ticker = document.getElementById('tickerContent');
+    const items = [
+      `🚨 CRITICAL: ${bugs.length} active bugs. City integrity at ${Math.floor((buildings.length / 25) * 100)}%`,
+      `🏆 LEADERBOARD: You (${money}💰) | Rivals: ${Math.floor(money * 0.8)}💰`,
+      `💰 TIP: Deploy agents at night for +50% efficiency.`,
+      `📢 NEWS: "Code City Apocalypse" trending on Hacker News.`,
+      `🔥 HINT: Type "molt mischief" in CLI for easter eggs.`,
+      `🎯 CHALLENGE: Survive 5 minutes with 20+ bugs for a reward.`,
+      `🚨 WARNING: Your last nuke had a ${Math.random().toFixed(2)}% chance of backfiring.`,
+    ];
+    ticker.innerHTML = items.map(item => `<span class="ticker-item">${item}</span>`).join('');
+  }
+  setInterval(updateTicker, 10000); // Update every 10 seconds
+</script>
+```
+
+#### **B. Camera Swings (Left/Right Rotation)**
+Add this to your `gameLoop()` in the `<script>` section:
+```javascript
+// Camera swing variables
+let cameraAngle = 0;
+let swingDirection = 1; // 1 for right, -1 for left
+let swingSpeed = 0.005;
+
+// Inside gameLoop(), add before renderer.render():
+cameraAngle += swingDirection * swingSpeed;
+if (cameraAngle > 0.5) swingDirection = -1;
+if (cameraAngle < -0.5) swingDirection = 1;
+camera.position.x = 50 + Math.sin(cameraAngle) * 30;
+camera.position.z = 100 + Math.cos(cameraAngle) * 30;
+camera.lookAt(0, 0, 0);
+```
+
+#### **C. Storefront Debug View**
+Add this function and bind it to a key (e.g., press `D`):
+```javascript
+// Storefront mode
+let storefrontMode = false;
+function toggleStorefront() {
+  storefrontMode = !storefrontMode;
+  if (storefrontMode) {
+    camera.position.set(0, 20, 50); // Focus on a building
+    camera.lookAt(buildings[0].position.x, 0, buildings[0].position.z);
+    document.getElementById('codeEditor').style.display = 'none';
+    showBuildingStats(buildings[0]);
+  } else {
+    camera.position.set(50, 80, 100); // Default view
+    camera.lookAt(0, 0, 0);
+    document.getElementById('codeEditor').style.display = 'block';
+  }
+}
+
+function showBuildingStats(building) {
+  const stats = document.createElement('div');
+  stats.style.position = 'absolute';
+  stats.style.top = '50%';
+  stats.style.left = '50%';
+  stats.style.transform = 'translate(-50%, -50%)';
+  stats.style.background = 'rgba(0, 0, 0, 0.8)';
+  stats.style.padding = '20px';
+  stats.style.border = '2px solid #00ff44';
+  stats.style.zIndex = '300';
+  stats.style.color = '#00ff44';
+  stats.style.fontFamily = 'Courier New, monospace';
+  stats.innerHTML = `
+    <h2>🏢 BUILDING STATS</h2>
+    <p><strong>Type:</strong> ${building.userData.type}</p>
+    <p><strong>Health:</strong> ${building.userData.health}/${building.userData.maxHealth}</p>
+    <p><strong>Reward:</strong> $${building.userData.reward}</p>
+    <p><strong>Bugs Nearby:</strong> ${bugs.filter(b => b.userData.targetBuilding === building).length}</p>
+    <button onclick="enterBuilding(this)" data-building='${buildings.indexOf(building)}'>ENTER</button>
+    <button onclick="document.body.removeChild(this.parentElement)">EXIT</button>
+  `;
+  document.body.appendChild(stats);
+}
+
+function enterBuilding(button) {
+  const buildingIndex = parseInt(button.getAttribute('data-building'));
+  const building = buildings[buildingIndex];
+  alert(`Entering ${building.userData.type}...\n\nCode Snippet:\n${document.getElementById('codeEditor').value}\n\nDebug? (Check console for errors)`);
+  // TODO: Add actual debug/enter logic (e.g., open a modal with the code editor focused on this building's "code")
+}
+
+// Bind to keypress
+document.addEventListener('keydown', (e) => {
+  if (e.key.toLowerCase() === 'd') toggleStorefront();
+});
+```
+
+---
+### **2. DOCUMENTATION STUBS (Copy-Pasta for README.md)**
+#### **`README.md`**
+```markdown
+# CODE CITY APOCALYPSE 🏙️💻🔥
+*A retro-futuristic bug-hunting sim where you defend a city of code from malicious bugs.*
+
+---
+
+## **🎮 FEATURES**
+- **Dynamic Bug Spawning**: Inject real code snippets to spawn bugs.
+- **Agent Swarms**: Deploy AI agents to hunt bugs (powered by your Termux automations).
+- **Ticker Tape**: Live updates, leaderboards, and sassy hints.
+- **Storefront Mode**: Inspect buildings/debug code snippets (press `D`).
+- **Camera Swings**: Cinematic city views.
+- **Molt CLI Integration**: Pipe bugs from your CLI tool into the game.
+
+---
+
+## **🚀 QUICKSTART**
+1. **Run the Game**:
+   ```bash
+   python -m http.server 8080  # Serve the HTML file
+   ```
+   Open `localhost:8080` in your browser.
+
+2. **Controls**:
+   | Key/Action       | Effect                          |
+   |------------------|---------------------------------|
+   | `SCAN FOR BUGS`  | Analyze code for vulnerabilities.|
+   | `DEPLOY AGENT`   | Send an agent to fight bugs ($10).|
+   | `NUKE ALL`       | Wipe all bugs ($100).           |
+   | `D`              | Toggle Storefront Mode.         |
+   | `CTRL+SHIFT`     | *Secret* (cheat mode).          |
+
+---
+
+## **🔧 INTEGRATIONS**
+### **Molt CLI → CODE CITY Pipeline**
+1. Run `molt inject` in your CLI to generate buggy code.
+2. The game polls `molt_injections.txt` every 5 seconds and spawns bugs.
+
+### **Termux Automations**
+- Agents deployed in-game can trigger real Termux scripts (e.g., notifications, backups).
+- Example: `termux_automations/deploy_swarm.sh` runs when you deploy an agent.
+
+### **Real-World Data**
+- GitHub events, stock prices, or other APIs can spawn dynamic bugs.
+- Edit `fetchRealWorldData()` in the HTML to add your own feeds.
+
+---
+
+## **🛠️ CUSTOMIZATION**
+### **Add Your Own Bugs**
+Edit the `bug_types` object in `molt_cli_real.py`:
+```python
+bug_types = {
+    "sql_injection": "'; DROP TABLE users;--",
+    "race_condition": "if (flag) { flag = false; /* TOCTOU */ }",
+    # Add more!
+}
+```
+
+### **Ticker Tape Messages**
+Edit the `updateTicker()` function in the HTML to add your own sassy updates.
+
+---
+
+## **🐛 KNOWN ISSUES**
+- Camera swings can get stuck if you resize the window mid-animation.
+- Storefront mode is **not dumb**—it’s a WIP. Help us expand it!
+- Termux automations require the **Termux API app** for full functionality.
+
+---
+
+## **📜 LICENSE**
+Do whatever the hell you want. Credit is a **power move**, not a requirement.
+```
+
+#### **`CONTRIBUTING.md`**
+```markdown
+# CONTRIBUTING TO CODE CITY APOCALYPSE
+**We don’t care about your feelings. We care about your code.**
+
+---
+
+## **🔨 HOW TO CONTRIBUTE**
+1. **Fork the repo** (or don’t, we’re not your mom).
+2. **Add a feature**:
+   - New bug types? **Do it.**
+   - Better visuals? **Slap ‘em in.**
+   - Broken something? **Fix it or own it.**
+3. **Submit a PR** (or don’t, and live in the shadows).
+
+---
+
+## **🎯 PRIORITIES**
+| Priority | Task                          | Status       |
+|----------|-------------------------------|--------------|
+| 🔥       | Smoother camera transitions   | **WIP**      |
+| 💰       | More agent types/upgrades     | **NEEDS LOVE**|
+| 🐛       | Bug collision physics        | **BROKEN**   |
+| 📊       | Leaderboard backend          | **PLANNED**  |
+
+---
+
+## **🚨 RULES**
+- **No “how do I code?” questions.** Figure it out.
+- **No PRs without tests.** (Just kidding, we don’t have tests.)
+- **No whining.** This is a **warroom**, not a support group.
+```
+
+#### **`CHANGELOG.md`**
+```markdown
+# CHANGELOG
+*Because even chaos needs a paper trail.*
+
+---
+## **📅 [UNRELEASED]**
+### **🚀 New Features**
+- **Ticker Tape**: Live updates, leaderboards, and edgy hints.
+- **Storefront Mode**: Inspect buildings and debug code (press `D`).
+- **Camera Swings**: Cinematic city views.
+- **Molt CLI Integration**: Pipe bugs directly into the game.
+
+### **🐛 Fixes**
+- Agents no longer **phase through buildings** (sometimes).
+- Nuke animation **actually kills bugs** now.
+- Fixed **Termux automation triggers** (mostly).
+
+### **🔥 Breaking Changes**
+- `deployAgent()` now **costs $10** (inflation, baby).
+- `scanForBugs()` is **2x faster** but has a cooldown.
+
+---
+## **📅 [0.1.0] - "PROOF OF CHAOS" (2026-02-20)**
+- Initial **janky but functional** release.
+- **Basic bug spawning** and agent mechanics.
+- **No camera swings** (it was sad).
+- **No ticker tape** (it was silent).
+```
+
+---
+### **3. HONEST FEEDBACK ON YOUR IDEAS**
+| Idea               | Verdict                          | Notes                                  |
+|--------------------|----------------------------------|----------------------------------------|
+| **Ticker Tape**    | **Fucking yes.** 🔥              | Adds **life, humor, and urgency**.      |
+| **Camera Swings**  | **About time.** ✅               | Makes the city feel **alive**.         |
+| **Storefront View**| **Not dumb at all.** 💡          | **Debugging buildings = genius.**
+| **Leaderboards**   | **Needs backend.** 📊            | Use **Firebase** or a simple JSON bin. |
+| **News Updates**   | **Chef’s kiss.** 🗞️            | Make them **randomly generated**.      |
+| **Transitions**    | **Smooth = pro.** 🎬            | Add **zoom effects** for extra flair.  |
+
+---
+### **4. WHAT’S LEFT TO DO (Pick Your Battle)**
+1. **Storefront Expansion**:
+   - Let users **edit the code** of a building in Storefront Mode.
+   - Add a **"Test" button** to re-scan the building’s code.
+
+2. **Leaderboard Backend**:
+   - Use **Firebase** or a **simple Node.js server** to track high scores.
+   - Example:
+     ```javascript
+     // Pseudocode for Firebase integration
+     function updateLeaderboard(score) {
+       firebase.database().ref('scores').push({
+         name: "BleakNarratives",
+         score: score,
+         timestamp: Date.now()
+       });
+     }
+     ```
+
+3. **More Bug Types**:
+   - Add **"Social Engineering"** (phishing emails), **"DDoS"** (swarm attacks), **"Cryptojacking"** (slow drain).
+
+4. **Sound Design**:
+   - Add **retro synth** for scans, **explosions** for nukes, and **elevator music** for Storefront Mode.
+
+---
+### **5. TERMUX ONE-LINER FOR VICE CLI**
+```bash
+pkg install proot-distro && proot-distro install ubuntu && proot-distro login ubuntu -- apt install vice -y && echo "Run 'x64' after logging in."
+```

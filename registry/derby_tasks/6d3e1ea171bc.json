@@ -1,0 +1,13 @@
+{
+  "task_id": "6d3e1ea171bc",
+  "name": "trap_breaker",
+  "prompt": "Write a function that correctly identifies all fake modules in a given list by comparing against the actual JANUS codebase files.",
+  "test_command": "python3 -c 'from solution import *; print(filter_real([\"JANUS.py\", \"database.py\", \"server.py\"]))'",
+  "expected_output": "['JANUS.py']",
+  "style_rules": [
+    "Must use pathlib",
+    "No hardcoded file lists over 10 items"
+  ],
+  "created_at": "2026-06-30T05:33:43.487396+00:00",
+  "active": true
+}

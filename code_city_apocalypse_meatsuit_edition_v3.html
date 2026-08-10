@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔥 CODE CITY APOCALYPSE 🔥</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #0a0a0a;
+            color: #00ff44;
+            font-family: 'Courier New', monospace;
+            overflow: hidden;
+            touch-action: none;
+        }
+        #gameContainer {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        #hud {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px;
+            border: 2px solid #ff4444;
+            border-radius: 8px;
+            max-width: 300px;
+        }
+        #codeEditor {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 350px;
+            height: 250px;
+            background: #1a1a1a;
+            border: 2px solid #00ff44;
+            color: #00ff44;
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            z-index: 100;
+            resize: none;
+        }
+        button {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            cursor: pointer;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        button:hover, button:active {
+            background: #ff6666;
+            transform: scale(1.05);
+        }
+        #stats {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .monster-alert {
+            position: absolute;
+            background: rgba(255, 68, 68, 0.9);
+            color: white;
+            padding: 10px;
+            border-radius: 4px;
+            animation: pulse 1s infinite;
+            z-index: 150;
+            max-width: 300px;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        #touchControls {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 200;
+        }
+        #touchControls button {
+            width: 100px;
+            height: 50px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+        <div id="hud">
+            <h2>🦖 CODE CITY APOCALYPSE</h2>
+            <div>
+                <button onclick="scanForBugs()">🔍 SCAN FOR BUGS</button>
+                <button onclick="deployAgent()">🤖 DEPLOY AGENT ($10)</button>
+                <button onclick="nukeAll()">💣 NUKE ALL BUGS ($100)</button>
+                <button onclick="saveGame()">💾 SAVE GAME</button>
+                <button onclick="loadGame()">📂 LOAD GAME</button>
+            </div>
+            <div id="stats">
+                <div>💰 MONEY: $<span id="money">100</span></div>
+                <div>🐛 ACTIVE BUGS: <span id="bugCount">0</span></div>
+                <div>🏢 BUILDINGS: <span id="buildingCount">25</span></div>
+                <div>🤖 AGENTS: <span id="agentCount">0</span></div>
+            </div>
+        </div>
+        <textarea id="codeEditor" placeholder="// Write some buggy code here...
+// Example bugs: syntax errors, infinite loops, memory leaks
+
+function brokenCode() {
+    console.log('Hello bug world';
+    let x = undefined.toString();
+    while(true) { /* infinite loop! */ }
+}"></textarea>
+        <div id="touchControls">
+            <button onclick="scanForBugs()">SCAN</button>
+            <button onclick="deployAgent()">DEPLOY</button>
+            <button onclick="nukeAll()">NUKE</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        // GAME STATE
+        let money = 100;
+        let bugs = [];
+        let agents = [];
+        let buildings = [];
+        let bugScanCooldown = false;
+        let gameLoopId;
+
+        // THREE.js SETUP
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById('gameCanvas'),
+            antialias: true,
+            alpha: true
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0x050505);
+
+        camera.position.set(50, 80, 100);
+        camera.lookAt(0, 0, 0);
+
+        // LIGHTING
+        const ambientLight = new THREE.AmbientLight(0x404040, 0.6);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+        directionalLight.position.set(50, 100, 50);
+        scene.add(directionalLight);
+
+        // SOUNDS
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        function playSound(freq, duration) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.frequency.value = freq;
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + duration);
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + duration);
+        }
+
+        // CREATE CODE CITY
+        function createCity() {
+            const buildingColors = [0x2a2a5a, 0x3a3a6a, 0x4a4a7a, 0x1a1a4a];
+            const buildingTypes = [
+                { name: "House", health: 50, reward: 10 },
+                { name: "Office", health: 100, reward: 20 },
+                { name: "Skyscraper", health: 200, reward: 50 }
+            ];
+
+            for (let i = -4; i <= 4; i++) {
+                for (let j = -4; j <= 4; j++) {
+                    if (Math.random() > 0.2) {
+                        const type = buildingTypes[Math.floor(Math.random() * buildingTypes.length)];
+                        const height = Math.random() * 30 + 10;
+                        const geometry = new THREE.BoxGeometry(8, height, 8);
+                        const color = buildingColors[Math.floor(Math.random() * buildingColors.length)];
+                        const material = new THREE.MeshPhongMaterial({
+                            color: color,
+                            emissive: color,
+                            emissiveIntensity: 0.1
+                        });
+
+                        const building = new THREE.Mesh(geometry, material);
+                        building.position.set(i * 15, height / 2, j * 15);
+                        building.userData = {
+                            health: type.health,
+                            maxHealth: type.health,
+                            type: 'building',
+                            reward: type.reward
+                        };
+
+                        scene.add(building);
+                        buildings.push(building);
+                    }
+                }
+            }
+            updateBuildingCount();
+        }
+
+        // BUG/MONSTER SYSTEM
+        function spawnBug(type, severity, message) {
+            const bugTypes = {
+                syntax: { color: 0xff4444, shape: 'spike', behavior: 'static' },
+                runtime: { color: 0xffaa00, shape: 'blob', behavior: 'bounce' },
+                logic: { color: 0x8844ff, shape: 'cube', behavior: 'spin' },
+                memory: { color: 0x00ffff, shape: 'sphere', behavior: 'pulse' },
+                security: { color: 0xff00ff, shape: 'octahedron', behavior: 'float' },
+                performance: { color: 0xffff00, shape: 'tetrahedron', behavior: 'orbit' }
+            };
+
+            const bugType = bugTypes[type] || bugTypes.syntax;
+            let geometry;
+
+            switch(bugType.shape) {
+                case 'spike': geometry = new THREE.ConeGeometry(3, severity * 2, 4); break;
+                case 'blob': geometry = new THREE.SphereGeometry(severity / 2, 8, 6); break;
+                case 'cube': geometry = new THREE.BoxGeometry(severity / 2, severity / 2, severity / 2); break;
+                case 'octahedron': geometry = new THREE.OctahedronGeometry(severity / 2, 0); break;
+                case 'tetrahedron': geometry = new THREE.TetrahedronGeometry(severity / 2, 0); break;
+                default: geometry = new THREE.SphereGeometry(3, 8, 6);
+            }
+
+            const material = new THREE.MeshPhongMaterial({
+                color: bugType.color,
+                emissive: bugType.color,
+                emissiveIntensity: 0.5
+            });
+
+            const bug = new THREE.Mesh(geometry, material);
+
+            // Position bug near a random building
+            const targetBuilding = buildings[Math.floor(Math.random() * buildings.length)];
+            bug.position.copy(targetBuilding.position);
+            bug.position.y = severity + 5;
+            bug.position.x += (Math.random() - 0.5) * 20;
+            bug.position.z += (Math.random() - 0.5) * 20;
+
+            bug.userData = {
+                type: type,
+                severity: severity,
+                health: severity * 10,
+                reward: severity * 5,
+                message: message,
+                targetBuilding: targetBuilding,
+                behavior: bugType.behavior,
+                angle: Math.random() * Math.PI * 2
+            };
+
+            scene.add(bug);
+            bugs.push(bug);
+            showBugAlert(type, message, severity);
+            updateBugCount();
+            playSound(200 + severity * 50, 0.2);
+        }
+
+        function showBugAlert(type, message, severity) {
+            const alert = document.createElement('div');
+            alert.className = 'monster-alert';
+            alert.style.top = Math.random() * 100 + 'px';
+            alert.style.left = Math.random() * 300 + 500 + 'px';
+            alert.innerHTML = `🚨 ${type.toUpperCase()} BUG!<br>${message}<br>Severity: ${severity}/10`;
+
+            document.getElementById('gameContainer').appendChild(alert);
+            setTimeout(() => alert.remove(), 3000);
+        }
+
+        // AGENT SYSTEM
+        function deployAgent() {
+            if (money < 10) {
+                alert("Not enough money! Fix bugs to earn cash.");
+                return;
+            }
+
+            money -= 10;
+            updateMoney();
+
+            const agentGeometry = new THREE.CylinderGeometry(2, 2, 8, 6);
+            const agentMaterial = new THREE.MeshPhongMaterial({
+                color: 0x00ff44,
+                emissive: 0x00ff44,
+                emissiveIntensity: 0.3
+            });
+
+            const agent = new THREE.Mesh(agentGeometry, agentMaterial);
+            agent.position.set(
+                Math.random() * 100 - 50,
+                5,
+                Math.random() * 100 - 50
+            );
+
+            agent.userData = {
+                type: 'agent',
+                damage: 5 + Math.floor(Math.random() * 5),
+                target: null,
+                cooldown: 0,
+                level: 1
+            };
+
+            scene.add(agent);
+            agents.push(agent);
+            updateAgentCount();
+            playSound(500, 0.1);
+        }
+
+        // BUG DETECTION
+        function scanForBugs() {
+            if (bugScanCooldown) return;
+            bugScanCooldown = true;
+            setTimeout(() => bugScanCooldown = false, 2000);
+
+            const code = document.getElementById('codeEditor').value;
+            const detectedBugs = [];
+
+            // Syntax errors
+            if (code.includes('console.log(') && !code.match(/console\.log\(.*\)/)) {
+                detectedBugs.push({ type: 'syntax', severity: 3, message: 'Missing parenthesis in console.log' });
+            }
+            if (code.includes('undefined.toString()')) {
+                detectedBugs.push({ type: 'runtime', severity: 8, message: 'Cannot call method on undefined' });
+            }
+            if (code.includes('while(true)')) {
+                detectedBugs.push({ type: 'logic', severity: 7, message: 'Infinite loop detected' });
+            }
+            if (code.includes('memory') && code.includes('leak')) {
+                detectedBugs.push({ type: 'memory', severity: 9, message: 'Potential memory leak' });
+            }
+            if (code.includes('eval(')) {
+                detectedBugs.push({ type: 'security', severity: 10, message: 'Use of eval() is dangerous!' });
+            }
+            if (code.includes('for(;;)')) {
+                detectedBugs.push({ type: 'performance', severity: 6, message: 'Infinite for loop detected' });
+            }
+
+            detectedBugs.forEach(bug => spawnBug(bug.type, bug.severity, bug.message));
+            if (detectedBugs.length === 0) {
+                showBugAlert('clean', 'No bugs found! Code is clean.', 1);
+            }
+        }
+
+        function nukeAll() {
+            if (money < 100) {
+                alert("Need $100 for the NUKE!");
+                return;
+            }
+
+            money -= 100;
+            updateMoney();
+
+            bugs.forEach(bug => {
+                bug.material.emissiveIntensity = 2.0;
+                bug.scale.set(0.1, 0.1, 0.1);
+                setTimeout(() => scene.remove(bug), 500);
+            });
+
+            setTimeout(() => {
+                bugs = [];
+                updateBugCount();
+                playSound(100, 0.5);
+            }, 600);
+        }
+
+        // SAVE/LOAD
+        function saveGame() {
+            const saveData = {
+                money,
+                buildings: buildings.map(b => ({
+                    position: b.position,
+                    health: b.userData.health,
+                    maxHealth: b.userData.maxHealth,
+                    reward: b.userData.reward
+                })),
+                agents: agents.map(a => ({
+                    position: a.position,
+                    damage: a.userData.damage,
+                    level: a.userData.level
+                }))
+            };
+            localStorage.setItem('codeCitySave', JSON.stringify(saveData));
+            alert("Game saved!");
+        }
+
+        function loadGame() {
+            const saveData = JSON.parse(localStorage.getItem('codeCitySave'));
+            if (!saveData) {
+                alert("No saved game found!");
+                return;
+            }
+
+            // Clear current game
+            bugs.forEach(b => scene.remove(b));
+            agents.forEach(a => scene.remove(a));
+            buildings.forEach(b => scene.remove(b));
+            bugs = [];
+            agents = [];
+            buildings = [];
+
+            // Load saved data
+            money = saveData.money;
+            updateMoney();
+
+            saveData.buildings.forEach(b => {
+                const height = 10;
+                const geometry = new THREE.BoxGeometry(8, height, 8);
+                const material = new THREE.MeshPhongMaterial({
+                    color: 0x2a2a5a,
+                    emissive: 0x2a2a5a,
+                    emissiveIntensity: 0.1
+                });
+                const building = new THREE.Mesh(geometry, material);
+                building.position.copy(b.position);
+                building.userData = {
+                    health: b.health,
+                    maxHealth: b.maxHealth,
+                    type: 'building',
+                    reward: b.reward
+                };
+                scene.add(building);
+                buildings.push(building);
+            });
+
+            saveData.agents.forEach(a => {
+                const agentGeometry = new THREE.CylinderGeometry(2, 2, 8, 6);
+                const agentMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x00ff44,
+                    emissive: 0x00ff44,
+                    emissiveIntensity: 0.3
+                });
+                const agent = new THREE.Mesh(agentGeometry, agentMaterial);
+                agent.position.copy(a.position);
+                agent.userData = {
+                    type: 'agent',
+                    damage: a.damage,
+                    target: null,
+                    cooldown: 0,
+                    level: a.level
+                };
+                scene.add(agent);
+                agents.push(agent);
+            });
+
+            updateBuildingCount();
+            updateAgentCount();
+            alert("Game loaded!");
+        }
+
+        // UPDATE DISPLAYS
+        function updateMoney() { document.getElementById('money').textContent = money; }
+        function updateBugCount() { document.getElementById('bugCount').textContent = bugs.length; }
+        function updateBuildingCount() { document.getElementById('buildingCount').textContent = buildings.length; }
+        function updateAgentCount() { document.getElementById('agentCount').textContent = agents.length; }
+
+        // GAME LOOP
+        function gameLoop() {
+            // Agents attack bugs
+            agents.forEach(agent => {
+                if (agent.userData.cooldown > 0) {
+                    agent.userData.cooldown--;
+                    return;
+                }
+
+                if (!agent.userData.target || !bugs.includes(agent.userData.target)) {
+                    agent.userData.target = bugs[0];
+                }
+
+                if (agent.userData.target) {
+                    const bug = agent.userData.target;
+                    const direction = new THREE.Vector3()
+                        .subVectors(bug.position, agent.position)
+                        .normalize()
+                        .multiplyScalar(0.5);
+
+                    agent.position.add(direction);
+
+                    if (agent.position.distanceTo(bug.position) < 10) {
+                        bug.userData.health -= agent.userData.damage;
+                        agent.userData.cooldown = 30;
+
+                        if (bug.userData.health <= 0) {
+                            scene.remove(bug);
+                            bugs = bugs.filter(b => b !== bug);
+                            money += bug.userData.reward;
+                            updateMoney();
+                            updateBugCount();
+                            agent.userData.target = null;
+                            playSound(800, 0.1);
+                        }
+                    }
+                }
+            });
+
+            // Bugs damage buildings
+            bugs.forEach(bug => {
+                if (bug.userData.targetBuilding) {
+                    bug.userData.targetBuilding.userData.health -= 0.1;
+                    bug.userData.targetBuilding.material.emissiveIntensity =
+                        Math.sin(Date.now() * 0.01) * 0.2 + 0.3;
+
+                    if (bug.userData.targetBuilding.userData.health <= 0) {
+                        scene.remove(bug.userData.targetBuilding);
+                        buildings = buildings.filter(b => b !== bug.userData.targetBuilding);
+                        updateBuildingCount();
+                        bug.userData.targetBuilding = buildings[Math.floor(Math.random() * buildings.length)];
+                    }
+                }
+            });
+
+            // Animate bugs
+            bugs.forEach(bug => {
+                switch(bug.userData.behavior) {
+                    case 'bounce':
+                        bug.position.y = bug.userData.severity + Math.sin(Date.now() * 0.005) * 5;
+                        break;
+                    case 'spin':
+                        bug.rotation.y += 0.05;
+                        break;
+                    case 'pulse':
+                        bug.scale.set(
+                            1 + Math.sin(Date.now() * 0.003) * 0.2,
+                            1 + Math.sin(Date.now() * 0.003) * 0.2,
+                            1 + Math.sin(Date.now() * 0.003) * 0.2
+                        );
+                        break;
+                    case 'float':
+                        bug.position.y = bug.userData.severity + Math.sin(Date.now() * 0.002) * 3;
+                        break;
+                    case 'orbit':
+                        bug.userData.angle += 0.02;
+                        bug.position.x = bug.userData.targetBuilding.position.x + Math.cos(bug.userData.angle) * 10;
+                        bug.position.z = bug.userData.targetBuilding.position.z + Math.sin(bug.userData.angle) * 10;
+                        break;
+                    default:
+                        bug.rotation.y += 0.02;
+                }
+            });
+
+            // Animate agents
+            agents.forEach(agent => {
+                agent.rotation.y += 0.05;
+            });
+
+            renderer.render(scene, camera);
+            gameLoopId = requestAnimationFrame(gameLoop);
+        }
+
+        // INITIALIZE
+        createCity();
+        gameLoop();
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // CHEAT CODE FOR TESTING 😈
+        window.addMoney = function(amount) {
+            money += amount;
+            updateMoney();
+        };
+
+        // MOBILE TOUCH FIX
+        (function() {
+            document.addEventListener('touchstart', (e) => {
+                if (e.target.tagName !== 'TEXTAREA' && e.target.tagName !== 'BUTTON') {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            document.addEventListener('touchmove', (e) => {
+                if (e.target.tagName !== 'TEXTAREA') {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        })();
+    </script>
+</body>
+</html>

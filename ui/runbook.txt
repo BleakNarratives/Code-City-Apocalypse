@@ -1,0 +1,4 @@
+npm install && npm run dev
+
+# Bardilio Note:
+Node project present. Expect npm hell or a pleasant surprise. (Bardildo: harsh truth incoming)

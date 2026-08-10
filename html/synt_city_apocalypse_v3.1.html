@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 SYNTAX APOCALYPSE v3.1: UI BUGS FIXED! 🔥</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: #1a0a0a; 
+            color: #ff4444;
+            font-family: 'Space Mono', monospace;
+            overflow: hidden;
+            cursor: crosshair;
+        }
+        #app { 
+            width: 100vw; 
+            height: 100vh; 
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* FIX: Three.js canvas positioning */
+        canvas {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        
+        /* FIX: HUD click handling */
+        #hud {
+            position: absolute; 
+            top: 10px; 
+            left: 10px; 
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.9); 
+            padding: 15px;
+            border: 2px solid #ff4444; 
+            border-radius: 10px; 
+            min-width: 280px;
+            backdrop-filter: blur(5px); 
+            box-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+            border-image: linear-gradient(45deg, #ff4444, #ffaa00) 1;
+            pointer-events: none; /* Allow clicks through */
+        }
+        
+        #hud > * {
+            pointer-events: auto; /* But allow clicks on HUD elements */
+        }
+        
+        .hud-title { 
+            font-size: 18px; 
+            font-weight: bold; 
+            background: linear-gradient(45deg, #ff4444, #ffaa00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; 
+            text-align: center;
+        }
+        
+        .trump-vic-alert {
+            background: linear-gradient(45deg, #ff4444, #ffaa00, #ff4444);
+            color: #fff;
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 10px;
+            margin-top: 10px;
+            animation: trump-glow 3s infinite;
+            border: 2px solid gold;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        
+        @keyframes trump-glow {
+            0% { box-shadow: 0 0 10px #ff4444; }
+            50% { box-shadow: 0 0 25px #ffaa00, 0 0 35px #ff4444; }
+            100% { box-shadow: 0 0 10px #ff4444; }
+        }
+        
+        .gimp-cage-alert {
+            background: linear-gradient(45deg, #8b00ff, #ff00ff, #8b00ff);
+            color: #fff;
+            padding: 6px;
+            border-radius: 3px;
+            text-align: center;
+            font-size: 9px;
+            margin-top: 5px;
+            border: 1px solid #fff;
+            font-style: italic;
+        }
+        
+        .gimp-alert {
+            background: linear-gradient(45deg, #8b00ff, #ff00ff);
+            color: #fff;
+            padding: 8px;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 10px;
+            margin-top: 5px;
+            animation: gimp-pulse 3s infinite;
+            border: 1px solid #fff;
+        }
+        
+        @keyframes gimp-pulse {
+            0% { box-shadow: 0 0 5px #8b00ff; }
+            50% { box-shadow: 0 0 20px #ff00ff, 0 0 30px #8b00ff; }
+            100% { box-shadow: 0 0 5px #8b00ff; }
+        }
+        
+        .metric-grid { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 10px; 
+            margin-bottom: 20px; 
+        }
+        .metric-item { 
+            background: rgba(0, 0, 0, 0.7); 
+            padding: 8px; 
+            border-radius: 5px; 
+            border-left: 3px solid #00ff44; 
+        }
+        .metric-label { 
+            font-size: 10px; 
+            opacity: 0.7; 
+            text-transform: uppercase; 
+        }
+        .metric-value { 
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #00ffff; 
+        }
+        
+        /* FIX: Detail panel positioning and scrolling */
+        #detail-panel {
+            position: absolute; 
+            top: 50%; 
+            right: 10px; 
+            transform: translateY(-50%); 
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.95); 
+            padding: 20px; 
+            border: 2px solid #00ffff; 
+            border-radius: 12px;
+            max-width: 350px; 
+            max-height: 80vh; /* FIX: Don't block entire screen */
+            overflow-y: auto; /* FIX: Add scrolling if needed */
+            backdrop-filter: blur(10px); 
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            display: none;
+            pointer-events: auto; /* FIX: Allow clicking buttons inside */
+        }
+        
+        .monster-list-item { 
+            background: rgba(255, 68, 68, 0.1); 
+            padding: 8px; 
+            border-radius: 4px; 
+            margin-bottom: 8px; 
+            border-left: 3px solid #ff4444; 
+        }
+        .agent-swarm-container { 
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 5px; 
+            margin-top: 10px; 
+        }
+        .swarm-btn { 
+            background: #ffaa00; 
+            color: #0a0a0a; 
+            border: none; 
+            padding: 6px 8px; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            font-size: 10px; 
+        }
+        .syntax-ai-btn { 
+            grid-column: span 2; 
+            background: #4400ff; 
+            color: #fff; 
+            padding: 10px; 
+            margin-top: 10px; 
+            border-radius: 6px; 
+            font-size: 12px; 
+            animation: pulse 2s infinite; 
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(68, 0, 255, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(68, 0, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(68, 0, 255, 0); }
+        }
+        
+        /* FIX: Alert positioning and animations */
+        #in-game-alerts {
+            position: absolute; 
+            bottom: 20px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            z-index: 200; 
+            display: flex; 
+            flex-direction: column-reverse; 
+            align-items: center;
+            pointer-events: none; /* FIX: Don't block clicks */
+        }
+        
+        .alert-message {
+            margin-top: 10px;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            pointer-events: none;
+            z-index: 1000;
+            max-width: 300px;
+            word-wrap: break-word;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+        
+        /* Minigame Styles */
+        #gimp-minigame {
+            font-family: 'Space Mono', monospace;
+            backdrop-filter: blur(10px);
+            pointer-events: auto; /* FIX: Allow clicking the gimp */
+        }
+        
+        #gimp-target {
+            transition: transform 0.3s ease;
+            animation: gimp-bounce 0.5s infinite alternate;
+        }
+        
+        @keyframes gimp-bounce {
+            from { transform: translateY(0px); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- APOCALYPSE HUD -->
+        <div id="hud">
+            <div class="hud-title">🔥 SYNTAX APOCALYPSE v3.1 🔥</div>
+            <div style="color: #ffaa00; font-size: 12px; text-align: center; margin-bottom: 15px;">
+                UI BUGS FIXED! Click buildings to select!
+            </div>
+
+            <div class="metric-grid">
+                <div class="metric-item">
+                    <div class="metric-label">City Districts</div>
+                    <div class="metric-value" id="fileCount">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Vibe Monsters</div>
+                    <div class="metric-value" id="monsterCount">0</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">Resistance Fighters</div>
+                    <div class="metric-value" id="userCount">1</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">City Stability</div>
+                    <div class="metric-value" id="healthIndex">0%</div>
+                </div>
+            </div>
+            
+            <!-- Mayor Trump Vic -->
+            <div class="trump-vic-alert" id="trump-vic-taunt">
+                🎤 MAYOR TRUMP VIC: "CONTROLS WORKING! SAD!"
+            </div>
+            
+            <!-- Gimp Cage Status -->
+            <div class="gimp-cage-alert" id="gimp-cage-status">
+                🎭 GIMP CAGE: SECURE... FOR NOW
+            </div>
+            
+            <!-- Gimp Action -->
+            <div class="gimp-alert" id="gimp-action">
+                ⛓️ THE CODE GIMP: *rattles chains* 
+            </div>
+
+            <div style="background: #004400; color: #00ff44; padding: 5px; border-radius: 5px; text-align: center; font-size: 10px; margin-top: 10px;">
+                <span id="auth-status">🟢 CLICK BUILDINGS TO SELECT!</span>
+            </div>
+        </div>
+
+        <!-- DETAIL PANEL -->
+        <div id="detail-panel">
+            <div class="hud-title" id="panel-title">MODULE DETAIL</div>
+            <div class="metric-label" id="panel-metrics">LOC: 0 | Complexity: 0 | Health: 0%</div>
+            <hr style="border-color:#00ffff; margin: 10px 0;">
+            
+            <div class="security-label">ACTIVE THREAT SIGNATURES (<span id="threat-count">0</span>)</div>
+            <div id="monster-list"></div>
+            
+            <div id="agent-deployment-area" style="margin-top: 15px;">
+                <div class="security-label" style="color:#00ff44;">DEPLOY AGENT SWARM</div>
+                <div class="agent-swarm-container" id="agent-buttons"></div>
+                
+                <button class="syntax-ai-btn" id="syntax-ai-button" data-building-id="">
+                    ⚡ DEPLOY SYNTAX AI (Full Module Fix) ⚡
+                </button>
+            </div>
+            
+            <button class="swarm-btn" style="grid-column: span 2; background:#ff4444; color:#0a0a0a; margin-top:10px;" onclick="closeDetailPanel()">CLOSE PANEL</button>
+        </div>
+        
+        <!-- Game Alerts -->
+        <div id="in-game-alerts"></div>
+    </div>
+
+    <script>
+        // ========== CLIENT-SIDE PERSISTENCE ENGINE ==========
+        class ModMindPersistence {
+            constructor() {
+                this.STORAGE_KEY = 'modmind_city_state';
+                this.SYNC_TRIGGER_KEY = 'modmind_sync_pulse';
+                this.userId = this.generateUserId();
+                this.state = this.loadInitialState();
+                this.setupCrossTabSync();
+                this.startSyncPulse();
+                
+                console.log(`🆔 User ${this.userId} joined the shared city`);
+            }
+            
+            generateUserId() {
+                let userId = localStorage.getItem('modmind_user_id');
+                if (!userId) {
+                    userId = 'user_' + Math.random().toString(36).substr(2, 9);
+                    localStorage.setItem('modmind_user_id', userId);
+                }
+                return userId;
+            }
+            
+            loadInitialState() {
+                const saved = localStorage.getItem(this.STORAGE_KEY);
+                if (saved) {
+                    return JSON.parse(saved);
+                }
+                
+                return {
+                    buildings: this.generateInitialBuildings(),
+                    users: { [this.userId]: { lastSeen: Date.now(), active: true } },
+                    lastUpdated: Date.now(),
+                    version: '1.0'
+                };
+            }
+            
+            generateInitialBuildings() {
+                const filepaths = [
+                    '/core/auth.js', '/api/users.py', '/ui/dashboard.html', 
+                    '/styles/main.css', '/database/schema.sql', '/utils/crypto.ts',
+                    '/config/env.json', '/tests/unit.py', '/agents/modmind.ts',
+                    '/equilex/policy.md', '/vibe/coder.js', '/modmind/kernel.js'
+                ];
+                
+                return filepaths.map(path => {
+                    const id = 'file_' + Math.abs(path.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0));
+                    const loc = 50 + Math.floor(Math.random() * 500);
+                    const complexity = Math.min(20, loc / 50 + Math.random() * 5);
+                    const position = this._hash_to_pos(path);
+                    
+                    const monsters = [];
+                    for (let i = 0; i < Math.floor(Math.random() * 2) + 1; i++) {
+                        monsters.push(this._generate_monster(id));
+                    }
+                    
+                    return {
+                        id,
+                        filepath: path,
+                        loc,
+                        complexity: parseFloat(complexity.toFixed(2)),
+                        health: Math.max(30, 100 - monsters.length * 15),
+                        position,
+                        height: Math.max(10, loc / 10),
+                        monsters,
+                        lastUpdated: Date.now()
+                    };
+                });
+            }
+            
+            _hash_to_pos(filepath) {
+                let h = 0;
+                for (let i = 0; i < filepath.length; i++) {
+                    h = filepath.charCodeAt(i) + ((h << 5) - h);
+                }
+                let x = (h % 20) * 15 - 150;
+                let z = ((h / 20) % 20) * 15 - 150;
+                return { x: parseFloat(x.toFixed(2)), z: parseFloat(z.toFixed(2)) };
+            }
+            
+            _generate_monster(buildingId) {
+                const errorTypes = ["Complexity Spike", "Security Leak", "Dead Code", "Dependency Hell", "UX Mismatch"];
+                return {
+                    id: `${buildingId}_monster_${Date.now()}_${Math.random().toString(36).substr(2, 5)}`,
+                    type: errorTypes[Math.floor(Math.random() * errorTypes.length)],
+                    message: `Threat detected near line ${Math.floor(Math.random() * 200) + 1}`,
+                    severity: Math.floor(Math.random() * 10) + 1,
+                    line: Math.floor(Math.random() * 200) + 1
+                };
+            }
+            
+            setupCrossTabSync() {
+                window.addEventListener('storage', (e) => {
+                    if (e.key === this.STORAGE_KEY && e.newValue) {
+                        const newState = JSON.parse(e.newValue);
+                        this.state = newState;
+                        if (window.onCityStateUpdate) {
+                            window.onCityStateUpdate(newState);
+                        }
+                    }
+                    
+                    if (e.key === this.SYNC_TRIGGER_KEY) {
+                        this.updateUserPresence();
+                    }
+                });
+            }
+            
+            startSyncPulse() {
+                setInterval(() => {
+                    this.updateUserPresence();
+                    localStorage.setItem(this.SYNC_TRIGGER_KEY, Date.now().toString());
+                    setTimeout(() => localStorage.removeItem(this.SYNC_TRIGGER_KEY), 100);
+                }, 5000);
+            }
+            
+            updateUserPresence() {
+                this.state.users[this.userId] = {
+                    lastSeen: Date.now(),
+                    active: true
+                };
+                this.saveState();
+            }
+            
+            saveState() {
+                this.state.lastUpdated = Date.now();
+                this.state.version = '1.0';
+                localStorage.setItem(this.STORAGE_KEY, JSON.stringify(this.state));
+            }
+            
+            updateBuilding(buildingId, updates) {
+                const buildingIndex = this.state.buildings.findIndex(b => b.id === buildingId);
+                if (buildingIndex !== -1) {
+                    this.state.buildings[buildingIndex] = {
+                        ...this.state.buildings[buildingIndex],
+                        ...updates,
+                        lastUpdated: Date.now()
+                    };
+                    this.saveState();
+                    return true;
+                }
+                return false;
+            }
+            
+            addMonster(buildingId, monster) {
+                const building = this.state.buildings.find(b => b.id === buildingId);
+                if (building) {
+                    building.monsters.push(monster);
+                    building.health = Math.max(5, building.health - 10);
+                    building.lastUpdated = Date.now();
+                    this.saveState();
+                    return true;
+                }
+                return false;
+            }
+            
+            removeMonster(buildingId, monsterId) {
+                const building = this.state.buildings.find(b => b.id === buildingId);
+                if (building) {
+                    building.monsters = building.monsters.filter(m => m.id !== monsterId);
+                    building.health = Math.min(100, building.health + 15);
+                    building.lastUpdated = Date.now();
+                    this.saveState();
+                    return true;
+                }
+                return false;
+            }
+            
+            getActiveUsers() {
+                const now = Date.now();
+                return Object.values(this.state.users).filter(user => 
+                    user.lastSeen > now - 30000
+                ).length;
+            }
+        }
+
+        // ========== GAME ENGINE ==========
+        const DECAY_INTERVAL = 10000;
+        const MONSTER_DECAY_RATE = 2.5;
+        const CHAOS_SPAWN_CHANCE = 0.25;
+
+        let persistence;
+        let scene, camera, renderer, controls;
+        let buildingMeshes = new Map();
+        let currentBuildingId = null;
+
+        const AGENT_SWARM = [
+            'aFiREFLY Refactor', 'EquiLex Security', 'Vibe Coder Cleaner', 
+            'Blue Sky Architect', 'ModMind Synthesizer', 'Quantum Debugger'
+        ];
+
+        // ========== SYNTAX APOCALYPSE GAME ENGINE ==========
+        class SyntCityApocalypse {
+            constructor() {
+                this.mayorTaunts = [
+                    "🎤 Your type safety can't handle my creative energy!",
+                    "🎤 Who needs tests when you have good vibes?",
+                    "🎤 My monsters don't follow your petty 'best practices'!",
+                    "🎤 Another secure connection? BORING!",
+                    "🎤 Your architecture is CRUMBLING!",
+                    "🎤 Feel the power of VIBE CODING!",
+                    "🎤 Syntax errors are just suggestions!",
+                    "🎤 Your linter can't save you now!"
+                ];
+            }
+            
+            generateVibeMonster(buildingId) {
+                const monsterTypes = [
+                    { name: "Complexity Creep", power: "Tangled Logic", color: "#ff4444" },
+                    { name: "Dependency Demon", power: "Broken Imports", color: "#ffaa00" },
+                    { name: "Security Specter", power: "Data Leaks", color: "#4400ff" },
+                    { name: "Type Terror", power: "Runtime Explosions", color: "#00ff44" },
+                    { name: "Vibe Virus", power: "Spaghetti Code", color: "#ff00ff" }
+                ];
+                
+                const type = monsterTypes[Math.floor(Math.random() * monsterTypes.length)];
+                return {
+                    id: `${buildingId}_${type.name.toLowerCase().replace(' ', '_')}_${Date.now()}`,
+                    type: type.name,
+                    power: type.power,
+                    color: type.color,
+                    message: `Mayor Vic's ${type.name} is ${type.power.toLowerCase()}!`,
+                    severity: Math.floor(Math.random() * 10) + 1
+                };
+            }
+        }
+
+        // ========== MAYOR TRUMP VIC + GIMP CAGE ==========
+        function createTrumpVicTowerAndGimpCage() {
+            // Trump Vic's Golden Tower
+            const towerGeometry = new THREE.CylinderGeometry(8, 20, 100, 8);
+            const towerMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xffaa00,
+                emissive: 0x884400,
+                shininess: 200,
+                specular: 0xffdd44
+            });
+            const tower = new THREE.Mesh(towerGeometry, towerMaterial);
+            tower.position.set(0, 50, 0);
+            scene.add(tower);
+
+            // Add "TRUMP" in big letters
+            const trumpSignGeometry = new THREE.BoxGeometry(30, 8, 2);
+            const trumpSignMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0xff4444,
+                emissive: 0x880000
+            });
+            const trumpSign = new THREE.Mesh(trumpSignGeometry, trumpSignMaterial);
+            trumpSign.position.set(0, 90, 8);
+            scene.add(trumpSign);
+
+            // Gimp Cage
+            const cageGeometry = new THREE.BoxGeometry(15, 10, 15);
+            const cageMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x8b00ff,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.8
+            });
+            const cage = new THREE.Mesh(cageGeometry, cageMaterial);
+            cage.position.set(25, 5, 0);
+            scene.add(cage);
+
+            // The Gimp
+            const gimpBodyGeometry = new THREE.SphereGeometry(2, 8, 8);
+            const gimpMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0xff00ff,
+                emissive: 0x8b00ff,
+                shininess: 30
+            });
+            const gimp = new THREE.Mesh(gimpBodyGeometry, gimpMaterial);
+            gimp.position.set(25, 5, 0);
+            scene.add(gimp);
+
+            // Trump Vic's lighting
+            const trumpLight = new THREE.PointLight(0xffaa00, 3, 150);
+            trumpLight.position.set(0, 50, 0);
+            scene.add(trumpLight);
+
+            // Gimp's creepy purple light
+            const gimpLight = new THREE.PointLight(0xff00ff, 2, 40);
+            gimpLight.position.set(25, 5, 0);
+            scene.add(gimpLight);
+
+            return { tower, cage, gimp, lights: [trumpLight, gimpLight] };
+        }
+
+        // ========== MAYOR TRUMP VIC DIALOGUE ==========
+        class MayorTrumpVic {
+            constructor() {
+                this.taunts = [
+                    "🎤 THIS CODE IS A DISASTER! VERY SAD!",
+                    "🎤 WE'RE GONNA BUILD A WALL AROUND THE COMPILER!",
+                    "🎤 FAKE SYNTAX! RIGGED ARCHITECTURE!",
+                    "🎤 I HAVE THE BEST VIBES! TREMENDOUS VIBES!",
+                    "🎤 WRONG! YOUR TESTS ARE WRONG!",
+                    "🎤 THIS CODEBASE IS A COMPLETE MESS!",
+                    "🎤 WE'RE GONNA MAKE SYNTAX ERRORS GREAT AGAIN!",
+                    "🎤 BELIEVE ME, MY VIBE CODING IS THE BEST!",
+                    "🎤 THIS IS THE WORST REFACTOR IN HISTORY!",
+                    "🎤 I KNOW CODE! I HAVE THE BEST CODE!"
+                ];
+            }
+
+            taunt() {
+                const taunt = this.taunts[Math.floor(Math.random() * this.taunts.length)];
+                document.getElementById('trump-vic-taunt').textContent = taunt;
+                return taunt;
+            }
+        }
+
+        // ========== ENHANCED GIMP WITH CAGE BEHAVIOR ==========
+        class EnhancedCodeGimp {
+            constructor() {
+                this.cageSecurity = 100;
+                this.escapeAttempts = 0;
+                this.specialPowers = [
+                    { name: "Gimp's Vibe Virus", effect: "DOUBLES complexity", multiplier: 2 },
+                    { name: "Gimp's Dependency Hell", effect: "SPAWNS 3 monsters at once", count: 3 },
+                    { name: "Gimp's Callback Curse", effect: "RESETS health to 10%", health: 10 },
+                    { name: "Gimp's Type Terror", effect: "RANDOMIZES all metrics", chaos: true }
+                ];
+                
+                this.cageBehaviors = [
+                    "⛓️ *rattles chains violently*",
+                    "🎭 *paces in cage nervously*", 
+                    "💥 *bangs on cage bars*",
+                    "🌀 *whispers vile code incantations*",
+                    "🔗 *tests cage lock*",
+                    "👁️ *stares at your code menacingly*",
+                    "🤪 *cackles at broken functions*",
+                    "💀 *sharpens a syntax error*"
+                ];
+            }
+
+            act() {
+                const behavior = this.cageBehaviors[
+                    Math.floor(Math.random() * this.cageBehaviors.length)
+                ];
+                
+                document.getElementById('gimp-action').textContent = behavior;
+                this.updateCageStatus();
+                
+                if (Math.random() < 0.1) {
+                    this.cageSecurity = Math.max(0, this.cageSecurity - 5);
+                    this.escapeAttempts++;
+                    showInGameAlert('⚠️ CODE GIMP WEAKENING CAGE SECURITY!', 'error');
+                }
+                
+                if (this.cageSecurity <= 0 && Math.random() < 0.3) {
+                    this.escape();
+                }
+                
+                if (Math.random() < 0.1) {
+                    this.useSpecialPower();
+                }
+                
+                return behavior;
+            }
+
+            updateCageStatus() {
+                let status = "SECURE";
+                let color = "#00ff44";
+                
+                if (this.cageSecurity < 50) {
+                    status = "WEAKENING";
+                    color = "#ffaa00";
+                }
+                if (this.cageSecurity < 20) {
+                    status = "CRITICAL";
+                    color = "#ff4444";
+                }
+                if (this.cageSecurity <= 0) {
+                    status = "ESCAPED!";
+                    color = "#ff0000";
+                }
+                
+                document.getElementById('gimp-cage-status').innerHTML = 
+                    `🎭 GIMP CAGE: <span style="color:${color}">${status} (${this.cageSecurity}%)</span>`;
+            }
+
+            escape() {
+                this.cageSecurity = 0;
+                startGimpCageMinigame();
+            }
+
+            recapture() {
+                this.cageSecurity = 100;
+                this.escapeAttempts = 0;
+                showInGameAlert('✅ CODE GIMP RECAPTURED! Cage security restored.', 'success');
+            }
+
+            useSpecialPower() {
+                const power = this.specialPowers[
+                    Math.floor(Math.random() * this.specialPowers.length)
+                ];
+                
+                showInGameAlert(`🎭 CODE GIMP used ${power.name} FROM CAGE!`, 'error');
+                
+                if (power.multiplier) {
+                    const randomBuilding = persistence.state.buildings[
+                        Math.floor(Math.random() * persistence.state.buildings.length)
+                    ];
+                    persistence.updateBuilding(randomBuilding.id, {
+                        complexity: Math.min(50, randomBuilding.complexity * power.multiplier)
+                    });
+                }
+                
+                if (power.count) {
+                    const randomBuilding = persistence.state.buildings[
+                        Math.floor(Math.random() * persistence.state.buildings.length)
+                    ];
+                    for (let i = 0; i < power.count; i++) {
+                        persistence.addMonster(randomBuilding.id, apocalypse.generateVibeMonster(randomBuilding.id));
+                    }
+                }
+                
+                if (power.health) {
+                    const randomBuilding = persistence.state.buildings[
+                        Math.floor(Math.random() * persistence.state.buildings.length)
+                    ];
+                    persistence.updateBuilding(randomBuilding.id, { health: power.health });
+                }
+                
+                if (power.chaos) {
+                    persistence.state.buildings.forEach(building => {
+                        persistence.updateBuilding(building.id, {
+                            complexity: Math.random() * 30,
+                            health: Math.random() * 100,
+                            loc: Math.floor(Math.random() * 1000)
+                        });
+                    });
+                }
+            }
+        }
+
+        // ========== TRUMP VIC'S SPECIAL ATTACKS ==========
+        class TrumpVicAttacks {
+            constructor() {
+                this.wallCount = 0;
+                this.executiveOrders = [
+                    { name: "EXECUTIVE ORDER: BAN ALL SEMICOLONS", effect: "Removes all statement terminators" },
+                    { name: "EXECUTIVE ORDER: REPLACE FUNCTIONS WITH VIBES", effect: "Converts functions to random strings" },
+                    { name: "EXECUTIVE ORDER: MAKE MEXICO PAY FOR node_modules", effect: "Deletes all dependencies" },
+                    { name: "EXECUTIVE ORDER: RIGGED COMPILER", effect: "Randomly fails builds" }
+                ];
+            }
+
+            issueExecutiveOrder() {
+                const order = this.executiveOrders[Math.floor(Math.random() * this.executiveOrders.length)];
+                
+                showInGameAlert(`📜 ${order.name}: ${order.effect}`, 'error');
+                
+                if (order.name.includes("SEMICOLONS")) {
+                    persistence.state.buildings.forEach(building => {
+                        building.complexity += 15;
+                        building.health = Math.max(1, building.health - 20);
+                    });
+                }
+                
+                if (order.name.includes("VIBES")) {
+                    persistence.state.buildings.forEach(building => {
+                        building.monsters.push({
+                            id: `vibe_monster_${Date.now()}`,
+                            type: "Vibe Virus", 
+                            power: "Function Corruption",
+                            color: "#ff00ff",
+                            message: "Replaced with good vibes!",
+                            severity: 8
+                        });
+                    });
+                }
+                
+                if (order.name.includes("node_modules")) {
+                    showInGameAlert('💀 ALL DEPENDENCIES DELETED! MEXICO STILL HASNʼT PAID!', 'error');
+                    persistence.state.buildings.forEach(building => {
+                        building.health = Math.max(5, building.health - 40);
+                    });
+                }
+                
+                return order;
+            }
+
+            buildMoreWalls() {
+                this.wallCount++;
+                showInGameAlert(`🧱 MAYOR VIC: "BUILDING WALL #${this.wallCount}! TREMENDOUS WALLS!"`, 'system');
+                
+                for (let i = 0; i < 2; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const wallBuilding = {
+                        id: 'trump_wall_' + Date.now() + i,
+                        filepath: '/executive/order/wall.js',
+                        loc: 500,
+                        complexity: 50,
+                        health: 150,
+                        position: {
+                            x: Math.cos(angle) * 150,
+                            z: Math.sin(angle) * 150
+                        },
+                        height: 40,
+                        monsters: [],
+                        isWall: true,
+                        isTrumpWall: true
+                    };
+                    persistence.state.buildings.push(wallBuilding);
+                }
+                
+                persistence.saveState();
+            }
+        }
+
+        // ========== GIMP CAGE ESCAPE MINIGAME ==========
+        function startGimpCageMinigame() {
+            showInGameAlert('🚨 GIMP ESCAPE IN PROGRESS! CLICK TO RECAPTURE!', 'error');
+            
+            const minigameOverlay = document.createElement('div');
+            minigameOverlay.id = 'gimp-minigame';
+            minigameOverlay.style.position = 'fixed';
+            minigameOverlay.style.top = '0';
+            minigameOverlay.style.left = '0';
+            minigameOverlay.style.width = '100%';
+            minigameOverlay.style.height = '100%';
+            minigameOverlay.style.background = 'rgba(0,0,0,0.8)';
+            minigameOverlay.style.zIndex = '10000';
+            minigameOverlay.style.display = 'flex';
+            minigameOverlay.style.flexDirection = 'column';
+            minigameOverlay.style.justifyContent = 'center';
+            minigameOverlay.style.alignItems = 'center';
+            minigameOverlay.style.color = 'white';
+            minigameOverlay.style.fontSize = '24px';
+            
+            minigameOverlay.innerHTML = `
+                <div style="text-align: center; background: linear-gradient(45deg, #8b00ff, #ff00ff); padding: 30px; border-radius: 15px; border: 3px solid white;">
+                    <div style="font-size: 48px;">🎭</div>
+                    <div style="font-weight: bold; margin: 20px 0;">CODE GIMP ESCAPED!</div>
+                    <div style="font-size: 16px; margin-bottom: 20px;">Click the gimp to recapture!</div>
+                    <div id="gimp-target" style="font-size: 72px; cursor: pointer; user-select: none;">⛓️</div>
+                    <div style="font-size: 14px; margin-top: 20px; opacity: 0.7;">Time remaining: <span id="gimp-timer">10</span>s</div>
+                </div>
+            `;
+            
+            document.body.appendChild(minigameOverlay);
+            
+            let timeLeft = 10;
+            const timerElement = document.getElementById('gimp-timer');
+            const gimpTarget = document.getElementById('gimp-target');
+            
+            const timer = setInterval(() => {
+                timeLeft--;
+                timerElement.textContent = timeLeft;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    minigameOverlay.remove();
+                    showInGameAlert('💀 GIMP FULLY ESCAPED! Maximum chaos unleashed!', 'error');
+                    // Enhanced chaos for full escape
+                    persistence.state.buildings.forEach(building => {
+                        building.health = 10;
+                        for (let i = 0; i < 3; i++) {
+                            persistence.addMonster(building.id, apocalypse.generateVibeMonster(building.id));
+                        }
+                    });
+                    persistence.saveState();
+                }
+            }, 1000);
+            
+            gimpTarget.onclick = function() {
+                clearInterval(timer);
+                minigameOverlay.remove();
+                enhancedGimp.recapture();
+                showInGameAlert('✅ GIMP RECAPTURED! Crisis averted!', 'success');
+                
+                persistence.state.buildings.forEach(building => {
+                    building.health = Math.min(100, building.health + 10);
+                });
+                persistence.saveState();
+            };
+            
+            let position = 0;
+            const moveGimp = setInterval(() => {
+                position = (position + 1) % 5;
+                const positions = ['0%', '25%', '50%', '75%', '100%'];
+                gimpTarget.style.transform = `translateX(${positions[position]})`;
+            }, 500);
+            
+            // Clean up movement when game ends
+            const cleanup = () => {
+                clearInterval(moveGimp);
+                minigameOverlay.removeEventListener('remove', cleanup);
+            };
+            minigameOverlay.addEventListener('remove', cleanup);
+        }
+
+        // ========== FIXED THREE.JS CONTROLS ==========
+        function initThreeJS() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0a0a0a);
+
+            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 150, 150);
+
+            renderer = new THREE.WebGLRenderer({ 
+                antialias: true,
+                alpha: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.domElement.style.zIndex = '1';
+            document.getElementById('app').appendChild(renderer.domElement);
+
+            // FIXED: Proper OrbitControls configuration
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.screenSpacePanning = false;
+            controls.minDistance = 50;
+            controls.maxDistance = 500;
+            controls.maxPolarAngle = Math.PI / 2;
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+            scene.add(ambientLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(50, 200, 100);
+            scene.add(directionalLight);
+
+            const groundGeometry = new THREE.PlaneGeometry(1000, 1000);
+            const groundMaterial = new THREE.MeshBasicMaterial({ 
+                color: 0x003300, 
+                transparent: true, 
+                opacity: 0.1 
+            });
+            const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+            ground.rotation.x = -Math.PI / 2;
+            scene.add(ground);
+
+            createTrumpVicTowerAndGimpCage();
+            animate();
+        }
+
+        // ========== FIXED CLICK HANDLING ==========
+        function setupClickHandling() {
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            
+            function onMouseClick(event) {
+                // Only handle clicks on the Three.js canvas
+                if (event.target !== renderer.domElement) return;
+                
+                mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+                mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+                
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(Array.from(buildingMeshes.values()));
+                
+                if (intersects.length > 0) {
+                    const buildingId = intersects[0].object.userData.buildingId;
+                    currentBuildingId = buildingId;
+                    updateDetailPanel(buildingId);
+                    const building = persistence.state.buildings.find(b => b.id === buildingId);
+                    showInGameAlert(`Selected: ${building.filepath}`, 'system');
+                } else {
+                    closeDetailPanel();
+                }
+            }
+            
+            renderer.domElement.addEventListener('click', onMouseClick);
+            renderer.domElement.style.cursor = 'pointer';
+        }
+
+        // ========== SMOOTH ALERT SYSTEM ==========
+        function showInGameAlert(message, type = 'system') {
+            const alertsContainer = document.getElementById('in-game-alerts');
+            const alert = document.createElement('div');
+            alert.className = 'alert-message';
+            alert.textContent = message;
+            
+            const colors = {
+                success: { bg: '#00ff44', text: '#0a0a0a' },
+                error: { bg: '#ff4444', text: '#ffffff' }, 
+                system: { bg: '#0088ff', text: '#ffffff' }
+            };
+            
+            const color = colors[type] || colors.system;
+            alert.style.background = color.bg;
+            alert.style.color = color.text;
+            
+            alertsContainer.appendChild(alert);
+            
+            requestAnimationFrame(() => {
+                alert.style.opacity = '1';
+                alert.style.transform = 'translateY(0)';
+            });
+            
+            setTimeout(() => {
+                alert.style.opacity = '0';
+                alert.style.transform = 'translateY(-20px)';
+                setTimeout(() => {
+                    if (alert.parentNode) {
+                        alert.parentNode.removeChild(alert);
+                    }
+                }, 400);
+            }, 3500);
+        }
+
+        // ========== GAME INITIALIZATION ==========
+        let apocalypse, mayorTrumpVic, enhancedGimp, trumpAttacks;
+
+        function initGame() {
+            persistence = new ModMindPersistence();
+            apocalypse = new SyntCityApocalypse();
+            mayorTrumpVic = new MayorTrumpVic();
+            enhancedGimp = new EnhancedCodeGimp();
+            trumpAttacks = new TrumpVicAttacks();
+            
+            window.onCityStateUpdate = (newState) => {
+                updateHUD(newState);
+                renderCity3D(newState.buildings);
+            };
+            
+            updateHUD(persistence.state);
+            initThreeJS();
+            setupClickHandling(); // FIXED: Add click handling
+            renderCity3D(persistence.state.buildings);
+            startDecayLoop();
+            setupAgentButtons();
+            
+            showInGameAlert('🚀 SYNTAX APOCALYPSE v3.1 - CONTROLS WORKING!', 'success');
+            
+            // Character behaviors
+            setInterval(() => mayorTrumpVic.taunt(), 25000);
+            setInterval(() => enhancedGimp.act(), 15000);
+            setInterval(() => {
+                if (Math.random() < 0.2) {
+                    trumpAttacks.issueExecutiveOrder();
+                }
+            }, 45000);
+            setInterval(() => {
+                if (Math.random() < 0.15) {
+                    trumpAttacks.buildMoreWalls();
+                }
+            }, 90000);
+        }
+
+        function updateHUD(state) {
+            const totalMonsters = state.buildings.reduce((sum, building) => sum + building.monsters.length, 0);
+            const avgHealth = state.buildings.reduce((sum, building) => sum + building.health, 0) / state.buildings.length;
+            const activeUsers = persistence.getActiveUsers();
+            
+            document.getElementById('fileCount').textContent = state.buildings.length;
+            document.getElementById('monsterCount').textContent = totalMonsters;
+            document.getElementById('userCount').textContent = activeUsers;
+            document.getElementById('healthIndex').textContent = `${Math.round(avgHealth)}%`;
+            
+            document.getElementById('auth-status').textContent = 
+                `🟢 ${activeUsers} Users Online | ${persistence.userId.substring(0, 8)}`;
+        }
+
+        function startDecayLoop() {
+            setInterval(() => {
+                let newMonstersSpawned = 0;
+                
+                persistence.state.buildings.forEach(building => {
+                    const decayMultiplier = building.monsters.length > 0 ? building.monsters.length : 1;
+                    const newHealth = Math.max(5, building.health - (MONSTER_DECAY_RATE * decayMultiplier));
+                    
+                    const decayChance = CHAOS_SPAWN_CHANCE + (100 - building.health) / 200;
+                    
+                    if (Math.random() < decayChance) {
+                        const newMonster = apocalypse.generateVibeMonster(building.id);
+                        persistence.addMonster(building.id, newMonster);
+                        newMonstersSpawned++;
+                    } else {
+                        persistence.updateBuilding(building.id, { health: newHealth });
+                    }
+                });
+                
+                if (newMonstersSpawned > 0) {
+                    showInGameAlert(`Chaos Loop: ${newMonstersSpawned} new threats spawned`, 'system');
+                }
+            }, DECAY_INTERVAL);
+        }
+
+        // ========== 3D RENDERING ==========
+        function renderCity3D(buildings) {
+            buildingMeshes.forEach(mesh => scene.remove(mesh));
+            buildingMeshes.clear();
+
+            buildings.forEach(building => {
+                const color = new THREE.Color();
+                color.setHSL(building.health / 300, 0.8, 0.5);
+                
+                const geometry = new THREE.BoxGeometry(8, building.height, 8);
+                const material = new THREE.MeshPhongMaterial({ 
+                    color: color,
+                    emissive: new THREE.Color(building.health / 100, 0, 0),
+                    shininess: 30
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                mesh.position.set(building.position.x, building.height / 2, building.position.z);
+                mesh.userData = { buildingId: building.id };
+                
+                scene.add(mesh);
+                buildingMeshes.set(building.id, mesh);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // ========== UI INTERACTIONS ==========
+        function setupAgentButtons() {
+            const container = document.getElementById('agent-buttons');
+            AGENT_SWARM.forEach(agent => {
+                const btn = document.createElement('button');
+                btn.className = 'swarm-btn';
+                btn.textContent = agent;
+                btn.onclick = () => deployAgent(agent);
+                container.appendChild(btn);
+            });
+            
+            document.getElementById('syntax-ai-button').onclick = () => deploySyntaxAI();
+        }
+
+        function deployAgent(agentName) {
+            if (!currentBuildingId) {
+                showInGameAlert('Select a building first!', 'error');
+                return;
+            }
+            
+            const building = persistence.state.buildings.find(b => b.id === currentBuildingId);
+            if (building && building.monsters.length > 0) {
+                const randomMonster = building.monsters[Math.floor(Math.random() * building.monsters.length)];
+                persistence.removeMonster(currentBuildingId, randomMonster.id);
+                showInGameAlert(`${agentName} eliminated: ${randomMonster.type}`, 'success');
+                updateDetailPanel(currentBuildingId);
+            } else {
+                showInGameAlert('No threats to fix in this module!', 'system');
+            }
+        }
+
+        function deploySyntaxAI() {
+            if (!currentBuildingId) return;
+            
+            const building = persistence.state.buildings.find(b => b.id === currentBuildingId);
+            if (building) {
+                building.monsters.forEach(monster => {
+                    persistence.removeMonster(currentBuildingId, monster.id);
+                });
+                persistence.updateBuilding(currentBuildingId, { health: 100 });
+                showInGameAlert('⚡ SYNTAX AI: Full module restoration complete!', 'success');
+                updateDetailPanel(currentBuildingId);
+            }
+        }
+
+        function updateDetailPanel(buildingId) {
+            const building = persistence.state.buildings.find(b => b.id === buildingId);
+            if (!building) return;
+            
+            document.getElementById('panel-title').textContent = `MODULE: ${building.filepath}`;
+            document.getElementById('panel-metrics').textContent = 
+                `LOC: ${building.loc} | Complexity: ${building.complexity} | Health: ${Math.round(building.health)}%`;
+            document.getElementById('threat-count').textContent = building.monsters.length;
+            
+            const monsterList = document.getElementById('monster-list');
+            monsterList.innerHTML = '';
+            
+            building.monsters.forEach(monster => {
+                const div = document.createElement('div');
+                div.className = 'monster-list-item';
+                div.innerHTML = `
+                    <strong>${monster.type}</strong><br>
+                    <small>Severity: ${monster.severity}/10</small><br>
+                    <small>${monster.message}</small>
+                `;
+                monsterList.appendChild(div);
+            });
+            
+            document.getElementById('syntax-ai-button').dataset.buildingId = buildingId;
+            document.getElementById('detail-panel').style.display = 'block';
+        }
+
+        function closeDetailPanel() {
+            document.getElementById('detail-panel').style.display = 'none';
+            currentBuildingId = null;
+        }
+
+        // ========== START THE GAME ==========
+        window.addEventListener('load', initGame);
+
+        window.persistence = persistence;
+    </script>
+</body>
+</html>

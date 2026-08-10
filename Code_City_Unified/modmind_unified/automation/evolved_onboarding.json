@@ -1,0 +1,3549 @@
+{
+  "generation": 11,
+  "population": [
+    {
+      "dna_id": "DNA-1768553523.769978-9161f27d",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.770061",
+      "version": "1.0",
+      "generation": 1,
+      "fitness_score": 0.54,
+      "mutations": [],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.770737-73bcf517",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770795",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "step_type": "form",
+          "name": "Collect Info",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.770828-fc7415f5",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770845",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "step_type": "verification",
+          "name": "Verify Email",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.770855-a598098a",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770866",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "step_type": "activation",
+          "name": "Activate Account",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.770946-885f997f",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.770958",
+      "version": "1.0",
+      "generation": 2,
+      "fitness_score": 0.54,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.771091",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.77097-ec262149",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770980",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.771008",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.771021-29013f70",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.771034",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.771051",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome",
+              "new_value": "welcome (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.771061-876fd00a",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.771073",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.771084",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792633-f57187e0",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792655",
+      "version": "1.0",
+      "generation": 10,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.792671",
+          "type": "breeding",
+          "parent1": "DNA-1768553523.791876-2316f4c5",
+          "parent2": "DNA-1768553523.789536-91ff396e",
+          "description": "Hybrid of Base Onboarding (Mutated) (Mutated) and Base Onboarding (Mutated) (Mutated) (Mutated) (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Hybrid) (Mutated) (Mutated) (Mutated) (Mutated) (Hybrid)"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) (Mutated) (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Hybrid) (Mutated) (Mutated) (Mutated) (Mutated) (Hybrid) (Hybrid)",
+      "description": "Hybrid of Base Onboarding (Mutated) (Mutated) and Base Onboarding (Mutated) (Mutated) (Mutated) (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Hybrid) (Mutated) (Mutated) (Mutated) (Mutated) (Hybrid)",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.791894-de6570bc",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791904",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791912",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787951-5c21300c",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787961",
+          "version": "1.0",
+          "generation": 6,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787969",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 253.92870818393476,
+              "new_value": 299.06032027568705
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 299.06032027568705
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791918-3987432e",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791928",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791937",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.349610952020915
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.349610952020915
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787768-1061dc09",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787780",
+          "version": "1.0",
+          "generation": 7,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787789",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 323.99697025067036
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791943-98363a36",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791953",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791961",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787976-95dac440",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787987",
+          "version": "1.0",
+          "generation": 6,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787995",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified) (modified) (modified)",
+              "new_value": "welcome (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified) (modified) (modified)",
+            "retries": 2.178949962539124
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787796-13ed6549",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787807",
+          "version": "1.0",
+          "generation": 6,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787817",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 375.573341276894,
+              "new_value": 408.4438235127952
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 408.4438235127952
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.788002-ba514260",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.788012",
+          "version": "1.0",
+          "generation": 6,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.788020",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787824-e60f3e81",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787834",
+          "version": "1.0",
+          "generation": 7,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787844",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2.2408095266803985,
+              "new_value": 2.375508935559954
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified) (modified)",
+            "retries": 2.375508935559954
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.78785-6c558324",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787861",
+          "version": "1.0",
+          "generation": 6,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787870",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2.4678237340017386,
+              "new_value": 2.9359398700640793
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 2.9359398700640793
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787877-46563489",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787887",
+          "version": "1.0",
+          "generation": 7,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787896",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.787903-7747f59f",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.787913",
+          "version": "1.0",
+          "generation": 6,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.787922",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792681-62dfaea6",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792694",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.792703",
+          "type": "breeding",
+          "parent1": "DNA-1768553523.792072-b58973fc",
+          "parent2": "DNA-1768553523.791973-7f413f0c",
+          "description": "Hybrid of Base Onboarding (Mutated) and Base Onboarding (Mutated)"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) \u00d7 Base Onboarding (Mutated) (Hybrid)",
+      "description": "Hybrid of Base Onboarding (Mutated) and Base Onboarding (Mutated)",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.79209-3aaf7833",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792099",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792107",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791991-8a0fafd9",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792001",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792009",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 274.8458613917202
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 274.8458613917202
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.792114-9baf081b",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792125",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792133",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.0861642238076943
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 2.0861642238076943
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.792016-b4eef2b8",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792026",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792035",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 1.975579870897567
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 1.975579870897567
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.79214-7ad45354",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792151",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792158",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.792042-44968394",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792052",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792060",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792711-1e7ba2fb",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792723",
+      "version": "1.0",
+      "generation": 5,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.792733",
+          "type": "breeding",
+          "parent1": "DNA-1768553523.791184-77e6a92a",
+          "parent2": "DNA-1768553523.789645-9a3b1edb",
+          "description": "Hybrid of Base Onboarding (Mutated) (Mutated) (Mutated) and Base Onboarding \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid)"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated) (Mutated) \u00d7 Base Onboarding \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid) (Hybrid)",
+      "description": "Hybrid of Base Onboarding (Mutated) (Mutated) (Mutated) and Base Onboarding \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid)",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.791203-bf235f4a",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791213",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791222",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 311.3248830825631
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.770737-73bcf517",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770795",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "step_type": "form",
+          "name": "Collect Info",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791229-a1e2a170",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791239",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791247",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified)",
+              "new_value": "welcome (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 1.9546398252722725
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.789125-d03c45ab",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.789135",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.789143",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 246.48742480035423
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 246.48742480035423
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791254-185c6509",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791264",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791273",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.770828-fc7415f5",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770845",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "step_type": "verification",
+          "name": "Verify Email",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.78915-f8c22d3a",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.789160",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.789169",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified)",
+              "new_value": "welcome (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.770855-a598098a",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.770866",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "step_type": "activation",
+          "name": "Activate Account",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.789175-44509ba2",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.789185",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.789193",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792742-ac3619a3",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792753",
+      "version": "1.0",
+      "generation": 4,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.792761",
+          "type": "breeding",
+          "parent1": "DNA-1768553523.791876-2316f4c5",
+          "parent2": "DNA-1768553523.791876-2316f4c5",
+          "description": "Hybrid of Base Onboarding (Mutated) (Mutated) and Base Onboarding (Mutated) (Mutated)"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid)",
+      "description": "Hybrid of Base Onboarding (Mutated) (Mutated) and Base Onboarding (Mutated) (Mutated)",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.791894-de6570bc",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791904",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791912",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791894-de6570bc",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791904",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791912",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791918-3987432e",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791928",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791937",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.349610952020915
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.349610952020915
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791918-3987432e",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791928",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791937",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.349610952020915
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.349610952020915
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791943-98363a36",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791953",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791961",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.791943-98363a36",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.791953",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.791961",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792769-c34d279e",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792780",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.792869",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.792788-84815e9a",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792798",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792809",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 334.7379653704792
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 334.7379653704792
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.792817-bddb71bb",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792828",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792837",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified)",
+              "new_value": "welcome (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.792844-11c0053c",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792855",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792863",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792876-930043d3",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792887",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.792968",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.792895-b67225ba",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792905",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792913",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 251.17609975753433
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.79292-8422c52c",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792930",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792938",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome",
+              "new_value": "welcome (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.104702076209945
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.792945-1401bd63",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.792955",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.792963",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.792976-f7dcb135",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.792989",
+      "version": "1.0",
+      "generation": 9,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.793591",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid) \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid) \u00d7 Base Onboarding \u00d7 Base Onboarding (Mutated) \u00d7 Base Onboarding (Mutated) (Hybrid) \u00d7 Base Onboarding (Mutated) (Hybrid) (Hybrid) (Hybrid) \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid) (Mutated) (Mutated)",
+      "description": "Hybrid of Base Onboarding (Mutated) (Mutated) \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid) \u00d7 Base Onboarding (Mutated) (Mutated) (Hybrid) \u00d7 Base Onboarding \u00d7 Base Onboarding (Mutated) \u00d7 Base Onboarding (Mutated) (Hybrid) \u00d7 Base Onboarding (Mutated) (Hybrid) (Hybrid) (Hybrid) and Base Onboarding (Mutated) (Mutated)",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.792997-53e40871",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793006",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793015",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 246.22448696728546,
+              "new_value": 227.8678890675528
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 227.8678890675528
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793022-6fb8be6f",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793033",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793041",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793047-4604254b",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793057",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793066",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 240.762297311288,
+              "new_value": 200.50465073212965
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 200.50465073212965
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793072-57c7b3b4",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793082",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793090",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified) (modified)",
+              "new_value": "welcome (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified) (modified)",
+            "retries": 1.6700077899593233
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793097-95e8d0c3",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793107",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793115",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 214.88344796765594
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793122-8a63517f",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793132",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793139",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793146-23406ce1",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793156",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793164",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 279.10604750104835
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 279.10604750104835
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793171-9d7a8171",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793181",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793189",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 379.15192127755455,
+              "new_value": 390.70354745991295
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 390.70354745991295
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793196-37524408",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793206",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793215",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.1141495152176093
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.1141495152176093
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793221-5fa1c231",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793232",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793241",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.0010675134311224
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified) (modified)",
+            "retries": 2.0010675134311224
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793247-ed19eefa",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793258",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793266",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 296.3123596738648
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793272-6a7c3d61",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793283",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793291",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2.112415139338933,
+              "new_value": 2.1273261379560218
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 2.1273261379560218
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793298-9ce2f8cb",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793308",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793316",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793322-a015c989",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793332",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793340",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793346-eed338ef",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793356",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793364",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 318.82697104688924
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793371-f22be8c1",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793381",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793389",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2.2639115233998104,
+              "new_value": 2.178459387705116
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 2.178459387705116
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793395-013b2451",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793405",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793413",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified) (modified)",
+              "new_value": "welcome (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified) (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.79342-c507465e",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793430",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793438",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793444-246b1dcc",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793454",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793463",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 1.8304425868030385,
+              "new_value": 1.6318593709492062
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 1.6318593709492062
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793469-5b77c354",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793479",
+          "version": "1.0",
+          "generation": 5,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793487",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793493-aa1fdd78",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793504",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793512",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793518-0ae69a27",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793529",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793537",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified)",
+              "new_value": "welcome (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 1.8304425868030385
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793544-e3a786c3",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793554",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793562",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified)"
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793568-170876f9",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793578",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793586",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.793599-7504fa85",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.793610",
+      "version": "1.0",
+      "generation": 4,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.793691",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.793617-016f999c",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793627",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793636",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 279.9422304492234
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793643-ea3959b8",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793653",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793662",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 1.755344983803182,
+              "new_value": 1.482806498829142
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 1.482806498829142
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793668-d2171b55",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793678",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793686",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.793698-66e839ce",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.793709",
+      "version": "1.0",
+      "generation": 4,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.793791",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.793716-0b3921da",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793726",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793734",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 282.0296076746536,
+              "new_value": 265.25015379872667
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 265.25015379872667
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793741-f2e09d30",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793751",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793760",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.0816474087197747
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 2.0816474087197747
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793767-3ed320ff",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793777",
+          "version": "1.0",
+          "generation": 4,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793785",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified) (modified)",
+              "new_value": "customer (modified) (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.793798-88e37e3e",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.793808",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.793889",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.793816-3b52ff4d",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793825",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793834",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 274.8458613917202
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.79384-b79ef077",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793850",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793859",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome",
+              "new_value": "welcome (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 1.975579870897567
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.793865-8d20a9af",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.793875",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.793884",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.79401-cfae3c37",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794026",
+      "version": "1.0",
+      "generation": 2,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794112",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794036-a9f76638",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794046",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794056",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794063-088ac05d",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794074",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794082",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome",
+              "new_value": "welcome (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794089-47d8cfae",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794099",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794107",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.79412-162153aa",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794131",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794212",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794138-de01daff",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794148",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794157",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 327.5169535338011
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 327.5169535338011
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794164-f5064f54",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794174",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794182",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 1.9935369058847698
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 1.9935369058847698
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794189-769b9de8",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794199",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794207",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.79422-8c6ecf40",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794230",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794309",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794237-0386ccb8",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794247",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794255",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 274.4726881484676
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 274.4726881484676
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794262-2d878aa3",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794272",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794280",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.3214114558814667
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.3214114558814667
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794286-908cc497",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794296",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794304",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.794316-49f8fa82",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794327",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794405",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794334-2e5436b2",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794344",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794351",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794357-287846d4",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794367",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794375",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 2.191389094136534
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2.191389094136534
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794382-bfaba4ed",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794392",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794400",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.794412-e0bca274",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794423",
+      "version": "1.0",
+      "generation": 2,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794501",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.79443-03332d7b",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794439",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794447",
+              "type": "parameter_mutation",
+              "parameter": "fields",
+              "original_value": [
+                "name",
+                "email"
+              ],
+              "new_value": [
+                "name",
+                "email"
+              ]
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 300
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794454-69088d36",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794464",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794472",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome",
+              "new_value": "welcome (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794478-584cbf43",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794488",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794496",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.794508-58702007",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794519",
+      "version": "1.0",
+      "generation": 2,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794598",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794526-6311ffd4",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794536",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794544",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 359.94301350622857
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 359.94301350622857
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794551-c109d920",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794561",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794569",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome",
+              "new_value": "welcome (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794575-cba47994",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794585",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794593",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.794605-5ef00bb0",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794616",
+      "version": "1.0",
+      "generation": 2,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794727",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794623-fea5070b",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794633",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794641",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 290.09091233032774
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 290.09091233032774
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794647-52355143",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794681",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794693",
+              "type": "parameter_mutation",
+              "parameter": "retries",
+              "original_value": 2,
+              "new_value": 1.6040267545736737
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome",
+            "retries": 1.6040267545736737
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794701-b07b8aaf",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794712",
+          "version": "1.0",
+          "generation": 2,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794721",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer",
+              "new_value": "customer (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "dna_id": "DNA-1768553523.794734-3809f4bd",
+      "type": "ProcessDNA",
+      "created_at": "2026-01-16T02:52:03.794745",
+      "version": "1.0",
+      "generation": 3,
+      "fitness_score": 0.0,
+      "mutations": [
+        {
+          "timestamp": "2026-01-16T02:52:03.794829",
+          "type": "random_mutation",
+          "description": "Random mutation of process steps"
+        }
+      ],
+      "process_type": "customer_onboarding",
+      "name": "Base Onboarding (Mutated) (Mutated)",
+      "description": "Base customer onboarding process",
+      "steps": [
+        {
+          "dna_id": "DNA-1768553523.794753-c79fdfdd",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794762",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794771",
+              "type": "parameter_mutation",
+              "parameter": "timeout",
+              "original_value": 300,
+              "new_value": 321.2434245256599
+            }
+          ],
+          "step_type": "form",
+          "name": "Collect Info (Mutated) (Mutated)",
+          "description": "Gather customer data",
+          "parameters": {
+            "fields": [
+              "name",
+              "email"
+            ],
+            "timeout": 321.2434245256599
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794778-41b8318b",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794789",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794798",
+              "type": "parameter_mutation",
+              "parameter": "template",
+              "original_value": "welcome (modified)",
+              "new_value": "welcome (modified) (modified)"
+            }
+          ],
+          "step_type": "verification",
+          "name": "Verify Email (Mutated) (Mutated)",
+          "description": "Confirm email address",
+          "parameters": {
+            "template": "welcome (modified) (modified)",
+            "retries": 2
+          },
+          "conditions": []
+        },
+        {
+          "dna_id": "DNA-1768553523.794804-41303230",
+          "type": "StepDNA",
+          "created_at": "2026-01-16T02:52:03.794815",
+          "version": "1.0",
+          "generation": 3,
+          "fitness_score": 0.0,
+          "mutations": [
+            {
+              "timestamp": "2026-01-16T02:52:03.794823",
+              "type": "parameter_mutation",
+              "parameter": "role",
+              "original_value": "customer (modified)",
+              "new_value": "customer (modified) (modified)"
+            }
+          ],
+          "step_type": "activation",
+          "name": "Activate Account (Mutated) (Mutated)",
+          "description": "Enable access",
+          "parameters": {
+            "role": "customer (modified) (modified)"
+          },
+          "conditions": []
+        }
+      ],
+      "connections": [
+        {
+          "dna_id": "DNA-1768553523.770882-0a9f9cec",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770894",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770737-73bcf517",
+          "target_step_id": "DNA-1768553523.770828-fc7415f5",
+          "condition": "success",
+          "transition_probability": 1.0
+        },
+        {
+          "dna_id": "DNA-1768553523.770907-0e4643f2",
+          "type": "ConnectionDNA",
+          "created_at": "2026-01-16T02:52:03.770918",
+          "version": "1.0",
+          "generation": 1,
+          "fitness_score": 0.0,
+          "mutations": [],
+          "source_step_id": "DNA-1768553523.770828-fc7415f5",
+          "target_step_id": "DNA-1768553523.770855-a598098a",
+          "condition": "verified",
+          "transition_probability": 1.0
+        }
+      ],
+      "metadata": {}
+    }
+  ],
+  "best_fitness_history": [
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54
+  ],
+  "avg_fitness_history": [
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54,
+    0.54
+  ],
+  "diversity_score": 1.55
+}

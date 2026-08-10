@@ -1,0 +1,93 @@
+# FILE: automation_dna/Dockerfile
+# PURPOSE: Container configuration for Automation DNA platform
+# USAGE: docker build -t automation-dna .
+#        docker run -p 5000:5000 automation-dna
+
+# =============================================================================
+# BASE IMAGE - Python 3.11 on Alpine Linux (lightweight)
+# =============================================================================
+FROM python:3.11-slim-bullseye
+
+# Set working directory inside container
+WORKDIR /app
+
+# Set environment variables
+# PYTHONUNBUFFERED: Force Python to run in unbuffered mode (better for Docker logs)
+# PYTHONDONTWRITEBYTECODE: Prevent Python from writing .pyc files
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# =============================================================================
+# SYSTEM DEPENDENCIES
+# =============================================================================
+# Install system dependencies required for Python packages
+# gcc, g++: Required for compiling Python C extensions
+# postgresql-dev: Required for psycopg2
+# curl: For health checks
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    g++ \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# =============================================================================
+# PYTHON DEPENDENCIES
+# =============================================================================
+# Copy requirements file first (Docker layer caching optimization)
+# If requirements.txt hasn't changed, Docker reuses this layer
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
+
+# =============================================================================
+# APPLICATION CODE
+# =============================================================================
+# Copy application code
+COPY core/ ./core/
+COPY web/ ./web/
+COPY examples/ ./examples/
+COPY tests/ ./tests/
+
+# =============================================================================
+# RUNTIME CONFIGURATION
+# =============================================================================
+# Create directory for SQLite database (if using SQLite)
+RUN mkdir -p /app/data
+
+# Create non-root user for security
+# Running as root in containers is a security risk
+RUN useradd -m -u 1000 dnauser && \
+    chown -R dnauser:dnauser /app
+USER dnauser
+
+# Expose port 5000 for Flask
+EXPOSE 5000
+
+# Health check - ensures container is running properly
+# Docker will periodically check this endpoint
+HEALTHCHECK --interval=30s --timeout=5s --start-period=10s --retries=3 \
+    CMD curl -f http://localhost:5000/api/health || exit 1
+
+# =============================================================================
+# ENTRYPOINT
+# =============================================================================
+# Use gunicorn in production for better performance
+# Workers: 4 (adjust based on CPU cores)
+# Threads: 2 per worker
+# Timeout: 120s (for long-running evolution operations)
+CMD ["gunicorn", \
+     "--workers", "4", \
+     "--threads", "2", \
+     "--timeout", "120", \
+     "--bind", "0.0.0.0:5000", \
+     "--access-logfile", "-", \
+     "--error-logfile", "-", \
+     "web.app:app"]
+
+# For development, use Flask's built-in server instead:
+# CMD ["python", "web/app.py"]

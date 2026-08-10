@@ -1,0 +1,663 @@
+{% extends "base.html" %}
+
+{% block title %}Process Editor{% endblock %}
+
+{% block head %}
+<style>
+    .editor-container {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+    
+    .editor-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    
+    .editor-actions {
+        display: flex;
+        gap: 1rem;
+    }
+    
+    .editor-main {
+        display: flex;
+        gap: 2rem;
+    }
+    
+    .editor-canvas {
+        flex: 1;
+        background: var(--bg-darker);
+        border-radius: var(--border-radius);
+        padding: 2rem;
+        min-height: 500px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .editor-sidebar {
+        width: 300px;
+        background: var(--bg-darker);
+        border-radius: var(--border-radius);
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .step-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+    
+    .step-item {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: var(--border-radius);
+        padding: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+    }
+    
+    .step-item:hover {
+        border-color: var(--primary-color);
+        transform: translateX(5px);
+    }
+    
+    .step-item.active {
+        border-color: var(--primary-color);
+        background: rgba(108, 92, 231, 0.2);
+    }
+    
+    .step-name {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .step-type {
+        display: inline-block;
+        background: var(--primary-color);
+        color: white;
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .step-description {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    
+    .properties-panel {
+        margin-top: 2rem;
+    }
+    
+    .properties-panel h3 {
+        margin-bottom: 1rem;
+    }
+    
+    .property-item {
+        margin-bottom: 1rem;
+    }
+    
+    .property-item label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+    }
+    
+    .property-item input,
+    .property-item select,
+    .property-item textarea {
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: var(--border-radius);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: var(--bg-dark);
+        color: var(--text-primary);
+    }
+    
+    .canvas-area {
+        position: relative;
+        height: 100%;
+        min-height: 400px;
+    }
+    
+    .step-node {
+        position: absolute;
+        background: var(--primary-color);
+        color: white;
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        width: 200px;
+        cursor: move;
+        box-shadow: var(--box-shadow);
+        transition: var(--transition);
+    }
+    
+    .step-node:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    }
+    
+    .step-node.active {
+        border: 2px solid var(--success-color);
+    }
+    
+    .step-node-header {
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .step-node-type {
+        font-size: 0.8rem;
+        opacity: 0.9;
+        margin-bottom: 0.5rem;
+    }
+    
+    .step-node-description {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="editor-container">
+    <!-- Header -->
+    <section class="editor-header">
+        <div>
+            <h1>🧬 Process DNA Editor</h1>
+            <p class="subtitle">Design and modify your business process DNA</p>
+        </div>
+        <div class="editor-actions">
+            <button class="btn btn-secondary" id="addStepBtn">
+                <i class="fas fa-plus"></i> Add Step
+            </button>
+            <button class="btn btn-success" id="saveProcessBtn">
+                <i class="fas fa-save"></i> Save Process
+            </button>
+            <button class="btn btn-primary" id="testProcessBtn">
+                <i class="fas fa-play"></i> Test Process
+            </button>
+        </div>
+    </section>
+    
+    <!-- Main Editor -->
+    <section class="editor-main">
+        <!-- Canvas -->
+        <div class="editor-canvas">
+            <h2>Process Visualization</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 1.5rem;">
+                Drag and drop steps to design your process flow
+            </p>
+            
+            <div class="canvas-area" id="processCanvas">
+                <!-- Steps will be rendered here -->
+                <div class="no-steps">
+                    <i class="fas fa-info-circle"></i>
+                    <p>No steps added yet. Click "Add Step" to begin!</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="editor-sidebar">
+            <h2>Process Steps</h2>
+            
+            <div class="step-list" id="stepList">
+                <!-- Steps will be listed here -->
+            </div>
+            
+            <div class="properties-panel" id="propertiesPanel">
+                <h3>Properties</h3>
+                <p style="color: var(--text-secondary);">Select a step to edit its properties</p>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Add Step Modal -->
+<div class="modal" id="addStepModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add New Step</h3>
+            <button class="modal-close" id="closeAddStepModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addStepForm">
+                <div class="form-group">
+                    <label for="stepName">Step Name</label>
+                    <input type="text" id="stepName" class="form-control" 
+                           placeholder="e.g., Collect Customer Info" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="stepType">Step Type</label>
+                    <select id="stepType" class="form-control" required>
+                        <option value="">Select type...</option>
+                        <option value="form">Form</option>
+                        <option value="verification">Verification</option>
+                        <option value="activation">Activation</option>
+                        <option value="notification">Notification</option>
+                        <option value="approval">Approval</option>
+                        <option value="delay">Delay</option>
+                        <option value="integration">Integration</option>
+                        <option value="decision">Decision</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="stepDescription">Description</label>
+                    <textarea id="stepDescription" class="form-control" rows="3"
+                              placeholder="Describe what this step does..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Parameters</label>
+                    <div id="parametersContainer">
+                        <!-- Parameters will be added here -->
+                    </div>
+                    <button type="button" class="btn btn-sm btn-secondary" id="addParameterBtn">
+                        <i class="fas fa-plus"></i> Add Parameter
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelAddStep">Cancel</button>
+            <button class="btn btn-primary" id="confirmAddStep">Add Step</button>
+        </div>
+    </div>
+</div>
+
+<!-- Add Parameter Modal -->
+<div class="modal" id="addParameterModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Add Parameter</h3>
+            <button class="modal-close" id="closeAddParameterModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="addParameterForm">
+                <div class="form-group">
+                    <label for="paramName">Parameter Name</label>
+                    <input type="text" id="paramName" class="form-control" 
+                           placeholder="e.g., timeout" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paramType">Parameter Type</label>
+                    <select id="paramType" class="form-control" required>
+                        <option value="">Select type...</option>
+                        <option value="string">String</option>
+                        <option value="number">Number</option>
+                        <option value="boolean">Boolean</option>
+                        <option value="list">List</option>
+                        <option value="object">Object</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="paramValue">Default Value</label>
+                    <input type="text" id="paramValue" class="form-control"
+                           placeholder="Enter default value">
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" id="cancelAddParameter">Cancel</button>
+            <button class="btn btn-primary" id="confirmAddParameter">Add Parameter</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Editor functionality
+let currentStep = null;
+let steps = [];
+
+// Initialize editor
+function initEditorPage() {
+    console.log('Initializing Editor Page');
+    
+    // Set up event listeners
+    document.getElementById('addStepBtn').addEventListener('click', openAddStepModal);
+    document.getElementById('closeAddStepModal').addEventListener('click', closeAddStepModal);
+    document.getElementById('cancelAddStep').addEventListener('click', closeAddStepModal);
+    document.getElementById('confirmAddStep').addEventListener('click', addStep);
+    
+    document.getElementById('addParameterBtn').addEventListener('click', openAddParameterModal);
+    document.getElementById('closeAddParameterModal').addEventListener('click', closeAddParameterModal);
+    document.getElementById('cancelAddParameter').addEventListener('click', closeAddParameterModal);
+    document.getElementById('confirmAddParameter').addEventListener('click', addParameter);
+    
+    document.getElementById('saveProcessBtn').addEventListener('click', saveProcess);
+    document.getElementById('testProcessBtn').addEventListener('click', testProcess);
+    
+    // Load any existing process
+    loadProcess();
+}
+
+// Open add step modal
+function openAddStepModal() {
+    document.getElementById('addStepModal').style.display = 'block';
+}
+
+// Close add step modal
+function closeAddStepModal() {
+    document.getElementById('addStepModal').style.display = 'none';
+}
+
+// Add step
+function addStep() {
+    const stepName = document.getElementById('stepName').value;
+    const stepType = document.getElementById('stepType').value;
+    const stepDescription = document.getElementById('stepDescription').value;
+    
+    if (!stepName || !stepType) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    // Create step object
+    const step = {
+        id: 'step-' + Date.now(),
+        name: stepName,
+        type: stepType,
+        description: stepDescription,
+        parameters: getParameters(),
+        x: 50,
+        y: 50
+    };
+    
+    steps.push(step);
+    
+    // Update UI
+    updateStepList();
+    renderCanvas();
+    
+    closeAddStepModal();
+    
+    // Reset form
+    document.getElementById('addStepForm').reset();
+    document.getElementById('parametersContainer').innerHTML = '';
+}
+
+// Get parameters from form
+function getParameters() {
+    const params = {};
+    const paramInputs = document.querySelectorAll('#parametersContainer .parameter-item');
+    
+    paramInputs.forEach(input => {
+        const name = input.querySelector('input').value;
+        const value = input.querySelector('textarea, input[type="text"]').value;
+        
+        if (name) {
+            try {
+                params[name] = JSON.parse(value);
+            } catch (e) {
+                params[name] = value;
+            }
+        }
+    });
+    
+    return params;
+}
+
+// Open add parameter modal
+function openAddParameterModal() {
+    document.getElementById('addParameterModal').style.display = 'block';
+}
+
+// Close add parameter modal
+function closeAddParameterModal() {
+    document.getElementById('addParameterModal').style.display = 'none';
+}
+
+// Add parameter
+function addParameter() {
+    const paramName = document.getElementById('paramName').value;
+    const paramType = document.getElementById('paramType').value;
+    const paramValue = document.getElementById('paramValue').value;
+    
+    if (!paramName || !paramType) {
+        alert('Please fill in all required fields');
+        return;
+    }
+    
+    // Create parameter element
+    const paramElement = document.createElement('div');
+    paramElement.className = 'parameter-item';
+    paramElement.innerHTML = `
+        <div class="parameter-header">
+            <input type="text" value="${paramName}" readonly>
+            <button class="btn btn-sm btn-danger" onclick="removeParameter(this)">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        <div class="parameter-body">
+            <textarea placeholder="Value" style="width: 100%; min-height: 60px;">${paramValue}</textarea>
+        </div>
+    `;
+    
+    document.getElementById('parametersContainer').appendChild(paramElement);
+    closeAddParameterModal();
+    
+    // Reset form
+    document.getElementById('addParameterForm').reset();
+}
+
+// Remove parameter
+function removeParameter(button) {
+    button.parentElement.parentElement.remove();
+}
+
+// Update step list in sidebar
+function updateStepList() {
+    const stepList = document.getElementById('stepList');
+    stepList.innerHTML = '';
+    
+    steps.forEach(step => {
+        const stepItem = document.createElement('div');
+        stepItem.className = 'step-item' + (currentStep === step ? ' active' : '');
+        stepItem.onclick = () => selectStep(step);
+        
+        stepItem.innerHTML = `
+            <div class="step-name">${step.name}</div>
+            <div class="step-type">${step.type}</div>
+            <div class="step-description">${step.description}</div>
+        `;
+        
+        stepList.appendChild(stepItem);
+    });
+}
+
+// Select step
+function selectStep(step) {
+    currentStep = step;
+    updateStepList();
+    updatePropertiesPanel();
+    highlightStep(step.id);
+}
+
+// Highlight step on canvas
+function highlightStep(stepId) {
+    // Remove highlight from all steps
+    document.querySelectorAll('.step-node').forEach(node => {
+        node.classList.remove('active');
+    });
+    
+    // Add highlight to selected step
+    const selectedNode = document.querySelector(`[data-step-id="${stepId}"]`);
+    if (selectedNode) {
+        selectedNode.classList.add('active');
+    }
+}
+
+// Update properties panel
+function updatePropertiesPanel() {
+    const panel = document.getElementById('propertiesPanel');
+    
+    if (!currentStep) {
+        panel.innerHTML = '<h3>Properties</h3><p style="color: var(--text-secondary);">Select a step to edit its properties</p>';
+        return;
+    }
+    
+    let html = `
+        <h3>Step Properties</h3>
+        
+        <div class="property-item">
+            <label>Name</label>
+            <input type="text" value="${currentStep.name}" onchange="updateStepProperty('name', this.value)">
+        </div>
+        
+        <div class="property-item">
+            <label>Type</label>
+            <select onchange="updateStepProperty('type', this.value)">
+                <option value="form" ${currentStep.type === 'form' ? 'selected' : ''}>Form</option>
+                <option value="verification" ${currentStep.type === 'verification' ? 'selected' : ''}>Verification</option>
+                <option value="activation" ${currentStep.type === 'activation' ? 'selected' : ''}>Activation</option>
+                <option value="notification" ${currentStep.type === 'notification' ? 'selected' : ''}>Notification</option>
+                <option value="approval" ${currentStep.type === 'approval' ? 'selected' : ''}>Approval</option>
+                <option value="delay" ${currentStep.type === 'delay' ? 'selected' : ''}>Delay</option>
+                <option value="integration" ${currentStep.type === 'integration' ? 'selected' : ''}>Integration</option>
+                <option value="decision" ${currentStep.type === 'decision' ? 'selected' : ''}>Decision</option>
+            </select>
+        </div>
+        
+        <div class="property-item">
+            <label>Description</label>
+            <textarea onchange="updateStepProperty('description', this.value)">${currentStep.description}</textarea>
+        </div>
+        
+        <h4 style="margin: 1.5rem 0 1rem 0;">Parameters</h4>
+    `;
+    
+    for (const [key, value] of Object.entries(currentStep.parameters)) {
+        html += `
+            <div class="property-item">
+                <label>${key}</label>
+                <input type="text" value="${JSON.stringify(value)}" 
+                       onchange="updateStepParameter('${key}', this.value)">
+            </div>
+        `;
+    }
+    
+    panel.innerHTML = html;
+}
+
+// Update step property
+function updateStepProperty(property, value) {
+    if (!currentStep) return;
+    
+    currentStep[property] = value;
+    updateStepList();
+    renderCanvas();
+}
+
+// Update step parameter
+function updateStepParameter(key, value) {
+    if (!currentStep) return;
+    
+    try {
+        currentStep.parameters[key] = JSON.parse(value);
+    } catch (e) {
+        currentStep.parameters[key] = value;
+    }
+    
+    updatePropertiesPanel();
+}
+
+// Render canvas
+function renderCanvas() {
+    const canvas = document.getElementById('processCanvas');
+    
+    if (steps.length === 0) {
+        canvas.innerHTML = `
+            <div class="no-steps">
+                <i class="fas fa-info-circle"></i>
+                <p>No steps added yet. Click "Add Step" to begin!</p>
+            </div>
+        `;
+        return;
+    }
+    
+    canvas.innerHTML = '';
+    
+    // Position steps in a grid
+    const cols = 3;
+    const width = 220;
+    const height = 150;
+    const margin = 30;
+    
+    steps.forEach((step, index) => {
+        const row = Math.floor(index / cols);
+        const col = index % cols;
+        
+        const x = col * (width + margin);
+        const y = row * (height + margin);
+        
+        step.x = x;
+        step.y = y;
+        
+        const stepElement = document.createElement('div');
+        stepElement.className = 'step-node' + (currentStep === step ? ' active' : '');
+        stepElement.style.left = x + 'px';
+        stepElement.style.top = y + 'px';
+        stepElement.setAttribute('data-step-id', step.id);
+        stepElement.onclick = () => selectStep(step);
+        
+        stepElement.innerHTML = `
+            <div class="step-node-header">${step.name}</div>
+            <div class="step-node-type">${step.type}</div>
+            <div class="step-node-description">${step.description}</div>
+        `;
+        
+        canvas.appendChild(stepElement);
+    });
+}
+
+// Save process
+function saveProcess() {
+    if (steps.length === 0) {
+        alert('Please add at least one step to your process');
+        return;
+    }
+    
+    // Create process DNA
+    const processData = {
+        name: 'My Custom Process',
+        description: 'Process created in editor',
+        steps: steps,
+        connections: [] // Would be added when connecting steps
+    };
+    
+    console.log('Process saved:', processData);
+    alert('Process saved! (Demo only - check console for data)');
+}
+
+// Test process
+function testProcess() {
+    if (steps.length === 0) {
+        alert('Please add at least one step to test');
+        return;
+    }
+    
+    alert('Process testing functionality (to be implemented)');
+}
+
+// Load process
+function loadProcess() {
+    // In a real app, this would load from API or localStorage
+    // For demo, we'll start with empty process
+    console.log('Editor loaded - ready to create processes!');
+}
+
+// Call init when page loads
+initEditorPage();
+</script>
+{% endblock %}

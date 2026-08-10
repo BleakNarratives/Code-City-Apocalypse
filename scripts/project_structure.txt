@@ -1,0 +1,15 @@
+.
+├── build_obelisk.sh
+├── check_modmind.sh
+├── execute_cleanup.sh
+├── fix_obelisk.sh
+├── install_deps.sh
+├── lean_factory.sh
+├── local_ai_bridge.sh
+├── modmind_audit.sh
+├── molt_cli.py
+├── project_structure.txt
+├── setup_code_city.sh.save
+└── setup_nexus.sh
+
+1 directory, 12 files
