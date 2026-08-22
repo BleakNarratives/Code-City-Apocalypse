@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: datetime, os, subprocess
+# ROLE: [ARCHIVED CHAT PASTE — historical artifact, not executable code]
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 """[ARCHIVED CHAT PASTE — historical artifact, not executable code]
 
 # In Pydroid3 terminal, you're in SHELL, not Python!

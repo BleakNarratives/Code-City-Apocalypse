@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: automation_dna, json, pytest
+# ROLE: Test suite for Web Application functionality
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Test (0)
+# [/DNA_TAG]
+
 """
 Test suite for Web Application functionality
 Tests Flask routes, API endpoints, and web interface

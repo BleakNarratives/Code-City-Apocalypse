@@ -1,5 +1,16 @@
 # mvi_sigil_verifier.py - The Core of the Nyxwave Interpreter (NYX-INT)
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: stdlib
+# ROLE: MVISigilVerifier class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 class MVISigilVerifier:
     def __init__(self, registry_data_path):
         self.TRUSTED_REGISTRY = self._load_registry(registry_data_path)

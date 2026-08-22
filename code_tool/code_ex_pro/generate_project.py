@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: android, androidx, com, java, os
+# ROLE: AI Code Extractor Project Generator
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 AI Code Extractor Project Generator
 Run this script once to generate all project files in proper structure

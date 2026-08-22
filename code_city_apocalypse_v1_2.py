@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: aiofiles, asyncio, datetime, flask, flask_socketio, json, os, random, subprocess, sys, watchdog
+# ROLE: CODE CITY APOCALYPSE v1.2 - Optimized for big codebases, expanded features
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 CODE CITY APOCALYPSE v1.2 - Optimized for big codebases, expanded features
 No freezing, more tank: diff tracking, error fixes, modular growth.

@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: abc
+# ROLE: Generates audio data based on prompt and hive constraints.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 from abc import ABC, abstractmethod
 
 class SynthesisProvider(ABC):

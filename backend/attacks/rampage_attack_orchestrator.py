@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: asyncio, datetime, json, logging, os, pathlib, random, subprocess, typing
+# ROLE: RAMPAGE ATTACK ORCHESTRATOR
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 """
 RAMPAGE ATTACK ORCHESTRATOR
 Comprehensive attack coordination system for Rampage Refactor

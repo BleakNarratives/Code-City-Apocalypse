@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-entities
+# DEPS: stdlib
+# ROLE: Mayor Donetti Strump - Last Stand class.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """Mayor Donetti Strump - Last Stand class.
 
 Original implementation lost to chat-paste corruption.

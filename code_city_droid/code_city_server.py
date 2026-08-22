@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: asyncio, json, os, pathlib, random, time, typing, websockets
+# ROLE: Handles the deployment and effect of all agents.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
 import os
 import json
 import asyncio

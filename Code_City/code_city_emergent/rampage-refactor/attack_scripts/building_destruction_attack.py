@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: datetime, json, logging, os, pathlib, random, typing
+# ROLE: BUILDING DESTRUCTION ATTACK - RAMPAGE REFACTOR SPECIFIC
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 """
 BUILDING DESTRUCTION ATTACK - RAMPAGE REFACTOR SPECIFIC
 Simulates file deletion attacks that destroy "buildings" in the code city

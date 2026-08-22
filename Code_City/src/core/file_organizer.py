@@ -1,5 +1,16 @@
 # file_organizer.py - The Loosie Sorter
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-core
+# DEPS: collections, os, shutil
+# ROLE: Moves files from the 'loosies' folder into appropriate project structures.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 import os
 import shutil
 from collections import defaultdict

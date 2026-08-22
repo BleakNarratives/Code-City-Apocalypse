@@ -1,5 +1,16 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/city/city_mapper.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-app
+# DEPS: datetime, json, os, time
+# ROLE: CityMapper - convert scanned files into 'building' objects for visualizer and si
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
+
 """
 CityMapper - convert scanned files into 'building' objects for visualizer and simulator.
 

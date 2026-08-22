@@ -3,6 +3,17 @@
 # This server manages code analysis, calculates building metrics, 
 # and communicates real-time state to the frontend dashboard via WebSocket.
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: asyncio, json, os, pathlib, random, sys, time, uuid, watchdog, websockets
+# ROLE: Excludes typical junk and only includes code files.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
+
 import os
 import json
 import asyncio

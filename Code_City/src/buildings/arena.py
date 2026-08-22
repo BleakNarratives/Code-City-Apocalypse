@@ -1,6 +1,17 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/arena.py
 # Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/arena.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-buildings
+# DEPS: dataclasses, enum, math, random, time, typing
+# ROLE: The Arena - PvP Combat System
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 """
 The Arena - PvP Combat System
 Where developers compete in code battles, algorithm races, and refactor duels.

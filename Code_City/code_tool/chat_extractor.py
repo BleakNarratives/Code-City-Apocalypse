@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: datetime, os, re
+# ROLE: Here's some natural language.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 import os
 import re
 from datetime import datetime

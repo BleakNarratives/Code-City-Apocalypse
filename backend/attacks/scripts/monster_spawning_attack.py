@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: datetime, json, logging, os, pathlib, random, typing
+# ROLE: MONSTER SPAWNING ATTACK - RAMPAGE REFACTOR SPECIFIC
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 """
 MONSTER SPAWNING ATTACK - RAMPAGE REFACTOR SPECIFIC
 Simulates bug injection attacks that create "monsters" in the code city

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: celtic_crypto, datetime, fiber_core, json,, pathlib, red_team_attacks
+# ROLE: Phase 2 – Loom Daemon
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 Phase 2 – Loom Daemon
 Continuously syncs peer state, monitors integrity, and runs self-tests.

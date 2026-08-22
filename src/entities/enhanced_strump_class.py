@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: stdlib
+# ROLE: A satirical, cartoonish mayor NPC with a PG-13, over-the-top personality.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 class MayorNPC:
     """
     A satirical, cartoonish mayor NPC with a PG-13, over-the-top personality.

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: os, subprocess, sys
+# ROLE: Qwen CLI Integration for Code City Unified
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
 """
 Qwen CLI Integration for Code City Unified
 

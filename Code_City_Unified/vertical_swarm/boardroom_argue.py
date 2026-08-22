@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: subprocess, threading, time
+# ROLE: color_text function module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 import subprocess
 import threading
 import time

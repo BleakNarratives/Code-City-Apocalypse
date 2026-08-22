@@ -1,4 +1,15 @@
 # Save this as extractor.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: sys
+# ROLE: extractor
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 import sys
 
 text = sys.stdin.read()

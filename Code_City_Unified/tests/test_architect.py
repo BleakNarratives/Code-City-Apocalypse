@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: modmind_architect, os, sys, unittest
+# ROLE: Test that 'battle' keyword triggers the battle protocol
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Test (0)
+# [/DNA_TAG]
+
 import unittest
 import sys
 import os

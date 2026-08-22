@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-frontend
+# DEPS: code_city_apocalypse, smart_coder, traceback
+# ROLE: APOCALYPSE INTEGRATION - Connects code errors to visual disasters
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 APOCALYPSE INTEGRATION - Connects code errors to visual disasters
 """

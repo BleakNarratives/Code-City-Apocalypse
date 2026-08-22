@@ -1,4 +1,15 @@
 # Mayor Strump Debugger Expanded File: strump_debug_expanded.py Path: Unknown
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-entities
+# DEPS: stdlib
+# ROLE: MayorNPC class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 class MayorNPC:
     def refactor_city(self):
         print("Mayor: 'Time to refactor this city! Let's rename all variables to \"x\" and add 1000 comments!'")

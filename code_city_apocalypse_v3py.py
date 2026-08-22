@@ -1,4 +1,15 @@
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: stdlib
+# ROLE: code_city_apocalypse_v3.py
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 # Auto-generated: code_city_apocalypse_v3.py
 # Created by SmartCoder
 

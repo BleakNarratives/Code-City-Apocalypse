@@ -1,5 +1,16 @@
 # File: devstorm_scanner.py (The ModMind Scanner Backend)
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: stdlib
+# ROLE: Classifies a file into Industry, Commerce, or Residential Zone based on path and
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
+
 # --- ZONING CLASSIFIER (Blueprint for ModMind Agent Specialization) ---
 
 CODE_ZONES = {

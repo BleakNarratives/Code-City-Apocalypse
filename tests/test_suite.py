@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: backend, pathlib, sys, tempfile, unittest
+# ROLE: Dependency-light acceptance tests for the Code City scanner boundary.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Test (0)
+# [/DNA_TAG]
+
 """Dependency-light acceptance tests for the Code City scanner boundary."""
 
 from __future__ import annotations

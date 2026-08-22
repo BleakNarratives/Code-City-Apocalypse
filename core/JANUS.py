@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: datetime, hashlib, json, os, typing
+# ROLE: JANUS.py — Dual-Face Context Bridge
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 """
 JANUS.py — Dual-Face Context Bridge
 Looks backward (session memory) and 

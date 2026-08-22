@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: automation_dna, pytest
+# ROLE: Test fixtures and configuration for Automation DNA
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 """
 Test fixtures and configuration for Automation DNA
 """

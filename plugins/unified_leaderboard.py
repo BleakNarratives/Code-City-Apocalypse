@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: collections, core, datetime, os,, pathlib, plugins
+# ROLE: unified_leaderboard.py — Models, Users, Swarms, and Gladiator Showdowns.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 unified_leaderboard.py — Models, Users, Swarms, and Gladiator Showdowns.
 One leaderboard to rank them all. Feeds Quantum Derby odds.

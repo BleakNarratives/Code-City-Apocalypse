@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: hashlib, os, pathlib, rich, shutil
+# ROLE: VERTICAL AI - SYSTEM ORGANIZER
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 """
 VERTICAL AI - SYSTEM ORGANIZER
 Eliminates duplicates, organizes files, and optimizes storage

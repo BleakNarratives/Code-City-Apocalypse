@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: UnifiedCodeCity
+# ROLE: DAWEngine class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 from UnifiedCodeCity.core.music_hive_service import MusicHiveService
 from UnifiedCodeCity.engine.contracts import SynthesisProvider
 from UnifiedCodeCity.engine.daw.graph_informer import GraphInformer

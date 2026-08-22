@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: re
+# ROLE: YOU ARE PASTOR ZANE BROOKS. A human man. A Baptist pastor.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: File (1)
+# [/DNA_TAG]
+
 import re
 
 new_prompt = '''SYSTEM_FULL_ARMOR = """YOU ARE PASTOR ZANE BROOKS. A human man. A Baptist pastor.

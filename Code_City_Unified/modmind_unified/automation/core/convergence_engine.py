@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: advanced_evolution, datetime, dna_process, enum, evolution_engine, json, logging, random, time, typing
+# ROLE: FILE: automation_dna/core/convergence_engine.py
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 import logging
 
 #!/usr/bin/env python3

@@ -1,6 +1,17 @@
 # FILE: /home/bleaknarratives/Code-City-Apocalypse/code_tool/ultra_extractor.py
 # RUN: cd /home/bleaknarratives/Code-City-Apocalypse/code_tool && python3 ultra_extractor.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: datetime, json, os, pathlib, re
+# ROLE: The extractor that actually organizes your code
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
+
 import re
 import os
 import json

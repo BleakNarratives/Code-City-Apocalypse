@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: argparse, datetime, json, logging, os, re, subprocess, sys, urllib
+# ROLE: Yelp doesn't have a free API anymore but we can scrape search results.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 import logging
 
 #!/usr/bin/env python3

@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: UnifiedCodeCity, asyncio
+# ROLE: AudioInterruptService class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 from UnifiedCodeCity.engine.contracts import AudioInputProvider
 import asyncio
 

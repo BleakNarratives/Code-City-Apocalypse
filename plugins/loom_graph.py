@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: collections, core, datetime, os,, pathlib, plugins
+# ROLE: loom_graph.py — The Loom: Data Fiber Topology Weaver
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 loom_graph.py — The Loom: Data Fiber Topology Weaver
 Layer 3.5 — The third axis. Turns JANUS into a dimensional knowledge graph.

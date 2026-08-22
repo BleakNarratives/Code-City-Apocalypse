@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: automation_dna, pytest
+# ROLE: Test suite for Evolution Engine functionality
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Test (0)
+# [/DNA_TAG]
+
 """
 Test suite for Evolution Engine functionality
 Tests population management, selection, breeding, and evolution

@@ -1,5 +1,16 @@
 # Author: BleakNarratives
 # File: pastor_wrapper_v4.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: subprocess,
+# ROLE: preach function module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
 import subprocess, sys
 
 SYSTEM = {

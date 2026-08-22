@@ -1,6 +1,17 @@
 # File: code_city_attackers.py
 # Path: /src/entities/code_city_attackers.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-entities
+# DEPS: random
+# ROLE: Base class for all entities in Code City.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
+
 import random
 
 class CodeEntity:

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: asyncio, datetime, json, logging, os, pathlib, random, typing, websockets
+# ROLE: WEBSOCKET HIJACKING ATTACK SIMULATOR
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 """
 WEBSOCKET HIJACKING ATTACK SIMULATOR
 Simulates WebSocket connection hijacking and message manipulation

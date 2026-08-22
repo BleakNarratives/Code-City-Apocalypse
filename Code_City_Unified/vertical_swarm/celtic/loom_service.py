@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: celtic_crypto, fiber_core, flask, json,
+# ROLE: Creates loom_state.db and provides REST API for fibers.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 """
 Creates loom_state.db and provides REST API for fibers.
 """

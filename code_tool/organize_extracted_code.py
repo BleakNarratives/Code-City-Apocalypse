@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: glob, os, pathlib, re
+# ROLE: Scans the OUTPUT_ROOT for extracted code files and moves them
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 # FILENAME: organize_extracted_code.py
 # FILE PATH: /home/bleaknarratives/Code-City-Apocalypse/code_tool/organize_extracted_code.py
 

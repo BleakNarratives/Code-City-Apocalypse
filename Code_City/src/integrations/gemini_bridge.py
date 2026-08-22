@@ -1,5 +1,16 @@
 # gemini_bridge.py - EquiNex Real-Time Chat Integration
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-integrations
+# DEPS: stdlib
+# ROLE: Monitors the Gemini Android app chat stream via clipboard polling.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 # NOTE: In a real Termux environment, the 'termux-api-wrapper' 
 # would use subprocess.run('termux-clipboard-get') and other 
 # Android accessibility APIs (conceptual for safety).

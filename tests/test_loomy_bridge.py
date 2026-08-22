@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: backend, pathlib, sys, unittest
+# ROLE: Dependency-light tests for the Loomy -> Code City bridge (Track 3.1).
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Test (0)
+# [/DNA_TAG]
+
 """Dependency-light tests for the Loomy -> Code City bridge (Track 3.1)."""
 
 from __future__ import annotations

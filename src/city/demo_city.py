@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: json, os, sys, time
+# ROLE: Demo runner
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: UI (6)
+# [/DNA_TAG]
+
 """Demo runner
 Usage:
   termux $ python3 /home/bleaknarratives/Code-City-Apocalypse/demo_city.py /path/to/your/repo

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: datetime, pathlib, re, subprocess
+# ROLE: is_self_reference function module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 import subprocess
 import re
 from pathlib import Path

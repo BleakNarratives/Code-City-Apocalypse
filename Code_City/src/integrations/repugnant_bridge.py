@@ -1,6 +1,17 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/integrations/repugnant_bridge.py
 # Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/integrations/repugnant_bridge.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-integrations
+# DEPS: dataclasses, enum, json, statistics, time, typing
+# ROLE: Repugnant Integration Bridge
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 """
 Repugnant Integration Bridge
 Connects Code City to Repugnant (human behavior monitor) for:

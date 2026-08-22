@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: glob, os, pathlib, re
+# ROLE: Extracts code blocks of specific languages from a text string 
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 # FILENAME: chat_export_extractor.py
 # FILE PATH: /home/bleaknarratives/Code-City-Apocalypse/code_tool/chat_export_extractor.py
 

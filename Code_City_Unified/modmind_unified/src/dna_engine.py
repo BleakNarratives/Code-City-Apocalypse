@@ -1,6 +1,17 @@
 # Author: BleakNarratives
 # File: dna_engine.py
 # Path: ~/Code_City_Unified/modmind_unified/src/dna_engine.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: ast, datetime, shutil, subprocess
+# ROLE: Self-coding mutator. Reads file → prompts LLM → validates → overwrites.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 import ast
 import subprocess
 import shutil

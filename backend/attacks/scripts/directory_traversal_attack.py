@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: datetime, json, logging, os, pathlib, random, re, time, typing
+# ROLE: DIRECTORY TRAVERSAL ATTACK SIMULATOR
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 """
 DIRECTORY TRAVERSAL ATTACK SIMULATOR
 Simulates path traversal vulnerabilities in the Rampage Refactor system

@@ -1,6 +1,17 @@
 # File: CoreTenet_FCT.py
 # FCT = Foundational Constraint Trigger. Enforces Goldie Lock Zone adherence.
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: stdlib
+# ROLE: check_for_bloat function module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
+
 def check_for_bloat(language: str, template_type: str, requested_dependencies: list, required_external_services: list) -> dict:
     
     # --- 1. Define Standard Tenet Weights (The FCT's Priority System) ---

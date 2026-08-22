@@ -1,6 +1,17 @@
 # FILE: /home/bleaknarratives/Code-City-Apocalypse/code_tool/fixed_extractor.py
 # RUN: python3 fixed_extractor.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: re, subprocess
+# ROLE: main function module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
+
 import subprocess
 import re
 

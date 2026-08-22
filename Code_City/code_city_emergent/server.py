@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: asyncio, datetime, json, logging, os, pathlib, scanner, typing, websockets
+# ROLE: Rampage Refactor - Backend Server
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
 """
 Rampage Refactor - Backend Server
 Scans codebases, detects bugs, manages WebSocket connections

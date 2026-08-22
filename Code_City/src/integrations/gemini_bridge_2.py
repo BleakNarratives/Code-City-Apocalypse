@@ -1,5 +1,16 @@
 # gemini_bridge.py - EquiNex Real-Time Chat Integration
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-integrations
+# DEPS: time
+# ROLE: GeminiChatBridge class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 import time
 
 class GeminiChatBridge:

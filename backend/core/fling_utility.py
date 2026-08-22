@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: logging, os, pathlib, shutil, typing, yaml
+# ROLE: [ARCHIVED CHAT PASTE — historical artifact, not executable code]
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Utility (7)
+# [/DNA_TAG]
+
 """[ARCHIVED CHAT PASTE — historical artifact, not executable code]
 
 import yaml

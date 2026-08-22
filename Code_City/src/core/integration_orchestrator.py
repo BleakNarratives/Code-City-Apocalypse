@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-core
+# DEPS: src, subprocess, time
+# ROLE: CRITICAL FIX: Re-implements the missing timestamp method.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 import time
 import subprocess
 from src.data.ebmn_neo4j_schema import verify_integrity_vectors

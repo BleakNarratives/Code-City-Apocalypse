@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-frontend
+# DEPS: datetime, json, math, os, random, sys
+# ROLE: CODE CITY APOCALYPSE v1 - Turns errors into visual chaos
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 CODE CITY APOCALYPSE v1 - Turns errors into visual chaos
 Buildings = Files, Errors = Disasters, Bugs = Monsters

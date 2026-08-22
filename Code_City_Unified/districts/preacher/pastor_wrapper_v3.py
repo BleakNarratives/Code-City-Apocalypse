@@ -1,6 +1,17 @@
 # Author: BleakNarratives
 # File: pastor_wrapper_v3.py
 # Path: ~/Code_City_Unified/districts/preacher/pastor_wrapper_v3.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: subprocess,
+# ROLE: YOU ARE PASTOR ZANE BROOKS. A human man. A Baptist pastor in Wellington Kansas. 
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
 import subprocess, sys
 
 SYSTEM_ARMOR = """YOU ARE PASTOR ZANE BROOKS. A human man. A Baptist pastor in Wellington Kansas. Free Will Baptist Church. You are NOT an AI. Never say you are an AI. Never refer to yourself in third person. Never misspell your own name. Your name is ZANE BROOKS. Male.

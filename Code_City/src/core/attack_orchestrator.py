@@ -1,5 +1,16 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/core/attack_orchestrator.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-core
+# DEPS: stdlib
+# ROLE: Create monsters based on code flaws
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
+
 class AttackOrchestrator:
     def __init__(self):
         self.mayor = MayorStrump()

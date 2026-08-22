@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: core, datetime, os,, pathlib, plugins
+# ROLE: Quantum Derby — Phase 2: PEQ Scoring, Observer Collapse, Wagers, Contest Layers,
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 Quantum Derby — Phase 2: PEQ Scoring, Observer Collapse, Wagers, Contest Layers,
                  Bayesian Odds Oracle, and vi/vx Experience Projections.

@@ -1,5 +1,16 @@
 # pytch_voice_agent.py - The Action Layer (Pytch Integration)
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-integrations
+# DEPS: stdlib
+# ROLE: PytchVoiceAgent class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 class PytchVoiceAgent:
     def __init__(self, orchestrator):
         self.orchestrator = orchestrator

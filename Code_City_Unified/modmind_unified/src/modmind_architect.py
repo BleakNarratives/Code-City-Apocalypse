@@ -1,6 +1,17 @@
 # Author: BleakNarratives
 # File: modmind_architect.py
 # Path: ~/Code_City_Unified/modmind_unified/src/modmind_architect.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: abc, json
+# ROLE: Level 1 — Defense. Analyzes code for bugs.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 import json
 from abc import ABC, abstractmethod
 

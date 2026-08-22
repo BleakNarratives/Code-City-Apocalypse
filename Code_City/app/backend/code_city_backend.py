@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-app
+# DEPS: ast, asyncio, json, os, pathlib, subprocess, threading, typing, websockets
+# ROLE: Scan the actual file system and analyze code
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 import os
 import json
 import ast

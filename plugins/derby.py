@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: core, datetime, os,, pathlib, plugins
+# ROLE: derby.py — EOF Derby Leaderboard Engine
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 derby.py — EOF Derby Leaderboard Engine
 Layer 3 of JANUS. Models compete. Code ships.

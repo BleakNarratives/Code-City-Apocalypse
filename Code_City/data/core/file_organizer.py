@@ -1,5 +1,16 @@
 # file_organizer.py - Cleans up the root_2025 "loosies" and consolidates Code City
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-data
+# DEPS: stdlib
+# ROLE: FileOrganizer class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 class FileOrganizer:
     def __init__(self, new_base_path="/home/bleaknarratives/Code-City-Apocalypse"):
         self.base = new_base_path

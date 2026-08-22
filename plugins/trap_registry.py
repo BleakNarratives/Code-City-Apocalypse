@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: core, datetime, os,, pathlib, plugins
+# ROLE: trap_registry.py — Capability Gate System
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 trap_registry.py — Capability Gate System
 Layer 2 of JANUS — the lock before the rooms.

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-frontend
+# DEPS: datetime, json, os, random, sys
+# ROLE: CODE CITY APOCALYPSE v1.4 - Static HTML version, no deps beyond standard lib
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 CODE CITY APOCALYPSE v1.4 - Static HTML version, no deps beyond standard lib
 Quick viz for big codebases.

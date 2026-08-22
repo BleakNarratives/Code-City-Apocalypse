@@ -2,6 +2,17 @@
 # File: consumption_protocol.py
 # Path: ~/Code_City_Unified/modmind_unified/src/consumption_protocol.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: stdlib
+# ROLE: Twoie Protocol: absorb_agent() extracts all public methods from
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 class ConsumptionMixin:
     """
     Twoie Protocol: absorb_agent() extracts all public methods from

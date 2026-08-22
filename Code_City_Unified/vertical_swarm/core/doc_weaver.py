@@ -1,5 +1,16 @@
 # doc_weaver.py - The 5tr8d0p3 Documentation Weaver for NotebookLM
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: os
+# ROLE: Reads a Python file and generates a structured documentation file.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 import os
 
 def create_5tr8d0p3(file_path):

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: ast, datetime, json, logging, os, pathlib, random, re, typing
+# ROLE: CODE INJECTION ATTACK SIMULATOR
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 """
 CODE INJECTION ATTACK SIMULATOR
 Simulates malicious code injection attacks against the Rampage Refactor system

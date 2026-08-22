@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: celtic_crypto, fiber_core, hashlib, json
+# ROLE: Simulates various attacks against the fiber loom system
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 import hashlib
 import json
 from fiber_core import DataFiber

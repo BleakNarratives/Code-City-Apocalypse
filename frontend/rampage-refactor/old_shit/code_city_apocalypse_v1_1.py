@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-frontend
+# DEPS: datetime, flask, flask_socketio, json, os, random, sys, watchdog
+# ROLE: [ARCHIVED — syntax error fixed by wrapping]
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """[ARCHIVED — syntax error fixed by wrapping]
 
 #!/usr/bin/env python3

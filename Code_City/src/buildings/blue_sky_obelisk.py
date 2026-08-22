@@ -1,6 +1,17 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/blue_sky_obelisk.py
 # Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/blue_sky_obelisk.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-buildings
+# DEPS: dataclasses, enum, json, time, typing
+# ROLE: Blue Sky Obelisk - The Strategy Hub
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 """
 Blue Sky Obelisk - The Strategy Hub
 A mystical planning space where teams pause combat to strategize, review data,

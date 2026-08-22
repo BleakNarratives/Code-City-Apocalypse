@@ -1,5 +1,16 @@
 # cj_encoder.py - The Carrot Juice Protocol (CJP) Encoder for Celtic Data Loom
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-core
+# DEPS: hashlib, json
+# ROLE: Implements the Carrot Juice Protocol for topological data integrity.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 import hashlib
 import json
 

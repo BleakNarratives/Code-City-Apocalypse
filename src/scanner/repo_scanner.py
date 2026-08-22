@@ -1,5 +1,16 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/scanner/repo_scanner.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: os, re, time
+# ROLE: RepoScanner - scan a directory and extract per-file metrics used to build City o
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
+
 """
 RepoScanner - scan a directory and extract per-file metrics used to build City objects.
 

@@ -1,5 +1,16 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/entities/mayor_trump.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-entities
+# DEPS: stdlib
+# ROLE: The mayor creates spaghetti code and vulnerabilities
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 class MayorTrump:
     def __init__(self):
         self.catchphrases = [

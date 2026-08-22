@@ -1,6 +1,17 @@
 # FILE: /home/bleaknarratives/Code-City-Apocalypse/code_tool/screen_extractor.py
 # RUN: python3 screen_extractor.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: re, subprocess
+# ROLE: Try to grab text directly from screen without clipboard
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
+
 import subprocess
 import re
 

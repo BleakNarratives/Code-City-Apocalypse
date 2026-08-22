@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: asyncio, datetime, json, logging, os, pathlib, typing, websockets
+# ROLE: CODE CITY - Cross-Platform Backend Server
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Interface (2)
+# [/DNA_TAG]
+
 """
 CODE CITY - Cross-Platform Backend Server
 A functional code city visualization system for Android and Windows

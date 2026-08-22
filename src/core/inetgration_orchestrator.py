@@ -1,6 +1,17 @@
 # integration_orchestrator.py - Core of the EquiNex Protocol
 # Handles CRC enforcement, data routing, and DLSI triggers.
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: stdlib
+# ROLE: The central switchboard and security kernel of ModMind/EquiNex.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
+
 class IntegrationOrchestrator:
     """The central switchboard and security kernel of ModMind/EquiNex."""
     

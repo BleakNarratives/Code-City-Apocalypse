@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: core, dataclasses, datetime, os,, pathlib, plugins, typing
+# ROLE: whorl_translator.py — Whorl ↔ JANUS Universal Adapter
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 whorl_translator.py — Whorl ↔ JANUS Universal Adapter
 Bridges Whorl's helical agent physics into the JANUS ecosystem.

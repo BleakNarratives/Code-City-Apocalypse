@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: json, obelisk, sys
+# ROLE: You are {persona}. Analyze: {docs}
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 import sys
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'Code_City'))
 from obelisk.lib.ai.gemini_wrapper import GeminiWrapper

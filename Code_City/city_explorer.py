@@ -1,6 +1,17 @@
 # FILE: /home/bleaknarratives/Code-City-Apocalypse/city_explorer.py  
 # RUN: cd /home/bleaknarratives/Code-City-Apocalypse && python3 city_explorer.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: os, pathlib
+# ROLE: Scan file system and build city representation
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 import os
 from pathlib import Path
 

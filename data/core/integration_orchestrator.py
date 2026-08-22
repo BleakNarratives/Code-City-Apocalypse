@@ -1,5 +1,16 @@
 # integration_orchestrator.py - Core of the EquiNex Protocol
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: src, subprocess, time
+# ROLE: CRITICAL ROUTING FIX: Fetches the instance by its registered name.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
+
 import time
 import subprocess
 from src.data.ebmn_neo4j_schema import verify_integrity_vectors

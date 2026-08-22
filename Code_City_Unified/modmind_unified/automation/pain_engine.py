@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: argparse, collections, datetime, json, logging, os, subprocess, sys
+# ROLE: Call local Ollama via curl. No requests library needed.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 import logging
 
 #!/usr/bin/env python3

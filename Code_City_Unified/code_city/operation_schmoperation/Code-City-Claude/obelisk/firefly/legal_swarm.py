@@ -1,4 +1,15 @@
 # obelisk/firefly/legal_swarm.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: stdlib
+# ROLE: Firefly Legal Swarm - Document Analysis for Defense
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 Firefly Legal Swarm - Document Analysis for Defense
 Specialized scouts for Brady violations, evidence errors, misconduct

@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: datetime, subprocess, sys
+# ROLE: boardroom_simple.py – One file, eight opinions, no bullshit.
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
 """
 boardroom_simple.py – One file, eight opinions, no bullshit.
 Run with: python boardroom_simple.py

@@ -1,4 +1,15 @@
 # Create the main extraction script
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: json, os, pathlib, re, shutil
+# ROLE: Create organized output directory structure
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 cat > scripts/enhanced_extractor.py << 'EOF'
 #!/usr/bin/env python3
 import os

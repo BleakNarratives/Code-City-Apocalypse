@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-extraction
+# DEPS: datetime, os, re
+# ROLE: [ARCHIVED CHAT PASTE — historical artifact, not executable code]
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Extraction (8)
+# [/DNA_TAG]
+
 """[ARCHIVED CHAT PASTE — historical artifact, not executable code]
 
 import os

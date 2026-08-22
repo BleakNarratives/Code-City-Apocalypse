@@ -1,6 +1,17 @@
 # File: enhanced_sigil_generator.py
 # Fixed version with all syntax errors corrected
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: PIL, math, numpy, qrcode
+# ROLE: Generate consciousness-encoded sigil with QR, spirals, Celtic knot work, braids,
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Script (2)
+# [/DNA_TAG]
+
+
 from PIL import Image, ImageDraw, ImageFont, ImageColor
 import qrcode
 import numpy as np

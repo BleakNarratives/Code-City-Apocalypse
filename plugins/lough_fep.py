@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: collections, core, datetime, os,
+# ROLE: LOUGH/FEP — Legacy Overlay Unified Graphics Hub + Field Excited Programming
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 LOUGH/FEP — Legacy Overlay Unified Graphics Hub + Field Excited Programming
 

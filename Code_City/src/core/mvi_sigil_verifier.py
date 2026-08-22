@@ -1,5 +1,16 @@
 # mvi_sigil_verifier.py - The Core of the Nyxwave Interpreter (NYX-INT)
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-core
+# DEPS: json
+# ROLE: Verifies a live Component Sigil (MVI) against its trusted mathematical
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 import json
 # Conceptual import for NumPy/PIL math functions needed for real-time comparison
 # import numpy_lite as np_mvi 

@@ -1,5 +1,16 @@
 # pytch_voice_agent.py - The Action Layer (Pytch Integration)
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-core
+# DEPS: stdlib
+# ROLE: Receives validated commands from the Orchestrator and executes them 
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 class PytchVoiceAgent:
     """
     Receives validated commands from the Orchestrator and executes them 

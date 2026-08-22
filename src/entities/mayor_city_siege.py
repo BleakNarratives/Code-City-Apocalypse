@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: stdlib
+# ROLE: MayorNPC class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 class MayorNPC:
     def summon_monsters(self):
         print("Mayor: 'Let's summon some code flaws to attack the city!'")

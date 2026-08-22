@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: ast,, core, datetime, os, os,, pathlib, plugins
+# ROLE: amusement_park.py — Sandbox Playground for Models
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """
 amusement_park.py — Sandbox Playground for Models
 Layer 4 WILDCARD. Creative experimentation zone.

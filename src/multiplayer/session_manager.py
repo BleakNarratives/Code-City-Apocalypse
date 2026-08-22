@@ -1,6 +1,17 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/multiplayer/session_manager.py
 # Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/multiplayer/session_manager.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: dataclasses, enum, json, time, typing, uuid
+# ROLE: Multiplayer Session Manager
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 """
 Multiplayer Session Manager
 Handles lobby creation, role assignment, state synchronization, and combat coordination.

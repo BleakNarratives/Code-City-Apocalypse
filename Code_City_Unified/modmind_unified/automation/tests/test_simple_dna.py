@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: automation_dna, json, pytest
+# ROLE: Simple test suite for DNA Process functionality
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Test (0)
+# [/DNA_TAG]
+
 """
 Simple test suite for DNA Process functionality
 Tests basic creation, mutation, and serialization

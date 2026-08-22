@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: datetime, subprocess, sys
+# ROLE: VERTICAL AI // DEMO READY
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: UI (6)
+# [/DNA_TAG]
+
 """
 VERTICAL AI // DEMO READY
 One file. Eight voices. Your ideas. No bullshit.

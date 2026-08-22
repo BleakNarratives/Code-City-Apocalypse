@@ -1,6 +1,17 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/entities/mayor_strump_boss.py
 # Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/entities/mayor_strump_boss.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-src
+# DEPS: random, time, typing
+# ROLE: Mayor Donetti Strump - The Corrupt Mayor Boss
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 """
 Mayor Donetti Strump - The Corrupt Mayor Boss
 A satirical raid boss who secretly loves spaghetti code and spawns chaos.

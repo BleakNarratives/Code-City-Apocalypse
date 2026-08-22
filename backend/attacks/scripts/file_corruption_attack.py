@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: datetime, json, logging, os, pathlib, random, typing
+# ROLE: FILE CORRUPTION ATTACK SIMULATOR
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 """
 FILE CORRUPTION ATTACK SIMULATOR
 Simulates malicious file corruption attacks against codebases

@@ -1,6 +1,17 @@
 # Author: BleakNarratives
 # File: red_team.py
 # Path: ~/Code_City_Unified/modmind_unified/src/red_team.py
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-unified
+# DEPS: datetime, json, os, socket
+# ROLE: RedTeamScanner class module
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Attack (4)
+# [/DNA_TAG]
+
 import socket
 import json
 import os

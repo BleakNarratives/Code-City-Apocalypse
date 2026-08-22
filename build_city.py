@@ -1,3 +1,14 @@
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: json,, pathlib
+# ROLE: build city
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: File (1)
+# [/DNA_TAG]
+
 from pathlib import Path, PurePath
 import json, hashlib, html
 

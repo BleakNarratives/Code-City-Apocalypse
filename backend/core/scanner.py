@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-backend
+# DEPS: , ast, logging, os, pathlib, re, typing
+# ROLE: Code Scanner - Analyzes codebases and detects bugs
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Core (3)
+# [/DNA_TAG]
+
 """
 Code Scanner - Analyzes codebases and detects bugs
 """

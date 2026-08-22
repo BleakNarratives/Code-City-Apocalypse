@@ -1,4 +1,15 @@
 #!/usr/bin/env python3
+
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-general
+# DEPS: core, dataclasses, datetime, os,, pathlib, plugins
+# ROLE: gauntlet.py — Ghost Trials, Gladiator Defenders, Obstacle Courses, and Mutation 
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
 """gauntlet.py — Ghost Trials, Gladiator Defenders, Obstacle Courses, and Mutation Prizes."""
 
 import os, sys, json, hashlib, time, shutil, subprocess, tempfile

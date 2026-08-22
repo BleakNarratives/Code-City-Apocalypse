@@ -1,6 +1,17 @@
 # File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/junkyard.py
 # Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/junkyard.py
 
+# [DNA_TAG]
+# ORIGIN: Crostini-Chromebook
+# PILLAR: codecity-buildings
+# DEPS: dataclasses, enum, json, random, typing
+# ROLE: Junkyard - The Frankencode Factory
+# AUTHOR: Buffy (Codebuff AI)
+# SESSION: 2026-08-22 Bucket 08 DNA Sweep
+# TIER: Module (3)
+# [/DNA_TAG]
+
+
 """
 Junkyard - The Frankencode Factory
 Where deleted/deprecated code goes to be salvaged, combined, and resurrected.
