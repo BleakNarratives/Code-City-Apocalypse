@@ -1,4 +1,4 @@
-# File: /storage/emulated/0/code_city/src/entities/mayor_trump.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/entities/mayor_trump.py
 
 class MayorTrump:
     def __init__(self):

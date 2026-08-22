@@ -1,0 +1,58 @@
+CODE-CITY-APOCALYPSE — OPERATIONAL RUNBOOK
+==========================================
+
+PURPOSE
+-------
+A dynamic city simulation / agent-based environment for red-team/blue-team
+code security exercises. Models attack and defense in a simulated city grid.
+
+ARCHITECTURE
+------------
+Code_City/                    # Main simulation (multiple versions v1-v4)
+├── code_city_apocalypse.py   # Primary simulation runner (v1-v4+ iterations)
+├── code_city_server.py       # Dynamic server
+├── code_city_static.py       # Static renderer
+├── build_city.py             # City builder
+├── red_team_attacks.py       # Attack simulation
+├── defensive_fortifications.py # Defense simulation
+├── security_audit.py         # Security audit tools
+├── security_patches.py       # Patch system
+├── celtic_crypto.py          # Celtic knot cryptographic module
+├── android_code_city.py      # Android-specific runner
+└── city_explorer.py          # City exploration tool
+
+Code_City_Unified/            # Unified dashboard rewrite
+├── boardroom_orchestrator.py # Boardroom orchestration
+├── equinex_v1.html           # EquiNex frontend
+└── ws_server.py              # WebSocket server
+
+DevStorm Builder/             # Red team exercise framework
+└── class_redteam_exercise_devstorm_builder.py
+
+SAFE OPERATIONS
+---------------
+# List Python files and check syntax
+find . -name "*.py" -exec python3 -m py_compile {} \; 2>&1 | head -20
+
+# Run simple test (if available)
+python3 Code_City/simple_test.py 2>&1
+
+# Check the version history
+ls -la Code_City/code_city_apocalypse_v*.py
+
+VERSION LINEAGE
+---------------
+code_city_apocalypse.py → v1_1 → v1_2 → v1_2_2 → v1_4 → v2 → v3 → v3py → v4
+
+DANGEROUS OPERATIONS
+--------------------
+- Do NOT run red_team_attacks.py against any real system
+- Do NOT execute celtic_crypto.py as a real cryptographic module
+- The simulation may use system resources heavily — monitor CPU/memory
+
+RECOVERY NOTES
+--------------
+- Multiple version iterations exist — v4 is likely the most recent
+- DevStorm Builder files may have duplicates with (1), (2) suffixes
+- Code_City_Unified appears to be a consolidation/rewrite effort
+- WHO_DID_WHAT.md exists — review for history

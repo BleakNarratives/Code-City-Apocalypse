@@ -5,7 +5,7 @@ import shutil
 from collections import defaultdict
 
 # The base path for all loose files and the target for organizing.
-BASE_DIR = "/storage/emulated/0/root_2025"
+BASE_DIR = "/home/bleaknarratives/Code-City-Apocalypse/root_2025"
 
 class LoosieSorter: # <--- THIS CLASS NAME MUST BE HERE
     def __init__(self, orchestrator):

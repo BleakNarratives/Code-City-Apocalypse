@@ -1,5 +1,5 @@
-# File: /storage/emulated/0/code_city/src/buildings/blue_sky_obelisk.py
-# Path: /storage/emulated/0/code_city/src/buildings/blue_sky_obelisk.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/blue_sky_obelisk.py
+# Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/blue_sky_obelisk.py
 
 """
 Blue Sky Obelisk - The Strategy Hub

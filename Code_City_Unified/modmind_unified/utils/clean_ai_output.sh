@@ -1,4 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
+
 # Description: Cleans AI output by removing conversational fluff, extracting only code blocks.
 # Usage:
 #   echo "AI output with ```code``` and fluff" | ./clean_ai_output.sh

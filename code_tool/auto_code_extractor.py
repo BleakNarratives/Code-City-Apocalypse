@@ -8,13 +8,13 @@ import hashlib
 class AutoCodeExtractor:
     def __init__(self):
         self.watch_dirs = [
-            "/storage/emulated/0/Download",
-            "/storage/emulated/0/Documents", 
-            "/storage/emulated/0/scripts"
+            "/home/bleaknarratives/Code-City-Apocalypse",
+            "/home/bleaknarratives/Code-City-Apocalypse", 
+            "/home/bleaknarratives/Code-City-Apocalypse/scripts"
         ]
         self.processed_files = set()
         self.code_extensions = {'.py', '.txt', '.js', '.html', '.css', '.md', '.json', '.xml', '.yaml', '.yml'}
-        self.output_dir = "/storage/emulated/0/auto_extracted_code"
+        self.output_dir = "/home/bleaknarratives/Code-City-Apocalypse/code_tool/auto_extracted_code"
         
         # Create output structure
         Path(f"{self.output_dir}/code").mkdir(parents=True, exist_ok=True)

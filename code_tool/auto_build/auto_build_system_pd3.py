@@ -1,9 +1,11 @@
+"""[ARCHIVED CHAT PASTE — historical artifact, not executable code]
+
 # In Pydroid3 terminal, you're in SHELL, not Python!
 # Run Python explicitly:
 
 python3 -c "
 import os
-base_dir = '/storage/emulated/0/Documents/auto_build_system'
+base_dir = '/home/bleaknarratives/Code-City-Apocalypse/code_tool/auto_build'
 os.makedirs(base_dir, exist_ok=True)
 
 phase1_code = '''import time
@@ -19,8 +21,8 @@ def get_clipboard():
         return ''
 
 def save_to_file(content, filename):
-    os.makedirs('/storage/emulated/0/Documents/auto_capture', exist_ok=True)
-    filepath = f'/storage/emulated/0/Documents/auto_capture/{filename}'
+    os.makedirs('/home/bleaknarratives/Code-City-Apocalypse/code_tool/auto_capture', exist_ok=True)
+    filepath = f'/home/bleaknarratives/Code-City-Apocalypse/code_tool/auto_capture/{filename}'
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(content)
     return filepath
@@ -44,3 +46,4 @@ with open(f'{base_dir}/conversation_rider.py', 'w') as f:
 
 print(f'✅ SAVED: {base_dir}/conversation_rider.py')
 "
+"""

@@ -1,4 +1,4 @@
-# FILE: /storage/emulated/0/code_tool/fixed_extractor.py
+# FILE: /home/bleaknarratives/Code-City-Apocalypse/code_tool/fixed_extractor.py
 # RUN: python3 fixed_extractor.py
 
 import subprocess

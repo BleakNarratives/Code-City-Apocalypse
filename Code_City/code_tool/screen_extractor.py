@@ -1,4 +1,4 @@
-# FILE: /storage/emulated/0/code_tool/screen_extractor.py
+# FILE: /home/bleaknarratives/Code-City-Apocalypse/code_tool/screen_extractor.py
 # RUN: python3 screen_extractor.py
 
 import subprocess

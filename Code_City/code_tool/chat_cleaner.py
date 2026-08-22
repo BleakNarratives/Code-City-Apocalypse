@@ -6,7 +6,7 @@ from pathlib import Path
 
 class ChatCleaner:
     def __init__(self):
-        self.output_dir = "/storage/emulated/0/cleaned_chats"
+        self.output_dir = "/home/bleaknarratives/Code-City-Apocalypse/code_tool/cleaned_chats"
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
         
         # Patterns to identify and remove code blocks
@@ -66,10 +66,10 @@ class ChatCleaner:
     def find_chat_files(self):
         """Find potential chat log files"""
         chat_locations = [
-            "/storage/emulated/0/Download/*.txt",
-            "/storage/emulated/0/Documents/*.txt", 
-            "/storage/emulated/0/*.log",
-            "/storage/emulated/0/scripts/*.txt"
+            "/home/bleaknarratives/Code-City-Apocalypse/*.txt",
+            "/home/bleaknarratives/Code-City-Apocalypse/*.txt", 
+            "/home/bleaknarratives/Code-City-Apocalypse/*.log",
+            "/home/bleaknarratives/Code-City-Apocalypse/scripts/*.txt"
         ]
         
         chat_files = []

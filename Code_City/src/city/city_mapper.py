@@ -1,4 +1,4 @@
-# File: /storage/emulated/0/code_city/src/city/city_mapper.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/city/city_mapper.py
 
 """
 CityMapper - convert scanned files into 'building' objects for visualizer and simulator.

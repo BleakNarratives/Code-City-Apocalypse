@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import sys
-sys.path.append('/data/data/com.termux/files/home/code_city')
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'Code_City'))
 from obelisk.lib.ai.gemini_wrapper import GeminiWrapper
 import json
 

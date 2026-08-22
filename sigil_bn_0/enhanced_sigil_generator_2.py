@@ -1,3 +1,7 @@
-/storage/emulated/0/cat  [error opening dir]
+"""[ARCHIVED CHAT PASTE — historical artifact, not executable code]
+
+/home/bleaknarratives/Code-City-Apocalypse/cat  [error opening dir]
 
 0 directories, 0 files
+
+"""

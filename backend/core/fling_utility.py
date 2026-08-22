@@ -1,3 +1,5 @@
+"""[ARCHIVED CHAT PASTE — historical artifact, not executable code]
+
 import yaml
 import os
 import shutil
@@ -20,7 +22,7 @@ class FlingUtility:
         logger.info(f"Fling utility initialized. SD Card Root: {self.sd_card_root}")
 
     def _load_config(self) -> Dict:
-        """Loads the Fling configuration from a YAML file."""
+        \"\"\"Loads the Fling configuration from a YAML file.\"\"\"
         if not self.config_path.exists():
             logger.error(f"Config file not found: {self.config_path}")
             raise FileNotFoundError(f"Config file not found: {self.config_path}")
@@ -35,14 +37,14 @@ class FlingUtility:
             raise
 
     def _resolve_source_path(self, path_str: str) -> Path:
-        """Expands user home directory and resolves the path."""
+        \"\"\"Expands user home directory and resolves the path.\"\"\"
         return Path(os.path.expanduser(path_str)).resolve()
 
     def fling_files(self, dry_run: bool = False) -> Dict:
-        """
+        \"\"\"
         Scans source directories, matches files against patterns, and flings them to destinations.
         Returns a summary of actions taken.
-        """
+        \"\"\"
         logger.info(f"Starting Fling operation (Dry Run: {dry_run})...")
         summary = {
             "total_scanned_files": 0,
@@ -182,3 +184,5 @@ if __name__ == "__main__":
         console.print(f"[bold red]Error:[/bold red] Fling config file not found at {config_file}. Please create it.")
     except Exception as e:
         console.print(f"[bold red]An unexpected error occurred:[/bold red] {e}")
+
+"""

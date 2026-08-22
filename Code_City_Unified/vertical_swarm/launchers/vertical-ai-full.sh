@@ -1,4 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
+
 SWARM_DIR="$HOME/.ai_swarm"
 mkdir -p "$SWARM_DIR"
 

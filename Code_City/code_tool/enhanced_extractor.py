@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 
 class CodeExtractor:
-    def __init__(self, source_base="/storage/emulated/0", output_base="./output"):
+    def __init__(self, source_base="/home/bleaknarratives/Code-City-Apocalypse", output_base="./output"):
         self.source_base = source_base
         self.output_base = output_base
         self.setup_directories()

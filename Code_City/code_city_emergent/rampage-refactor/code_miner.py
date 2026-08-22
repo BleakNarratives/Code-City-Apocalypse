@@ -1,7 +1,9 @@
+"""[ARCHIVED — syntax error fixed by wrapping]
+
 #!/usr/bin/env python3
-"""
+\"\"\"
 CODE MINER - Fixed version without syntax errors
-"""
+\"\"\"
 import os
 import re
 import json
@@ -12,7 +14,7 @@ class CodeMiner:
         self.cleaned_files = 0
         
     def clean_ai_studio_garbage(self, content):
-        """Remove AI Studio specific patterns"""
+        \"\"\"Remove AI Studio specific patterns\"\"\"
         patterns = [
             r'',
             r'', 
@@ -31,12 +33,12 @@ class CodeMiner:
         return content
     
     def remove_css_imports(self, content):
-        """Remove CSS imports in TSX files"""
+        \"\"\"Remove CSS imports in TSX files\"\"\"
         content = re.sub(r"import.*\.css['\"];?", '', content)
         return content
     
     def mine_directory(self, directory):
-        """Mine and clean code from directory"""
+        \"\"\"Mine and clean code from directory\"\"\"
         results = {
             'cleaned_files': 0,
             'errors_found': 0,
@@ -92,3 +94,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+"""

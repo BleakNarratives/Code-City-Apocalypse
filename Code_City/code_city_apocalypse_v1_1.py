@@ -1,8 +1,10 @@
+"""[ARCHIVED — syntax error fixed by wrapping]
+
 #!/usr/bin/env python3
-"""
+\"\"\"
 CODE CITY APOCALYPSE v1.1 - Slick, real-time code viz for workflows
 No bullshit, just a tool to spot errors without fucking your focus.
-"""
+\"\"\"
 import json
 import random
 import os
@@ -25,7 +27,7 @@ class CodeCityApocalypse:
         self.last_scan = {}
         
     def scan_project(self, project_path="."):
-        """Scan project, update only changed files for real-time feel"""
+        \"\"\"Scan project, update only changed files for real-time feel\"\"\"
         updated = False
         for root, dirs, files in os.walk(project_path):
             for file in files:
@@ -106,7 +108,7 @@ def handle_connect():
     emit('update_scene', apocalypse.generate_city_scene())
 
 def apocalypse.generate_html(self):
-    return """
+    return \"\"\"
 <!DOCTYPE html>
 <html>
 <head>
@@ -188,7 +190,7 @@ def apocalypse.generate_html(self):
     </script>
 </body>
 </html>
-    """
+    \"\"\"
 
 if __name__ == "__main__":
     path = sys.argv[1] if len(sys.argv) > 1 else "."
@@ -201,3 +203,5 @@ if __name__ == "__main__":
     
     print("Running Code City server... Open http://localhost:5000")
     socketio.run(app, debug=True)
+
+"""

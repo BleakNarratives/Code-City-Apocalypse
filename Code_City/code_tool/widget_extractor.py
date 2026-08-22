@@ -44,7 +44,7 @@ def main():
         print(f"📦 FOUND {len(blocks)} CODE BLOCKS!")
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        project_dir = Path("/storage/emulated/0/code_tool/extracted_projects") / f"project_{timestamp}"
+        project_dir = Path("/home/bleaknarratives/Code-City-Apocalypse/code_tool/extracted_projects") / f"project_{timestamp}"
         project_dir.mkdir(parents=True, exist_ok=True)
         
         for i, code in enumerate(blocks):

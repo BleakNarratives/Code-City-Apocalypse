@@ -38,7 +38,7 @@ def main():
             
             # Create organized copy
             # Preserve original folder structure but in organized output
-            rel_path = os.path.relpath(file_path, '/storage/emulated/0')
+            rel_path = os.path.relpath(file_path, '/home/bleaknarratives/Code-City-Apocalypse')
             dest_path = os.path.join(output_base, "organized", rel_path)
             
             # Create destination directory

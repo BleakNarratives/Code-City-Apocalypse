@@ -13,7 +13,7 @@ from pathlib import Path
 from datetime import datetime
 
 class ChatExportExtractor:
-    def __init__(self, output_base="/storage/emulated/0/extracted_chat_code"):
+    def __init__(self, output_base="/home/bleaknarratives/Code-City-Apocalypse/code_tool/extracted_chat_code"):
         self.output_base = Path(output_base)
         self.output_base.mkdir(parents=True, exist_ok=True)
         

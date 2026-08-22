@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # FILENAME: organize_extracted_code.py
-# FILE PATH: /storage/emulated/0/scripts/organize_extracted_code.py
+# FILE PATH: /home/bleaknarratives/Code-City-Apocalypse/code_tool/organize_extracted_code.py
 
 import os
 import re
@@ -9,7 +9,7 @@ from pathlib import Path
 
 # --- Configuration ---
 # Must match the output directory in your ChatExportExtractor class
-OUTPUT_ROOT = Path("/storage/emulated/0/extracted_chat_code")
+OUTPUT_ROOT = Path("/home/bleaknarratives/Code-City-Apocalypse/code_tool/extracted_chat_code")
 # Regex to find the language and original file name from the saved file name
 # e.g., 'conversation_log_test_python.txt' -> groups: ('conversation_log_test', 'python')
 # This assumes your naming convention is {base_name}_{lang}.txt

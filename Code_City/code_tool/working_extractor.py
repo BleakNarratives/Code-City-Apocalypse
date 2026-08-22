@@ -1,3 +1,5 @@
+"""[ARCHIVED CHAT PASTE — historical artifact, not executable code]
+
 import os
 import re
 from datetime import datetime
@@ -43,6 +45,7 @@ def save_to_files(code_blocks, natural_language, tasks):
 
 # Test
 if __name__ == "__main__":
-    test_chat = """Hello"""
+    test_chat = \"\"\"Hello\"\"\"
 ```python
 print('test')
+"""

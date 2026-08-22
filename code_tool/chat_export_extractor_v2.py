@@ -1,12 +1,16 @@
+"""[ARCHIVED — syntax error fixed by wrapping]
+
 ```python
 #!/usr/bin/env python3
-"""
+\"\"\"
 Fixed Chat Export Code Extractor
 - Saves files with correct extensions
 - Organizes into language-specific folders
 - Handles inline snippets separately
-"""
+\"\"\"
 
+# Auto-recovered file
+\"\"\"
 import re
 import os
 import json
@@ -15,7 +19,7 @@ from datetime import datetime
 
 class ChatExportExtractor:
     def __init__(self):
-        self.output_dir = Path("/storage/emulated/0/extracted_chat_code")
+        self.output_dir = Path("/home/bleaknarratives/Code-City-Apocalypse/code_tool/extracted_chat_code")
         self.output_dir.mkdir(parents=True, exist_ok=True)
         
         # FIXED: Proper extension mapping
@@ -49,7 +53,7 @@ class ChatExportExtractor:
         }
     
     def extract_from_text(self, content: str, source_name: str) -> dict:
-        """Extract code blocks with proper language detection"""
+        \"\"\"Extract code blocks with proper language detection\"\"\"
         extracted = {}
         
         # Extract fenced code blocks
@@ -70,7 +74,7 @@ class ChatExportExtractor:
         return extracted
     
     def save_extracted_code(self, extracted: dict, source_name: str, original_path: str) -> list:
-        """Save code into organized language folders with correct extensions"""
+        \"\"\"Save code into organized language folders with correct extensions\"\"\"
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         saved_files = []
         
@@ -127,7 +131,7 @@ class ChatExportExtractor:
         return saved_files
     
     def process_file(self, file_path: str):
-        """Process a single chat export file"""
+        \"\"\"Process a single chat export file\"\"\"
         source_name = Path(file_path).stem
         print(f"📄 Processing: {file_path}")
         
@@ -147,12 +151,12 @@ class ChatExportExtractor:
             return []
     
     def run_extraction(self):
-        """Find and process all chat export files"""
+        \"\"\"Find and process all chat export files\"\"\"
         patterns = [
-            "/storage/emulated/0/Download/*chat*.txt",
-            "/storage/emulated/0/Download/*.log",
-            "/storage/emulated/0/Documents/*.txt",
-            "/storage/emulated/0/*.md"
+            "/home/bleaknarratives/Code-City-Apocalypse/*chat*.txt",
+            "/home/bleaknarratives/Code-City-Apocalypse/*.log",
+            "/home/bleaknarratives/Code-City-Apocalypse/*.txt",
+            "/home/bleaknarratives/Code-City-Apocalypse/*.md"
         ]
         
         import glob
@@ -173,3 +177,6 @@ if __name__ == "__main__":
     extractor = ChatExportExtractor()
     extractor.run_extraction()
 ```
+\"\"\"
+
+"""

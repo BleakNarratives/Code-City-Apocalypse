@@ -743,7 +743,7 @@ Automatically extracts code from AI chat sessions on Android.
 ## Usage
 Just chat with your AI assistants - code is automatically extracted and organized!
 
-Files saved to: /storage/emulated/0/Android/data/com.codeextractor/files/AICodeExtractor/
+Files saved to: /home/bleaknarratives/Code-City-Apocalypse/Android/data/com.codeextractor/files/AICodeExtractor/
 '''
 }
 

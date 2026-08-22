@@ -1,4 +1,4 @@
-# File: /storage/emulated/0/code_city/src/scanner/repo_scanner.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/scanner/repo_scanner.py
 
 """
 RepoScanner - scan a directory and extract per-file metrics used to build City objects.

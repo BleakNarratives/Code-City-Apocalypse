@@ -1,5 +1,5 @@
-# FILE: /storage/emulated/0/code_tool/ultra_extractor.py
-# RUN: cd /storage/emulated/0/code_tool && python3 ultra_extractor.py
+# FILE: /home/bleaknarratives/Code-City-Apocalypse/code_tool/ultra_extractor.py
+# RUN: cd /home/bleaknarratives/Code-City-Apocalypse/code_tool && python3 ultra_extractor.py
 
 import re
 import os
@@ -9,7 +9,7 @@ from datetime import datetime
 
 class UltraExtractor:
     def __init__(self):
-        self.base_dir = Path("/storage/emulated/0/code_tool")
+        self.base_dir = Path("/home/bleaknarratives/Code-City-Apocalypse/code_tool")
         self.projects_dir = self.base_dir / "organized_projects"
         self.projects_dir.mkdir(exist_ok=True)
     

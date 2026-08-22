@@ -1,9 +1,11 @@
+"""[ARCHIVED — syntax error fixed by wrapping]
+
 #!/usr/bin/env python3
-"""
+\"\"\"
 CODE CITY APOCALYPSE v1 - Turns errors into visual chaos
 Buildings = Files, Errors = Disasters, Bugs = Monsters
 Enhanced with interactive UI and fixes.
-"""
+\"\"\"
 import json
 import random
 import math
@@ -19,7 +21,7 @@ class CodeCityApocalypse:
         self.air_raids = []  # Syntax errors as air raids
         
     def scan_project(self, project_path="."):
-        """Scan project and create city layout"""
+        \"\"\"Scan project and create city layout\"\"\"
         self.buildings = []
         building_id = 0
         
@@ -64,7 +66,7 @@ class CodeCityApocalypse:
         return self.generate_city_scene()
     
     def get_file_type(self, filename):
-        """Determine building type based on file"""
+        \"\"\"Determine building type based on file\"\"\"
         if filename.endswith('.py'):
             return 'python_tower'
         elif filename.endswith('.tsx') or filename.endswith('.jsx'):
@@ -75,7 +77,7 @@ class CodeCityApocalypse:
             return 'data_bunker'
     
     def get_file_color(self, filename):
-        """Get building color based on file type"""
+        \"\"\"Get building color based on file type\"\"\"
         colors = {
             'python_tower': '#3572A5',  # Python blue
             'react_dome': '#61DAFB',    # React blue
@@ -85,7 +87,7 @@ class CodeCityApocalypse:
         return colors.get(self.get_file_type(filename), '#666666')
     
     def scan_file_for_errors(self, filepath):
-        """Scan file for errors and return severity level"""
+        \"\"\"Scan file for errors and return severity level\"\"\"
         try:
             with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
                 content = f.read()
@@ -121,7 +123,7 @@ class CodeCityApocalypse:
             return 3  # File read error
     
     def trigger_disaster(self, building, severity):
-        """Trigger appropriate disaster based on error severity"""
+        \"\"\"Trigger appropriate disaster based on error severity\"\"\"
         disasters = [
             self.create_fire,
             self.create_monster,
@@ -136,7 +138,7 @@ class CodeCityApocalypse:
             disaster_func(building)
     
     def create_fire(self, building):
-        """Create fire disaster for syntax errors"""
+        \"\"\"Create fire disaster for syntax errors\"\"\"
         fire = {
             'type': 'fire',
             'building_id': building['id'],
@@ -151,7 +153,7 @@ class CodeCityApocalypse:
         self.disasters.append(fire)
     
     def create_monster(self, building):
-        """Create Rampage-style monster for logic errors"""
+        \"\"\"Create Rampage-style monster for logic errors\"\"\"
         monsters = ['gorilla', 'lizard', 'wolf', 'dinosaur']
         monster = {
             'type': 'monster',
@@ -169,7 +171,7 @@ class CodeCityApocalypse:
         self.monsters.append(monster)
     
     def create_air_raid(self, building):
-        """Create Red Baron air raid for runtime errors"""
+        \"\"\"Create Red Baron air raid for runtime errors\"\"\"
         plane = {
             'type': 'air_raid',
             'pilot': 'red_baron',
@@ -189,7 +191,7 @@ class CodeCityApocalypse:
         self.air_raids.append(plane)
     
     def create_earthquake(self, building):
-        """Create earthquake for system crashes"""
+        \"\"\"Create earthquake for system crashes\"\"\"
         quake = {
             'type': 'earthquake',
             'epicenter': {
@@ -202,7 +204,7 @@ class CodeCityApocalypse:
         self.disasters.append(quake)
     
     def create_lightning(self, building):
-        """Create lightning for electrical/performance issues"""
+        \"\"\"Create lightning for electrical/performance issues\"\"\"
         lightning = {
             'type': 'lightning',
             'building_id': building['id'],
@@ -221,7 +223,7 @@ class CodeCityApocalypse:
         self.disasters.append(lightning)
     
     def generate_city_scene(self):
-        """Generate Three.js scene with all elements"""
+        \"\"\"Generate Three.js scene with all elements\"\"\"
         scene = {
             'metadata': {
                 'generated_at': datetime.now().isoformat(),
@@ -241,8 +243,8 @@ class CodeCityApocalypse:
         return scene
     
     def generate_threejs_html(self, scene_data):
-        """Generate HTML with Three.js visualization"""
-        html_template = """
+        \"\"\"Generate HTML with Three.js visualization\"\"\"
+        html_template = \"\"\"
 <!DOCTYPE html>
 <html>
 <head>
@@ -387,3 +389,5 @@ class CodeCityApocalypse:
             scene.add(building);
             buildings.push(building);
         });
+
+"""

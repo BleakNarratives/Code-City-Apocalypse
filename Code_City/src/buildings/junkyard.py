@@ -1,5 +1,5 @@
-# File: /storage/emulated/0/code_city/src/buildings/junkyard.py
-# Path: /storage/emulated/0/code_city/src/buildings/junkyard.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/junkyard.py
+# Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/junkyard.py
 
 """
 Junkyard - The Frankencode Factory

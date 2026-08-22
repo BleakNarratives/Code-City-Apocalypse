@@ -1,4 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
+
 cd ~/storage/shared/ai_swarm_project
 
 echo "🧬⚡ LAUNCHING TWINS..."

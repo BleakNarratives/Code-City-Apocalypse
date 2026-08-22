@@ -1,11 +1,11 @@
-# FILE: /storage/emulated/0/code_city/city_explorer.py  
-# RUN: cd /storage/emulated/0/code_city && python3 city_explorer.py
+# FILE: /home/bleaknarratives/Code-City-Apocalypse/city_explorer.py  
+# RUN: cd /home/bleaknarratives/Code-City-Apocalypse && python3 city_explorer.py
 
 import os
 from pathlib import Path
 
 class CodeCity:
-    def __init__(self, scan_path="/storage/emulated/0"):
+    def __init__(self, scan_path="/home/bleaknarratives/Code-City-Apocalypse"):
         self.scan_path = Path(scan_path)
         self.city = self.build_city()
     
@@ -88,5 +88,5 @@ class CodeCity:
         print(f"\n📊 CITY STATS: {total_buildings} code buildings found")
 
 # Build and display the city
-city = CodeCity("/storage/emulated/0/code_tool")  # Scan our workspace
+city = CodeCity("/home/bleaknarratives/Code-City-Apocalypse/code_tool")  # Scan our workspace
 city.print_city_map()

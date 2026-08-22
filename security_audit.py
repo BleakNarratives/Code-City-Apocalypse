@@ -1,3 +1,5 @@
+"""[ARCHIVED — syntax error fixed by wrapping]
+
 #!/usr/bin/env python3
 import hashlib
 import json
@@ -6,9 +8,9 @@ from celtic_crypto import CelticDataLoom
 from defensive_fortifications import FortifiedCelticLoom
 
 class SecurityAuditor:
-    """
+    \"\"\"
     Comprehensive security audit for fiber loom systems
-    """
+    \"\"\"
     
     def __init__(self):
         self.audit_results = {}
@@ -16,7 +18,7 @@ class SecurityAuditor:
         self.recommendations = []
     
     def audit_basic_loom(self, loom):
-        """Audit basic loom security"""
+        \"\"\"Audit basic loom security\"\"\"
         print("🔍 AUDITING BASIC LOOM SECURITY")
         print("="*50)
         
@@ -42,7 +44,7 @@ class SecurityAuditor:
         return findings
     
     def audit_celtic_loom(self, loom):
-        """Audit Celtic loom enhanced security"""
+        \"\"\"Audit Celtic loom enhanced security\"\"\"
         print("🔍 AUDITING CELTIC LOOM SECURITY")
         print("="*50)
         
@@ -71,7 +73,7 @@ class SecurityAuditor:
         return findings
     
     def audit_fortified_loom(self, loom):
-        """Audit fortified loom maximum security"""
+        \"\"\"Audit fortified loom maximum security\"\"\"
         print("🔍 AUDITING FORTIFIED LOOM SECURITY")
         print("="*50)
         
@@ -101,7 +103,7 @@ class SecurityAuditor:
         return findings
     
     def comprehensive_audit(self, loom):
-        """Run comprehensive security audit"""
+        \"\"\"Run comprehensive security audit\"\"\"
         print("🎯 COMPREHENSIVE SECURITY AUDIT")
         print("="*60)
         
@@ -150,7 +152,7 @@ class SecurityAuditor:
         return security_score, findings
     
     def generate_recommendations(self, findings, loom_type):
-        """Generate security improvement recommendations"""
+        \"\"\"Generate security improvement recommendations\"\"\"
         print(f"\n🔧 SECURITY RECOMMENDATIONS:")
         
         recommendations = []
@@ -180,17 +182,17 @@ class SecurityAuditor:
         if findings['fiber_count'] > 20:
             recommendations.append("Consider implementing fiber
 python security_audit.py
-cat > /storage/emulated/0/code_city/security_patches.py << 'EOF'
+cat > /home/bleaknarratives/Code-City-Apocalypse/security_patches.py << 'EOF'
 import hashlib
 import time
 from fiber_core import DataFiber
 
 class SecurityPatches:
-    """Critical security fixes for identified vulnerabilities"""
+    \"\"\"Critical security fixes for identified vulnerabilities\"\"\"
     
     @staticmethod
     def patch_collective_integrity(loom):
-        """Patch 1: Prevent unauthorized fiber injection"""
+        \"\"\"Patch 1: Prevent unauthorized fiber injection\"\"\"
         print("🛡️  PATCHING COLLECTIVE INTEGRITY VULNERABILITY")
         
         original_add_fiber = loom.add_fiber
@@ -212,7 +214,7 @@ class SecurityPatches:
     
     @staticmethod
     def patch_knot_verification(loom):
-        """Patch 2: Make knot verification mandatory for extraction"""
+        \"\"\"Patch 2: Make knot verification mandatory for extraction\"\"\"
         print("🛡️  PATCHING KNOT INTEGRITY VULNERABILITY")
         
         original_extract_fiber = loom.extract_fiber
@@ -244,7 +246,7 @@ class SecurityPatches:
     
     @staticmethod
     def patch_rate_limiting(loom, max_fibers_per_minute=30):
-        """Patch 3: Prevent denial of service attacks"""
+        \"\"\"Patch 3: Prevent denial of service attacks\"\"\"
         print("🛡️  PATCHING DENIAL OF SERVICE VULNERABILITY")
         
         loom.fiber_add_times = []
@@ -275,7 +277,7 @@ class SecurityPatches:
     
     @staticmethod
     def apply_all_patches(loom):
-        """Apply all security patches to a loom instance"""
+        \"\"\"Apply all security patches to a loom instance\"\"\"
         print("🔒 APPLYING COMPREHENSIVE SECURITY PATCHES")
         print("="*50)
         
@@ -325,3 +327,5 @@ if __name__ == "__main__":
             break
     
     print("\n🏆 SECURITY PATCHES VALIDATED")
+
+"""

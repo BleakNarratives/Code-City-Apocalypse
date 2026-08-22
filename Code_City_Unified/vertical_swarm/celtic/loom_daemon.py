@@ -11,7 +11,7 @@ from fiber_core import DataFiber
 from celtic_crypto import CelticDataLoom
 from red_team_attacks import RedTeamAttacker   # optional if file exists
 
-PEER_FILE = "/storage/emulated/0/code_city/peerlist.json"
+PEER_FILE = "/home/bleaknarratives/Code-City-Apocalypse/peerlist.json"
 SYNC_INTERVAL = 60          # seconds between sync attempts
 INTEGRITY_CHECK_INTERVAL = 180
 REDTEAM_INTERVAL = 600      # optional self-test every 10 min

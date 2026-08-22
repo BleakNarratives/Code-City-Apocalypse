@@ -387,3 +387,4 @@ class CodeCityApocalypse:
             scene.add(building);
             buildings.push(building);
         });
+"""

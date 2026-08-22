@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # FILENAME: chat_export_extractor.py
-# FILE PATH: /storage/emulated/0/scripts/chat_export_extractor.py
+# FILE PATH: /home/bleaknarratives/Code-City-Apocalypse/code_tool/chat_export_extractor.py
 
 import re
 import os
@@ -15,7 +15,7 @@ class ChatExportExtractor:
     def __init__(self):
         # This is the directory where extracted code blocks will be saved
         # Must match the folder used by the organizer script
-        self.output_dir = "/storage/emulated/0/extracted_chat_code"
+        self.output_dir = "/home/bleaknarratives/Code-City-Apocalypse/code_tool/extracted_chat_code"
         # Ensure the output directory exists
         Path(self.output_dir).mkdir(parents=True, exist_ok=True)
 

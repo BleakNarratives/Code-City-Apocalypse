@@ -73,5 +73,5 @@ def weave_code_city_docs(base_dir):
 
 if __name__ == "__main__":
     # Start the scan from the Code City root
-    weave_code_city_docs('/storage/emulated/0/root_2025/code_city')
+    weave_code_city_docs('/home/bleaknarratives/Code-City-Apocalypse/root_2025/code_city')
     

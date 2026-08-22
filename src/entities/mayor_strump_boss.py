@@ -1,5 +1,5 @@
-# File: /storage/emulated/0/code_city/src/entities/mayor_strump_boss.py
-# Path: /storage/emulated/0/code_city/src/entities/mayor_strump_boss.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/entities/mayor_strump_boss.py
+# Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/entities/mayor_strump_boss.py
 
 """
 Mayor Donetti Strump - The Corrupt Mayor Boss

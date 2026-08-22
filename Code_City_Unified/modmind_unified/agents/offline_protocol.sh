@@ -1,4 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
+
 # 🛡️ OFFLINE AGENT PROTOCOL
 # Enables agents to work with cached data when offline
 

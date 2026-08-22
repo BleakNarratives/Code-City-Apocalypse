@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify
 from fiber_core import DataFiber
 from celtic_crypto import CelticDataLoom
 
-DB_PATH = "/storage/emulated/0/code_city/loom_state.db"
+DB_PATH = "/home/bleaknarratives/Code-City-Apocalypse/loom_state.db"
 app = Flask(__name__)
 loom = CelticDataLoom()
 

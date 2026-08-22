@@ -1,4 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/bash
+#!/bin/bash
+
 # MIND READER: Behavioral Profiling
 # "We know what you're thinking before you do."
 

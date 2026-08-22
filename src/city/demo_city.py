@@ -1,9 +1,9 @@
-Demo runner
+"""Demo runner
 Usage:
-  termux $ python3 /storage/emulated/0/code_city/demo_city.py /path/to/your/repo
+  termux $ python3 /home/bleaknarratives/Code-City-Apocalypse/demo_city.py /path/to/your/repo
 
 Outputs:
-  - /storage/emulated/0/code_city/data/city.json
+  - /home/bleaknarratives/Code-City-Apocalypse/Code_City/data/city.json
   - an ASCII 'panorama' printed to stdout (sorted by height)
 """
 
@@ -13,7 +13,7 @@ import time
 import json
 
 REPO_ROOT = sys.argv[1] if len(sys.argv) > 1 else '.'
-OUT_JSON = '/storage/emulated/0/code_city/data/city.json'
+OUT_JSON = '/home/bleaknarratives/Code-City-Apocalypse/Code_City/data/city.json'
 
 # ensure local imports work when executed from top-level
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
@@ -23,7 +23,7 @@ try:
     from city.city_mapper import build_city, save_city
 except Exception:
     # if launched from /storage..., assume structure is /storage/.../src present
-    sys.path.insert(0, os.path.join('/storage/emulated/0/code_city', 'src'))
+    sys.path.insert(0, os.path.join('/home/bleaknarratives/Code-City-Apocalypse', 'src'))
     from scanner.repo_scanner import scan_repo
     from city.city_mapper import build_city, save_city
 

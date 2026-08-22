@@ -1,7 +1,7 @@
 # Fling Configuration - Defines permanent file routing paths.
 # Think of these as your "interstate highways" for files.
 
-sd_card_root: "/storage/emulated/0/root_2026" # Base path for all destinations on your SD card
+sd_card_root: "/home/bleaknarratives/Code-City-Apocalypse" # Base path for all destinations on your SD card
 
 source_directories:
   - "~/Documents"
@@ -12,7 +12,7 @@ source_directories:
 mappings:
   - name: "PDF Archive"
     pattern: "*.pdf"
-    destination: "documents/pdfs" # Will resolve to /storage/emulated/0/root_2026/documents/pdfs
+    destination: "documents/pdfs" # Will resolve to /home/bleaknarratives/Code-City-Apocalypse/documents/pdfs
     action: "move" # or "copy"
     tag: "EXIT_PDF_ARCHIVE" # Analogous to an interstate exit sign
 

@@ -1,4 +1,5 @@
-#!/data/data/com.termux/files/usr/bin/env bash
+#!/usr/bin/env bash
+
 cd ~/storage/shared/ai_swarm_project
 
 echo "🧬 Starting Eden..."

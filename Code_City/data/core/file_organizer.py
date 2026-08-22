@@ -1,7 +1,7 @@
 # file_organizer.py - Cleans up the root_2025 "loosies" and consolidates Code City
 
 class FileOrganizer:
-    def __init__(self, new_base_path="/storage/emulated/0/code_city"):
+    def __init__(self, new_base_path="/home/bleaknarratives/Code-City-Apocalypse"):
         self.base = new_base_path
 
     def get_target_path(self, filename):

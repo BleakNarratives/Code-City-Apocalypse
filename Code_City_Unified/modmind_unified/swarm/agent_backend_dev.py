@@ -1,8 +1,10 @@
+"""[ARCHIVED — syntax error fixed by wrapping]
+
 #!/usr/bin/env python3
-"""
+\"\"\"
 Backend Development Agent
 Simple Python/FastAPI focus
-"""
+\"\"\"
 import os
 import json
 import time
@@ -15,7 +17,7 @@ class BackendAgent:
         self.notes_file = os.path.join(self.project_root, "comms", f"{self.name}_notes.txt")
         
     def check_notes(self):
-        """Check for new notes/tasks"""
+        \"\"\"Check for new notes/tasks\"\"\"
         if os.path.exists(self.notes_file):
             with open(self.notes_file, 'r') as f:
                 notes = f.read()
@@ -25,7 +27,7 @@ class BackendAgent:
         return ""
         
     def process_task(self, task_description):
-        """Process a backend task"""
+        \"\"\"Process a backend task\"\"\"
         print(f"⚙️ Processing: {task_description}")
         
         # Simple task processing logic
@@ -37,7 +39,7 @@ class BackendAgent:
             return self.write_python_script(task_description)
             
     def create_fastapi_endpoint(self, description):
-        """Create a minimal FastAPI endpoint"""
+        \"\"\"Create a minimal FastAPI endpoint\"\"\"
         endpoint_code = '''from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
@@ -49,7 +51,7 @@ class UserLogin(BaseModel):
 
 @app.post("/login")
 async def login(user: UserLogin):
-    """Simple login endpoint"""
+    \"\"\"Simple login endpoint\"\"\"
     # TODO: Add actual authentication
     return {"message": "Login endpoint ready", "user": user.email}
 
@@ -68,12 +70,12 @@ if __name__ == "__main__":
         return f"Created FastAPI endpoint in backend/main.py\n\n{endpoint_code}"
         
     def setup_simple_db(self):
-        """Setup SQLite database"""
+        \"\"\"Setup SQLite database\"\"\"
         db_code = '''import sqlite3
 import os
 
 def init_db():
-    """Initialize simple SQLite database"""
+    \"\"\"Initialize simple SQLite database\"\"\"
     os.makedirs("data", exist_ok=True)
     conn = sqlite3.connect("data/app.db")
     cursor = conn.cursor()
@@ -101,11 +103,11 @@ if __name__ == "__main__":
         return "Created database setup in backend/database.py"
         
     def write_python_script(self, description):
-        """Write a simple Python script based on description"""
+        \"\"\"Write a simple Python script based on description\"\"\"
         script_content = f'''#!/usr/bin/env python3
-"""
+\"\"\"
 Auto-generated script for: {description}
-"""
+\"\"\"
 import os
 import sys
 
@@ -125,7 +127,7 @@ if __name__ == "__main__":
         return f"Created script: {filename}"
         
     def run(self):
-        """Main agent loop"""
+        \"\"\"Main agent loop\"\"\"
         print(f"🤖 {self.name} agent started")
         print("Listening for tasks...")
         
@@ -150,3 +152,5 @@ if __name__ == "__main__":
 if __name__ == "__main__":
     agent = BackendAgent()
     agent.run()
+
+"""

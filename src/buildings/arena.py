@@ -1,5 +1,5 @@
-# File: /storage/emulated/0/code_city/src/buildings/arena.py
-# Path: /storage/emulated/0/code_city/src/buildings/arena.py
+# File: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/arena.py
+# Path: /home/bleaknarratives/Code-City-Apocalypse/Code_City/src/buildings/arena.py
 
 """
 The Arena - PvP Combat System
