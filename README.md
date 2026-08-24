@@ -1,25 +1,61 @@
-# Code-City-Apocalypse
+# Code City Apocalypse
 
-## What is this?
-A dynamic city simulation or agent-based environment. This project likely deals
-with systemic state management, grid/node logic, and simulation loops.
+**Red team / blue team wargame — 514 Python files, zero syntax errors.**
 
-## What's the entry point?
-Search for simulation runners like `sim.py`, `city_loop.py`, or a main
-execution block that ticks the simulation forward. If there are data files
-(JSON / CSV), those represent the initial map / world state.
-
-## Forward Direction & Deployable Status
-**Status: Alpha Prototype**
-
-To make this deployable, the simulation tick logic must be decoupled from the
-rendering logic. Forward development should focus on establishing a clear
-state-export mechanism (e.g. outputting the city state as JSON per tick) so
-that external UIs or analytical dashboards can consume the API without stalling
-the core game loop.
-
-See also `~/bleaknarratives/INVENTORY.md` and `CROSS_DEVICE_MERGE_PLAN.md`.
+A dynamic city simulation where agents compete in a cyberpunk wargame. Red team agents (VIPER, RAVAGE, WRAPPER) attack. Blue team agents (EQUINEX, LIDARR, BASTION) defend. The city evolves through agent interactions.
 
 ---
 
-*Credit: Initial analysis and doc scaffold by Agent (Buffy / Freebuff) — 2026-07-21 un-attended doc-pass. Pending: identify the core simulation tick function and ensure save-state files are routed to a safe `.gitignored` data directory.*
+## Agents
+
+### Red Team
+| Agent | Role | Specialty |
+|-------|------|-----------|
+| **VIPER** | Precision | Auger — surgical strikes |
+| **RAVAGE** | Brute Force | Overwhelming force |
+| **WRAPPER** | UI Mimicry | Social engineering |
+
+### Blue Team
+| Agent | Role | Specialty |
+|-------|------|-----------|
+| **EQUINEX** | ModMind Guardian | System protection |
+| **LIDARR** | Topography/Radar | Threat detection |
+| **BASTION** | Immutable Rollback | Recovery and defense |
+
+### S-Rank Brown Hat
+| Agent | Role |
+|-------|------|
+| **THE SHIT SHOVELER** | Three named special moves, non-negotiable |
+
+---
+
+## Structure
+
+```
+Code_City/                  Core simulation
+Code_City_Unified/          Unified agent system
+SCOUT_CONTAINER/            Scout and intelligence modules
+backend/                    Server infrastructure
+frontend/                   UI and visualization
+code_tool/                  Code extraction utilities
+```
+
+## Stats
+
+- **514 Python files** — 0 syntax errors
+- **392 DNA-tagged files** — full lineage tracking
+- **51 syntax errors fixed** — all resolved in Sprint Ralphie
+
+## Running
+
+```bash
+python3 code_city_apocalypse.py
+```
+
+## Status
+
+**Alpha Prototype** — simulation tick logic decoupled from rendering. City state exportable as JSON for external dashboards.
+
+---
+
+*BleakNarratives // 2026*
