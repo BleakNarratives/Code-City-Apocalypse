@@ -1,0 +1,13 @@
+==================================================
+5TR8D0P3 DOCUMENTATION FILE
+SOURCE FILE: ebmn_neo4j_schema.py
+FULL PATH: /storage/emulated/0/root_2025/code_city/data/ebmn_neo4j_schema.py
+==================================================
+
+[INTENT AND PURPOSE (THE FEET)]
+ebmn_neo4j_schema.py - EquiLex Braided Metadata Node (EBMN) Schema
+
+[FUNCTIONAL BREAKDOWN]
+
+--- def verify_integrity_vectors(node_data):
+"""Checks the pitch (EQT) and yaw (SHS) vectors of a new node."""

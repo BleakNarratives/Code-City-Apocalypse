@@ -1,0 +1,1 @@
+# This makes smell_sniffer a Python package within truthsleuth.

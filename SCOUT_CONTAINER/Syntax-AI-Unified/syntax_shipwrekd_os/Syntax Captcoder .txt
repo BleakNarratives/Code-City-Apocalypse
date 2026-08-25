@@ -1,0 +1,17 @@
+**Automation** generates a private Livestream instance from each Blue Sky Meeting. Meeting begining will begin flow whenever #bsm tag is seen on screen or input into the keyboard. 
+
+Instance will initiate context-relative generation of titles, captions, and AI generated thumbnail images on some free tier service like restream.io, streamyard.com, etc to free tier endpoints like YouTube, Tik-Tok, IG, etc, for the purpose of playback review and reiteration.
+
+Optimal environment variables should allow for live Nat coding in an IDE (preferably IDEal) and demonstrate real time code extraction and scripting through both voice 2 text and thru synchronous on screen contents, then; 
+
+Syntax Captcoder reiterates via voice and/or text chat or monitors the human members of the meeting for alternatives, modifications, various other specifications in real time, monitors and applies specifications in real time,and;
+
+Test-integrates the code in DreamTable Sandbox thru the Looking Glass function, demonstrating the code additions visually as it would appear in the game 
+
+... Idk how to exactly say it with my dumb meatbrain, but it would kind of be like throwing on a pair of glasses that would allow you to "witness" the in-game variables "show up" in the game's UI, and literally all of this would be driven and overseen and directed by Syntax AI.
+
+I would assume this would be a major feature and selling point of IDEal, Syntax AI, and the ShipWrekD OS Builder Windows balls-kicking alternative uMachine. 
+
+Pssst... Mine's gonna be a gnarly ass FIOA accountability engine and RICO auditor for public officials and local governments, and a shit-kicker-inner for injustice and corruption and lawlessness. 
+
+*Tips Fedora

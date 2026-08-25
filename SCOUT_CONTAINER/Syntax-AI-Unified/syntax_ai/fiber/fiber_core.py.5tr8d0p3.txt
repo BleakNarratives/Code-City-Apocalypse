@@ -1,0 +1,46 @@
+==================================================
+5TR8D0P3 DOCUMENTATION FILE
+SOURCE FILE: fiber_core.py
+FULL PATH: /storage/emulated/0/root_2025/code_city/fiber_core.py
+==================================================
+
+[INTENT AND PURPOSE (THE FEET)]
+ADD THE MISSING METADATA
+
+[FUNCTIONAL BREAKDOWN]
+
+--- class DataFiber:
+ADD THE MISSING METADATA
+self.metadata = {
+'owner_proof': hashlib.sha3_256(owner_id.encode()).hexdigest(),
+'content_hash': self.content_hash,
+'fiber_type': self._classify_content(),
+'size_vector': len(raw_data),
+'temporal_stamp': self.timestamp
+}
+
+def _classify_content(self):
+"""Classify content type for relationship weaving"""
+
+--- def __init__(self, raw_data, owner_id):
+ADD THE MISSING METADATA
+self.metadata = {
+'owner_proof': hashlib.sha3_256(owner_id.encode()).hexdigest(),
+'content_hash': self.content_hash,
+'fiber_type': self._classify_content(),
+'size_vector': len(raw_data),
+'temporal_stamp': self.timestamp
+}
+
+def _classify_content(self):
+"""Classify content type for relationship weaving"""
+
+--- def _classify_content(self):
+"""Classify content type for relationship weaving"""
+
+--- def to_dict(self):
+Quick test
+if __name__ == "__main__":
+test = DataFiber("Bleak's secret project data", "bleak")
+print("🧪 Fiber Test:", json.dumps(test.to_dict(), indent=2))
+print("🔐 Metadata:", json.dumps(test.metadata, indent=2))

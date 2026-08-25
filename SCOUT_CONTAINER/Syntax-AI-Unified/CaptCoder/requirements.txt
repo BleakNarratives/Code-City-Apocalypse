@@ -1,0 +1,50 @@
+# Syntax AI CaptCoder - Python Dependencies
+# ============================================================================
+
+# Core dependencies
+python-dotenv>=0.19.0
+requests>=2.25.0
+
+# Code analysis and optimization
+astunparse>=1.6.3
+
+# File monitoring
+watchdog>=2.0.0
+
+# Type hints (Python 3.9+)
+typing-extensions>=3.10.0
+
+# CLI and argument parsing
+argparse>=1.4.0
+
+# Logging
+colorlog>=6.0.0
+
+# Data handling
+pydantic>=1.8.0
+
+# Optional: For enhanced code analysis
+# AST-based code analysis
+libcst>=0.3.0
+
+# Optional: For OCR-based screen extraction
+# pillow>=8.0.0
+# pytesseract>=0.3.0
+
+# Optional: For PDF processing
+# PyMuPDF>=1.20.0
+
+# Optional: For advanced file handling
+# pyrtf-ng>=0.9.0
+
+# ============================================================================
+# Development dependencies (for development only)
+# ============================================================================
+# Uncomment for development:
+# pytest>=7.0.0
+# pytest-cov>=3.0.0
+# black>=22.0.0
+# flake8>=4.0.0
+# mypy>=0.900
+# isort>=5.0.0
+# autopep8>=1.6.0

@@ -66,3 +66,6 @@ class SwarmController:
 
     def dump_log(self):
         return json.dumps(self.log, indent=2)
+
+# VERBOSE: Alias injected by Cloud Bridge to satisfy modmind_cli import expectation.
+modmind_architect = SwarmController

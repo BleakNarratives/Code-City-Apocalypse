@@ -1,0 +1,65 @@
+==================================================
+5TR8D0P3 DOCUMENTATION FILE
+SOURCE FILE: fiber_cli.py
+FULL PATH: /storage/emulated/0/root_2025/code_city/fiber_cli.py
+==================================================
+
+[INTENT AND PURPOSE (THE FEET)]
+#!/usr/bin/env python3
+Find full ID if partial was entered
+
+[FUNCTIONAL BREAKDOWN]
+
+--- def list_fibers(self):
+Find full ID if partial was entered
+full_id = None
+for fid in self.loom.fibers.keys():
+if fid.startswith(fiber_id):
+full_id = fid
+break
+
+if full_id:
+fiber = self.loom.extract_fiber(full_id, self.current_user)
+if fiber:
+print(f"✅ Extracted: {fiber.raw_data}")
+else:
+print("❌ Extraction failed - check ownership")
+else:
+print("❌ Fiber not found")
+
+def change_user(self):
+new_user = input("Enter new username: ").strip()
+if new_user:
+self.current_user = new_user
+print(f"👤 Switched to user: {new_user}")
+
+if __name__ == "__main__":
+cli = FiberCLI()
+cli.run()
+
+--- def extract_fiber(self):
+Find full ID if partial was entered
+full_id = None
+for fid in self.loom.fibers.keys():
+if fid.startswith(fiber_id):
+full_id = fid
+break
+
+if full_id:
+fiber = self.loom.extract_fiber(full_id, self.current_user)
+if fiber:
+print(f"✅ Extracted: {fiber.raw_data}")
+else:
+print("❌ Extraction failed - check ownership")
+else:
+print("❌ Fiber not found")
+
+def change_user(self):
+new_user = input("Enter new username: ").strip()
+if new_user:
+self.current_user = new_user
+print(f"👤 Switched to user: {new_user}")
+
+if __name__ == "__main__":
+cli = FiberCLI()
+cli.run()

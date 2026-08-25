@@ -1,0 +1,802 @@
+================================================================================
+SYNTAX AI CAPTCODE - OPERATIONAL RUNBOOK
+================================================================================
+Version: 1.0.0
+Last Updated: 2026-06-22
+Status: ACTIVE DEVELOPMENT
+
+================================================================================
+1. QUICK REFERENCE - COMMAND CHEATSHEET
+================================================================================
+
+STARTUP COMMANDS:
+-----------------
+# Start the main CaptCoder monitor (BSM detection, code extraction)
+python -m src.python.core.captcoder
+
+# Start code optimization ("Bitch Work" protocol)
+python -m src.python.optimizers.code_optimizer
+
+# Start the Nexus API server (required for inter-agent communication)
+python -m src.python.services.nexus_api
+
+# Start TypeScript frontend (Vite dev server)
+npm run dev
+
+# Full system startup (all components)
+./scripts/start.sh
+
+
+TESTING COMMANDS:
+-----------------
+# Run Python unit tests
+python -m pytest tests/python/ -v
+
+# Run specific test file
+python -m pytest tests/python/test_captcoder.py -v
+
+# Run TypeScript tests
+npm test
+
+# Run all tests
+./scripts/test.sh
+
+
+DEPLOYMENT COMMANDS:
+--------------------
+# Build TypeScript frontend
+npm run build
+
+# Create distribution package
+python scripts/build.py
+
+# Deploy to production
+./scripts/deploy.sh
+
+
+MONITORING COMMANDS:
+--------------------
+# Start auto code extractor (watches directories)
+python -m src.python.extractors.auto_code_extractor
+
+# Start chat code capture (interactive mode)
+python -m src.python.extractors.chat_code_capture
+
+# Scan for code issues (analysis only, no fixes)
+python -m src.python.optimizers.code_optimizer --scan-only
+
+# Apply auto-fixes (creates backups)
+python -m src.python.optimizers.code_optimizer --auto-fix
+
+
+EMERGENCY COMMANDS:
+-------------------
+# Stop all running components
+./scripts/stop.sh
+
+# Force stop (kill all Python/Node processes)
+pkill -f "python.*CaptCoder"
+pkill -f "node.*vite"
+
+# Check system status
+./scripts/status.sh
+
+# View logs in real-time
+tail -f /storage/emulated/0/RootBase/Syntax-AI-Unified/CaptCoder/logs/*.log
+
+
+================================================================================
+2. DAILY OPERATIONS
+================================================================================
+
+2.1 STARTUP SEQUENCE
+--------------------
+1. Check environment variables are set:
+   source .env
+
+2. Verify Nexus API is running:
+   curl -I http://127.0.0.1:8000/health
+
+3. Start CaptCoder monitor:
+   python -m src.python.core.captcoder &
+
+4. Start optimization engine (optional, for scheduled runs):
+   python -m src.python.optimizers.code_optimizer --schedule=hourly &
+
+5. Start frontend (if needed):
+   npm run dev &
+
+2.2 SHUTDOWN SEQUENCE
+---------------------
+1. Stop frontend:
+   Ctrl+C (in Vite terminal) or pkill -f vite
+
+2. Stop Python processes:
+   pkill -f captcoder
+   pkill -f code_optimizer
+
+3. Verify all processes stopped:
+   ps aux | grep -E "python|node" | grep CaptCoder
+
+
+2.3 MONITORING & HEALTH CHECKS
+------------------------------
+# Check Nexus API health
+every 5 minutes: curl -s http://127.0.0.1:8000/health | grep -q "healthy"
+
+# Check CaptCoder is processing
+tail -n 20 logs/captcoder.log | grep -q "CAPTURING\|MONITORING"
+
+# Check for errors in logs
+grep -i "ERROR\|FAILED\|EXCEPTION" logs/*.log
+
+# Check disk space (auto code extractor)
+du -sh /storage/emulated/0/auto_extracted_code/
+
+
+================================================================================
+3. BLUE SKY MEETING (#BSM) OPERATIONS
+================================================================================
+
+3.1 STARTING A BSM SESSION
+---------------------------
+1. Ensure CaptCoder is running:
+   python -m src.python.core.captcoder
+
+2. In any input (chat, IDE, terminal), type:
+   "Let's start the Blue Sky Meeting now #bsm"
+
+3. System will automatically:
+   - Initiate livestream to configured endpoints
+   - Generate titles and captions
+   - Create AI thumbnails
+   - Start real-time monitoring
+
+3.2 DURING BSM SESSION
+-----------------------
+- All code snippets in backticks are automatically extracted
+- JaneNat commands are routed to Nexus API
+- Code changes are tested in DreamTable Sandbox
+- Looking Glass provides visual preview
+
+3.3 ENDING BSM SESSION
+----------------------
+Send command:
+   "End Blue Sky Meeting #bsm-end"
+
+Or press Ctrl+C in CaptCoder process.
+
+Livestream will automatically:
+- Save recording
+- Generate summary
+- Upload to archive
+- Stop all endpoints
+
+
+================================================================================
+4. CODE EXTRACTION OPERATIONS
+================================================================================
+
+4.1 AUTO CODE EXTRACTOR
+-----------------------
+Configuration: src/python/extractors/auto_code_extractor.py
+
+Watched directories (default):
+  - /storage/emulated/0/Download
+  - /storage/emulated/0/Documents
+  - /storage/emulated/0/scripts
+
+Output directory: /storage/emulated/0/auto_extracted_code/
+
+To add custom directories:
+  Edit MONITOR_DIRECTORIES in .env
+  Or pass --watch-dir /path/to/dir
+
+To change check interval (default 30 seconds):
+  Edit WATCH_INTERVAL_SECONDS in .env
+
+
+4.2 CHAT CODE CAPTURE
+---------------------
+Interactive mode:
+  python -m src.python.extractors.chat_code_capture
+
+Usage:
+  1. Run the script
+  2. Paste chat responses containing code blocks
+  3. Code is automatically extracted and saved to: generated_code/
+  4. TTS feedback confirms each save (if enabled)
+
+Commands:
+  - Paste any text with code blocks (```python ... ```)
+  - Type 'exit' to quit
+  - Ctrl+C to interrupt
+
+
+4.3 SCREEN CODE EXTRACTION
+--------------------------
+OCR-based extraction (requires additional setup):
+
+Prerequisites:
+  pip install pillow pytesseract
+  Install Tesseract OCR: apt install tesseract-ocr
+
+Usage:
+  python -m src.python.extractors.screen_extractor --screenshot
+
+Or in monitoring mode:
+  python -m src.python.extractors.screen_extractor --monitor --interval 5
+
+
+================================================================================
+5. CODE OPTIMIZATION ("BITCH WORK" PROTOCOL)
+================================================================================
+
+5.1 RUNNING OPTIMIZATION
+------------------------
+# Analysis only (safe, no changes):
+python -m src.python.optimizers.code_optimizer --scan-only
+
+# Apply auto-fixes (creates .py.bak backups):
+python -m src.python.optimizers.code_optimizer --auto-fix
+
+# Full scan with report:
+python -m src.python.optimizers.code_optimizer --scan-only --report
+
+
+5.2 OPTIMIZATION RULES
+----------------------
+Enabled by default:
+  ✓ Long functions (>50 lines) - FLAGGED
+  ✓ Missing docstrings - FLAGGED
+  ✓ Unused imports - FLAGGED
+  ✓ Print statements - AUTO-FIXED (converted to logging)
+  ✓ Magic numbers - FLAGGED
+  ✓ Missing type hints - FLAGGED
+
+To customize rules:
+  Edit OPTIMIZATION_RULES in .env
+  Example: OPTIMIZATION_RULES={"long_functions": 100, "missing_docstrings": false}
+
+
+5.3 PATTERN JOURNAL
+--------------------
+All optimizations are logged to: pattern_journal.json
+
+Each entry contains:
+  - Timestamp
+  - File analyzed
+  - Issues found
+  - Fixes applied
+  - Confidence score
+
+To view journal:
+  cat pattern_journal.json | python -m json.tool
+
+To clear journal:
+  > pattern_journal.json.bak && cat /dev/null > pattern_journal.json
+
+
+================================================================================
+6. SMART CODE GENERATION
+================================================================================
+
+6.1 GENERATING CODE FROM DESCRIPTIONS
+-------------------------------------
+Usage:
+  python -m src.python.core.smart_coder "create login system"
+
+Supported templates:
+  - Python classes
+  - React components
+  - FastAPI endpoints
+  - Form systems
+  - Navigation components
+  - Dashboards
+
+Examples:
+  python -m src.python.core.smart_coder "create user authentication API"
+  python -m src.python.core.smart_coder "build admin dashboard with charts"
+  python -m src.python.core.smart_coder "make contact form with validation"
+
+
+6.2 NATURAL LANGUAGE COMMANDS
+-----------------------------
+Prefix commands with language type:
+
+#python create a class for user management
+#react build a navigation component with dropdown
+#fastapi create endpoints for CRUD operations
+#form create login form with email and password
+
+
+6.3 LIVE NAT CODING
+--------------------
+In CaptCoder monitor mode, natural language is automatically converted:
+
+Input: "JaneNat, create a Python class for asset management"
+Output: Auto-generates class_asset.py with full implementation
+
+Input: "I need a React component for user profile"
+Output: Auto-generates UserProfile.tsx with styling
+
+
+================================================================================
+7. INTEGRATIONS
+================================================================================
+
+7.1 NEXUS API INTEGRATION
+-------------------------
+Nexus API is the central command router for all Syntax AI agents.
+
+Default URL: http://127.0.0.1:8000/command
+
+To start Nexus API:
+  python -m src.python.services.nexus_api
+
+To test Nexus connection:
+  curl -X POST http://127.0.0.1:8000/command \
+    -H "Content-Type: application/json" \
+    -d '{"raw_input": "test", "source_agent": "CaptCoder"}'
+
+Expected response: {"status": "received", "action": "queued"}
+
+
+7.2 DREAMTABLE SANDBOX
+-----------------------
+For visual code preview and testing:
+
+Prerequisites:
+  - DreamTable Sandbox installed
+  - Looking Glass function enabled
+
+Integration:
+  Code extracted by CaptCoder is automatically sent to Sandbox
+  Visual preview available at: http://localhost:3000/looking-glass
+
+
+7.3 LIVESTREAM INTEGRATION
+---------------------------
+Supported providers:
+  - restream.io
+  - streamyard.com
+  - YouTube Live
+  - TikTok Live
+  - Instagram Live
+
+Configuration in .env:
+  LIVESTREAM_PROVIDER=restream.io
+  LIVESTREAM_ENDPOINTS=youtube,tiktok,instagram
+  LIVESTREAM_API_KEY=your_api_key_here
+
+To start livestream manually:
+  python -m src.python.services.livestream --start
+
+To stop livestream:
+  python -m src.python.services.livestream --stop
+
+
+7.4 IDEAL INTEGRATION
+---------------------
+IDEal is the preferred IDE for Syntax AI CaptCoder.
+
+Plugin installation:
+  1. Open IDEal
+  2. Go to Extensions
+  3. Search for "Syntax AI CaptCoder"
+  4. Install and enable
+
+Features:
+  - Real-time code monitoring
+  - Inline suggestions
+  - Code extraction from chat
+  - Visual preview
+
+
+================================================================================
+8. TROUBLESHOOTING
+================================================================================
+
+8.1 COMMON ISSUES
+-----------------
+
+ISSUE: Nexus API not responding
+  - Check if Nexus API is running: ps aux | grep nexus_api
+  - Check port: netstat -tuln | grep 8000
+  - Restart: python -m src.python.services.nexus_api
+
+ISSUE: Code not being extracted from chat
+  - Verify CaptCoder is running: ps aux | grep captcoder
+  - Check input format (must use backticks for code blocks)
+  - Enable debug logging: add --debug flag
+
+ISSUE: Auto code extractor not finding files
+  - Check watched directories exist: ls /storage/emulated/0/Download
+  - Verify permissions: ls -la /storage/emulated/0/Download
+  - Check .env MONITOR_DIRECTORIES setting
+
+ISSUE: TypeScript frontend not loading
+  - Verify Node dependencies: npm list
+  - Reinstall: rm -rf node_modules/ && npm install
+  - Check Vite config: cat vite.config.ts
+
+ISSUE: Pattern Journal not being updated
+  - Check write permissions: touch pattern_journal.json
+  - Verify disk space: df -h
+  - Check for errors: tail -n 50 logs/optimizer.log
+
+
+8.2 ERROR CODES
+---------------
+
+ERROR: NEXUS_CONNECTION_FAILED
+  - Nexus API is down or unreachable
+  - Action: Start Nexus API or check network
+
+ERROR: NO_CODE_BLOCKS_FOUND
+  - Input doesn't contain valid code blocks
+  - Action: Use backticks (```) around code
+
+ERROR: PERMISSION_DENIED
+  - File/directory access denied
+  - Action: Check permissions, run as admin if needed
+
+ERROR: OCR_NOT_INSTALLED
+  - Tesseract OCR not available
+  - Action: pip install pytesseract && apt install tesseract-ocr
+
+ERROR: TTS_NOT_AVAILABLE
+  - Text-to-speech engine not found
+  - Action: apt install espeak || brew install espeak
+
+
+8.3 LOG FILES
+-------------
+
+Main log files:
+  - logs/captcoder.log - Main monitoring logs
+  - logs/optimizer.log - Optimization engine logs
+  - logs/extractor.log - Code extraction logs
+  - logs/nexus.log - Nexus API logs
+  - logs/frontend.log - TypeScript frontend logs
+
+To view all logs:
+  tail -f logs/*.log
+
+To search logs:
+  grep "ERROR" logs/*.log
+
+To rotate logs (manual):
+  ./scripts/rotate_logs.sh
+
+
+8.4 DEBUG MODE
+--------------
+
+Enable debug logging for any component:
+
+  python -m src.python.core.captcoder --debug
+  python -m src.python.optimizers.code_optimizer --debug
+
+Debug logs include:
+  - Detailed function calls
+  - Variable states
+  - API request/response bodies
+  - Performance metrics
+
+
+================================================================================
+9. MAINTENANCE
+================================================================================
+
+9.1 BACKUP PROCEDURES
+---------------------
+
+# Backup entire project
+./scripts/backup.sh
+
+# Backup configuration only
+cp .env .env.bak
+cp -r src/shared/config/ config_backup/
+
+# Backup pattern journal
+cp pattern_journal.json pattern_journal.json.bak
+
+# Automated backup (cron job)
+0 2 * * * /bin/bash /RootBase/Syntax-AI-Unified/CaptCoder/scripts/backup.sh
+
+
+9.2 CLEANUP PROCEDURES
+----------------------
+
+# Clean auto-extracted code (keep last 7 days)
+find /storage/emulated/0/auto_extracted_code/ -mtime +7 -delete
+
+# Clean generated code (keep last 30 days)
+find generated_code/ -mtime +30 -delete
+
+# Clean log files (keep last 10 files)
+ls -t logs/*.log | tail -n +11 | xargs rm -f
+
+# Clean Python cache
+find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null
+
+# Clean Node cache
+rm -rf node_modules/.cache 2>/dev/null
+
+
+9.3 UPDATE PROCEDURES
+---------------------
+
+# Update Python dependencies
+pip install -U -r requirements.txt
+
+# Update Node dependencies
+npm update
+
+# Update from Git
+cd /RootBase/Syntax-AI-Unified/CaptCoder
+git pull origin main
+
+# Rebuild after update
+npm run build
+python scripts/build.py
+
+
+9.4 PERFORMANCE TUNING
+----------------------
+
+# Increase scan performance (more memory)
+export PYTHON_OPTIMIZE=2
+
+# Reduce watch interval for faster detection
+export WATCH_INTERVAL_SECONDS=10
+
+# Disable TTS for better performance
+export TTS_ENABLED=False
+
+# Limit scan depth
+export MAX_SCAN_DEPTH=5
+
+# Exclude large directories
+export OPTIMIZATION_SCAN_EXCLUDE=".git,venv,node_modules,dist,data"
+
+
+================================================================================
+10. SECURITY
+================================================================================
+
+10.1 SENSITIVE DATA
+-------------------
+Never commit to version control:
+  - .env (contains API keys, credentials)
+  - *.bak files (may contain sensitive code)
+  - logs/*.log (may contain user data)
+  - generated_code/* (may contain proprietary code)
+
+Add to .gitignore:
+  .env
+  *.bak
+  logs/
+  generated_code/
+  auto_extracted_code/
+  pattern_journal.json
+
+
+10.2 PERMISSIONS
+----------------
+
+Minimum permissions required:
+  - Read: Monitored directories, code files
+  - Write: Output directories, logs, pattern journal
+  - Execute: Scripts, Python/Node binaries
+
+Recommended permissions:
+  chmod 755 scripts/*.sh
+  chmod 755 src/
+  chmod 644 .env
+  chmod 600 logs/*.log
+
+
+10.3 API SECURITY
+----------------
+
+Nexus API security:
+  - Enable authentication: NEXUS_AUTH_ENABLED=True
+  - Set API key: NEXUS_API_KEY=your_secure_key
+  - Restrict origins: NEXUS_CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:5173
+
+TLS/SSL:
+  - Use HTTPS for production: NEXUS_HTTPS=True
+  - Provide cert files: NEXUS_SSL_CERT=/path/to/cert.pem
+  - Provide key file: NEXUS_SSL_KEY=/path/to/key.pem
+
+
+10.4 NETWORK SECURITY
+----------------------
+
+Firewall rules (if applicable):
+  - Allow: 127.0.0.1:8000 (Nexus API)
+  - Allow: 0.0.0.0:3000 (Frontend)
+  - Allow: Livestream endpoints
+
+Restrict inbound connections:
+  - Bind to 127.0.0.1 for local-only access
+  - Use firewall to block external access to dev ports
+
+
+================================================================================
+11. DEPLOYMENT
+================================================================================
+
+11.1 DEVELOPMENT DEPLOYMENT
+---------------------------
+
+For local development:
+  1. Clone repository
+  2. Create .env file
+  3. Install dependencies
+  4. Run in dev mode
+
+All components run locally with hot-reload enabled.
+
+
+11.2 STAGING DEPLOYMENT
+------------------------
+
+For testing with production-like data:
+  1. Build frontend: npm run build
+  2. Build backend: python scripts/build.py
+  3. Deploy to staging server
+  4. Run integration tests
+
+
+11.3 PRODUCTION DEPLOYMENT
+--------------------------
+
+For production environment:
+  1. Ensure all tests pass
+  2. Create production .env with secure credentials
+  3. Build optimized packages
+  4. Deploy to production server
+  5. Enable monitoring and alerts
+  6. Verify health checks
+
+Production checklist:
+  - [ ] All tests passing
+  - [ ] Security review complete
+  - [ ] Backups verified
+  - [ ] Monitoring enabled
+  - [ ] Alerts configured
+  - [ ] Documentation updated
+
+
+11.4 DOCKER DEPLOYMENT
+-----------------------
+
+Build Docker image:
+  docker build -t syntax-ai-captcoder .
+
+Run container:
+  docker run -d \
+    --name captcoder \
+    -p 8000:8000 \
+    -p 3000:3000 \
+    -v /path/to/code:/app/code \
+    -v /path/to/output:/app/output \
+    --env-file .env \
+    syntax-ai-captcoder
+
+
+================================================================================
+12. RESOURCE LIMITS
+================================================================================
+
+12.1 MEMORY USAGE
+-----------------
+
+Component | Min Memory | Recommended | Max Memory
+----------|------------|-------------|-----------
+CaptCoder Monitor | 50MB | 100MB | 200MB
+Code Optimizer | 100MB | 256MB | 512MB
+TypeScript Frontend | 50MB | 128MB | 256MB
+Nexus API | 50MB | 100MB | 200MB
+Auto Extractor | 20MB | 50MB | 100MB
+
+To monitor memory:
+  ps aux | grep -E "python|node" | grep CaptCoder
+
+
+12.2 CPU USAGE
+--------------
+
+Component | CPU Priority | Expected Usage
+----------|--------------|---------------
+All | Normal | <10% idle, <50% during scans
+Code Optimizer | Low | Spikes during analysis
+Auto Extractor | Low | Minimal
+
+
+12.3 DISK SPACE
+---------------
+
+Component | Min Space | Recommended | Max Space
+----------|-----------|-------------|----------
+Project | 100MB | 500MB | 1GB
+Logs | 10MB | 100MB | 500MB
+Auto Extracted Code | 100MB | 1GB | 10GB
+Generated Code | 10MB | 100MB | 1GB
+
+To check disk space:
+  df -h /storage/emulated/0/
+  du -sh /RootBase/Syntax-AI-Unified/CaptCoder/
+
+
+================================================================================
+13. CONTACTS & ESCALATIONS
+================================================================================
+
+13.1 TEAM CONTACTS
+------------------
+
+Primary Contact: Syntax AI Team
+  Email: syntax-ai@protonmail.com
+  Discord: @SyntaxAI
+
+Development Lead: (To be assigned)
+  Email: dev@syntax-ai.com
+  Phone: (XXX) XXX-XXXX
+
+Operations: (To be assigned)
+  Email: ops@syntax-ai.com
+  On-call: 24/7
+
+
+13.2 ESCALATION PATH
+--------------------
+
+Level 1: Check documentation, FAQs, logs
+  Time: 0-15 minutes
+
+Level 2: Contact team via Discord
+  Time: 15-60 minutes
+
+Level 3: Create GitHub issue
+  Time: 1-4 hours
+
+Level 4: Email support team
+  Time: 4-24 hours
+
+Level 5: Emergency phone support
+  Time: Immediate (critical issues only)
+
+
+13.3 SUPPORT RESOURCES
+----------------------
+
+Documentation:
+  - README.md - Project overview
+  - runbook.txt - This file
+  - docs/ - Detailed documentation
+  - API Reference: docs/api_reference.md
+
+Community:
+  - Discord: Syntax AI Server
+  - GitHub: Syntax-AI/CaptCoder
+  - Reddit: r/SyntaxAI
+
+Learning:
+  - Tutorials: docs/tutorials/
+  - Examples: examples/
+  - Best Practices: docs/best_practices.md
+
+
+================================================================================
+END OF RUNBOOK
+================================================================================
+
+For the latest version of this runbook, see:
+  /RootBase/Syntax-AI-Unified/CaptCoder/runbook.txt
+
+Generated by Mistral Vibe for Syntax AI
+It's always a pleasure to watch you work! Cheers!

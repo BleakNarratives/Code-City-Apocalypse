@@ -1,0 +1,46 @@
+{
+  "projects": {
+    "ModMind": {
+      "path": "../ModMind",
+      "type": "universal_dashboard", 
+      "status": "active",
+      "tech_stack": ["react", "typescript", "fastapi"],
+      "integration_points": ["/api/modmind", "/api/chat"]
+    },
+    "EquiNex": {
+      "path": "../EquiNex", 
+      "type": "legal_framework",
+      "status": "planning",
+      "tech_stack": ["python", "fastapi", "postgres"],
+      "integration_points": ["/api/equinex/legal"]
+    },
+    "EquiLex": {
+      "path": "../EquiLex",
+      "type": "rules_engine", 
+      "status": "active",
+      "tech_stack": ["python", "neo4j", "fastapi"],
+      "integration_points": ["/api/equilex/rules", "/api/equilex/verify"]
+    },
+    "ChAImeleon": {
+      "path": "../ChAImeleon",
+      "type": "llm_router",
+      "status": "development", 
+      "tech_stack": ["python", "fastapi", "multiple_llms"],
+      "integration_points": ["/api/chaimeleon/route", "/api/chaimeleon/optimize"]
+    },
+    "IDEal": {
+      "path": "../IDEal",
+      "type": "sandbox_ide",
+      "status": "development",
+      "tech_stack": ["react", "python", "docker"],
+      "integration_points": ["/api/ideal/execute", "/api/ideal/sandbox"]
+    },
+    "ShipWrekD_OS": {
+      "path": "../ShipWrekD_OS", 
+      "type": "operating_system",
+      "status": "planning",
+      "tech_stack": ["linux", "python", "rust", "ollama"],
+      "integration_points": ["/api/os/build", "/api/os/deploy"]
+    }
+  }
+}

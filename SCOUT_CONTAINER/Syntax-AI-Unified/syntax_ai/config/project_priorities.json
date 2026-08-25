@@ -1,0 +1,36 @@
+{
+  "strategic_projects": [
+    {
+      "name": "Software 3.0",
+      "priority": "CRITICAL",
+      "description": "Architectural framework for prompt engineering and agent deployment",
+      "target_path": "../Software3.0",
+      "completion_metrics": {
+        "standardized_prompt_engineering": 0.0,
+        "agent_deployment_protocols": 0.0, 
+        "prompt_debt_management": 0.0
+      },
+      "next_actions": [
+        "Create FastAPI service structure",
+        "Implement prompt template library",
+        "Design agent coordination protocol"
+      ]
+    },
+    {
+      "name": "ModMind",
+      "priority": "HIGH", 
+      "description": "Adaptive agent architecture for real-time human-agent teaming",
+      "target_path": "../ModMind",
+      "completion_metrics": {
+        "real_time_policy_inference": 0.0,
+        "human_agent_teaming": 0.0,
+        "cognitive_liberty_compliance": 0.0
+      },
+      "next_actions": [
+        "Enhance existing dashboard with agent controls",
+        "Implement policy similarity metrics",
+        "Add real-time collaboration features"
+      ]
+    }
+  ]
+}

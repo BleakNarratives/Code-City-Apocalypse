@@ -1,0 +1,62 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  syntax:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Count Python files
+        run: |
+          count=$(find . -name "*.py" \
+            -not -path "./.git/*" \
+            -not -path "./__pycache__/*" \
+            -not -path "./SCOUT_CONTAINER/*" \
+            | wc -l)
+          echo "Python files: $count"
+
+      - name: Syntax check (core modules)
+        run: |
+          find . -name "*.py" \
+            -not -path "./.git/*" \
+            -not -path "./__pycache__/*" \
+            -not -path "./SCOUT_CONTAINER/*" \
+            -not -path "./Code_City/code_city_emergent/*" \
+            -not -path "./Code_City/code_tool/*" \
+            -not -path "./Code_City/sigil_bn_0/*" \
+            -not -path "./Code_City/app/*" \
+            -not -path "./app/*" \
+            -not -path "./frontend/*" \
+            -not -path "./backend/*" \
+            -not -path "./src/*" \
+            -not -path "./Code_City_Unified/modmind_unified/*" \
+            -not -path "./Code_City_Unified/districts/*" \
+            -not -path "./Code_City_Unified/vertical_swarm/core/*" \
+            -not -path "./Code_City_Unified/vertical_swarm/security/*" \
+            -exec python -m py_compile {} \;
+          echo "Core modules: syntax clean"
+
+      - name: Verify DNA tags
+        run: |
+          tagged=$(grep -rl "DNA_TAG" --include="*.py" . 2>/dev/null | wc -l)
+          total=$(find . -name "*.py" \
+            -not -path "./.git/*" \
+            -not -path "./__pycache__/*" \
+            -not -path "./SCOUT_CONTAINER/*" \
+            | wc -l)
+          echo "DNA-tagged: $tagged / $total files"

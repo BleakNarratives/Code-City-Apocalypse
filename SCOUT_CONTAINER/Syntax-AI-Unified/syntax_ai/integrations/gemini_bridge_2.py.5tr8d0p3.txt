@@ -1,0 +1,80 @@
+==================================================
+5TR8D0P3 DOCUMENTATION FILE
+SOURCE FILE: gemini_bridge_2.py
+FULL PATH: /storage/emulated/0/root_2025/code_city/src/integrations/gemini_bridge_2.py
+==================================================
+
+[INTENT AND PURPOSE (THE FEET)]
+gemini_bridge.py - EquiNex Real-Time Chat Integration
+Note: This conceptual loop runs infinitely in the script.
+Uses the CORRECTED Orchestrator method to route command
+
+[FUNCTIONAL BREAKDOWN]
+
+--- def get_clipboard_content(self):
+Note: This conceptual loop runs infinitely in the script.
+while True:
+new_message = self.check_for_new_data()
+if new_message:
+print(f"[{self.orchestrator.get_timestamp()}] NEW MESSAGE DETECTED. Processing...")
+extracted_data = self.orchestrator.trigger_extraction(new_message)
+if extracted_data:
+Uses the CORRECTED Orchestrator method to route command
+pytch_agent = self.orchestrator.get_component('Pytch_Voice_Agent')
+if pytch_agent:
+pytch_agent.receive_dispatch(extracted_data)
+
+time.sleep(self.interval)
+
+def send_context_to_gemini(self, context_summary):
+output = f"[Code City Status] {context_summary}"
+self.orchestrator.external_api_call('clipboard_set', output)
+
+def start(self):
+self.process_chat_stream()
+
+
+--- def check_for_new_data(self):
+Note: This conceptual loop runs infinitely in the script.
+while True:
+new_message = self.check_for_new_data()
+if new_message:
+print(f"[{self.orchestrator.get_timestamp()}] NEW MESSAGE DETECTED. Processing...")
+extracted_data = self.orchestrator.trigger_extraction(new_message)
+if extracted_data:
+Uses the CORRECTED Orchestrator method to route command
+pytch_agent = self.orchestrator.get_component('Pytch_Voice_Agent')
+if pytch_agent:
+pytch_agent.receive_dispatch(extracted_data)
+
+time.sleep(self.interval)
+
+def send_context_to_gemini(self, context_summary):
+output = f"[Code City Status] {context_summary}"
+self.orchestrator.external_api_call('clipboard_set', output)
+
+def start(self):
+self.process_chat_stream()
+
+
+--- def process_chat_stream(self):
+Note: This conceptual loop runs infinitely in the script.
+while True:
+new_message = self.check_for_new_data()
+if new_message:
+print(f"[{self.orchestrator.get_timestamp()}] NEW MESSAGE DETECTED. Processing...")
+extracted_data = self.orchestrator.trigger_extraction(new_message)
+if extracted_data:
+Uses the CORRECTED Orchestrator method to route command
+pytch_agent = self.orchestrator.get_component('Pytch_Voice_Agent')
+if pytch_agent:
+pytch_agent.receive_dispatch(extracted_data)
+
+time.sleep(self.interval)
+
+def send_context_to_gemini(self, context_summary):
+output = f"[Code City Status] {context_summary}"
+self.orchestrator.external_api_call('clipboard_set', output)
+
+def start(self):
+self.process_chat_stream()

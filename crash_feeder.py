@@ -1,0 +1,467 @@
+#!/usr/bin/env python3
+"""
+crash_feeder.py — System crash monitor that feeds terminal disasters into Code City.
+
+Watches dmesg, journalctl, /proc/vmstat, and OOM reaper logs for crash events.
+Each crash spawns a monster in the Code City arena via the crash API.
+
+No heavy deps — pure stdlib. Runs as a background daemon on Crostini/Chromebook.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import re
+import subprocess
+import time
+import urllib.request
+import urllib.error
+from dataclasses import dataclass, field, asdict
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Dict, List, Optional, Tuple
+
+# ─── Configuration ────────────────────────────────────────────────
+
+CITY_API_URL = os.getenv("CRASH_FEED_CITY_URL", "http://127.0.0.1:8765/crash")
+POLL_INTERVAL = int(os.getenv("CRASH_FEED_POLL", "5"))  # seconds
+MAX_CRASHES_PER_CYCLE = int(os.getenv("CRASH_FEED_MAX_PER_CYCLE", "3"))
+DMESG_MARKER_FILE = Path(os.path.expanduser("~/.crash_feeder_dmesg_pos"))
+
+
+@dataclass
+class CrashEvent:
+    """A single system crash event ready for monster spawning."""
+    crash_type: str
+    source: str                     # "dmesg" | "journalctl" | "vmstat" | "cgroup"
+    raw_line: str
+    timestamp: str = ""
+    severity: int = 3
+    monster_type: str = "Signal Reaper"
+    monster_symbol: str = "💀"
+    target_file: str = ""           # best guess at affected file
+    message: str = ""
+    metadata: Dict[str, Any] = field(default_factory=dict)
+
+    def __post_init__(self):
+        if not self.timestamp:
+            self.timestamp = datetime.now(timezone.utc).isoformat()
+
+
+class CrashFeeder:
+    """
+    Multi-source system crash monitor.
+
+    Sources (in order of reliability on Crostini):
+    1. dmesg — kernel ring buffer (OOM, segfault, kernel panics)
+    2. /proc/vmstat — memory pressure counters
+    3. cgroup memory events — container OOM detection
+    4. journalctl — user-space crash logs (if available)
+    """
+
+    def __init__(self, city_url: str = CITY_API_URL):
+        self.city_url = city_url
+        self.seen_hashes: set = set()
+        self.last_dmesg_pos = self._load_dmesg_pos()
+        self.crash_count = 0
+
+    # ── DMESG ──────────────────────────────────────────────────
+
+    def _load_dmesg_pos(self) -> int:
+        """Load last dmesg read position to avoid re-reading."""
+        try:
+            return int(DMESG_MARKER_FILE.read_text().strip())
+        except Exception:
+            return 0
+
+    def _save_dmesg_pos(self, pos: int) -> None:
+        DMESG_MARKER_FILE.write_text(str(pos))
+
+    def read_dmesg(self) -> List[CrashEvent]:
+        """
+        Read new dmesg lines since last poll.
+        On Crostini/Chromebook, dmesg may require sudo or be restricted.
+        Falls back gracefully.
+        """
+        events = []
+        try:
+            result = subprocess.run(
+                ["dmesg", "--kernel", "--level=emerg,alert,crit,err,warn"],
+                capture_output=True, text=True, timeout=10
+            )
+            if result.returncode != 0:
+                return events
+
+            lines = result.stdout.strip().split("\n")
+            for line in lines[self.last_dmesg_pos:]:
+                event = self._parse_dmesg_line(line)
+                if event:
+                    events.append(event)
+
+            self._save_dmesg_pos(len(lines))
+        except FileNotFoundError:
+            pass  # dmesg not available
+        except Exception:
+            pass
+
+        return events
+
+    def _parse_dmesg_line(self, line: str) -> Optional[CrashEvent]:
+        """Parse a dmesg line into a CrashEvent if it's a crash indicator."""
+        crash_patterns: List[Tuple[str, str, int, str, str, re.Pattern]] = [
+            # (crash_type, monster_type, severity, symbol, regex, description_template)
+            ("oom_kill", "Memory Wraith", 5, "🧟",
+             re.compile(r"Out of memory.*process\s+(\S+)", re.IGNORECASE),
+             "OOM killer nuked process: {match} — system memory exhausted"),
+            ("segfault", "Segmentation Specter", 4, "👻",
+             re.compile(r"segfault.*in\s+(\S+)", re.IGNORECASE),
+             "Segfault in {match} — memory access violation"),
+            ("kernel_panic", "Kernel Kraken", 5, "🐙",
+             re.compile(r"Kernel panic", re.IGNORECASE),
+             "Kernel panic — system is on fire"),
+            ("oom_reaper", "Reaper Wraith", 4, "☠️",
+             re.compile(r"oom_reaper.*reaped\s+(\S+)", re.IGNORECASE),
+             "OOM reaper harvested {match}"),
+            ("protection_fault", "Guard Gargoyle", 4, "🗿",
+             re.compile(r"protection fault.*in\s+(\S+)", re.IGNORECASE),
+             "General protection fault in {match}"),
+            ("bug", "Kernel Gremlin", 3, "👹",
+             re.compile(r"BUG:.*at\s+(\S+)", re.IGNORECASE),
+             "Kernel BUG at {match}"),
+            ("null_pointer", "Null Phantom", 3, "🫥",
+             re.compile(r"NULL pointer dereference.*in\s+(\S+)", re.IGNORECASE),
+             "NULL pointer dereference in {match}"),
+        ]
+
+        for crash_type, monster, severity, symbol, pattern, template in crash_patterns:
+            m = pattern.search(line)
+            if m:
+                match_val = m.group(1) if m.groups() else "unknown"
+                return CrashEvent(
+                    crash_type=crash_type,
+                    source="dmesg",
+                    raw_line=line,
+                    severity=severity,
+                    monster_type=monster,
+                    monster_symbol=symbol,
+                    target_file=match_val,
+                    message=template.format(match=match_val),
+                )
+
+        return None
+
+    # ── VMSTAT (memory pressure) ───────────────────────────────
+
+    def read_vmstat(self) -> List[CrashEvent]:
+        """Read /proc/vmstat for memory pressure indicators."""
+        events = []
+        try:
+            vmstat = Path("/proc/vmstat").read_text()
+            metrics = {}
+            for line in vmstat.strip().split("\n"):
+                if " " in line:
+                    k, v = line.split(None, 1)
+                    try:
+                        metrics[k] = int(v)
+                    except ValueError:
+                        pass
+
+            # OOM count
+            oom_kill = metrics.get("oom_kill", 0)
+            if oom_kill > 0:
+                events.append(CrashEvent(
+                    crash_type="oom_pressure",
+                    source="vmstat",
+                    raw_line=f"oom_kill={oom_kill}",
+                    severity=min(5, oom_kill),
+                    monster_type="Pressure Phantom",
+                    monster_symbol="💨",
+                    message=f"Memory pressure: {oom_kill} OOM kills recorded since boot",
+                    metadata={"oom_kill_count": oom_kill},
+                ))
+
+            # Page allocation failures
+            alloc_stall = metrics.get("allocstall_normal", 0) + metrics.get("allocstall_movable", 0)
+            if alloc_stall > 100:
+                events.append(CrashEvent(
+                    crash_type="alloc_stall",
+                    source="vmstat",
+                    raw_line=f"allocstall={alloc_stall}",
+                    severity=3,
+                    monster_type="Alloc Imp",
+                    monster_symbol="👹",
+                    message=f"High allocation stalls: {alloc_stall} — memory fragmentation",
+                    metadata={"allocstall": alloc_stall},
+                ))
+
+        except Exception:
+            pass
+
+        return events
+
+    # ── CGROUP (container OOM) ─────────────────────────────────
+
+    def read_cgroup_events(self) -> List[CrashEvent]:
+        """Check cgroup memory events for container-level OOM."""
+        events = []
+        cgroup_paths = [
+            "/sys/fs/cgroup/memory/memory.events",     # cgroup v1
+            "/sys/fs/cgroup/memory.events",             # cgroup v2
+        ]
+
+        for path_str in cgroup_paths:
+            p = Path(path_str)
+            if not p.exists():
+                continue
+            try:
+                content = p.read_text()
+                for line in content.strip().split("\n"):
+                    if "oom" in line.lower() and " " in line:
+                        key, val = line.strip().split(None, 1)
+                        if int(val) > 0:
+                            events.append(CrashEvent(
+                                crash_type="cgroup_oom",
+                                source="cgroup",
+                                raw_line=line.strip(),
+                                severity=4,
+                                monster_type="Container Kraken",
+                                monster_symbol="🐙",
+                                message=f"Cgroup OOM event: {key}={val} — container memory limit hit",
+                                metadata={"cgroup_key": key, "cgroup_value": int(val)},
+                            ))
+            except Exception:
+                continue
+
+        return events
+
+    # ── JOURNALCTL ─────────────────────────────────────────────
+
+    def read_journalctl(self) -> List[CrashEvent]:
+        """Read recent crash events from journalctl (if available)."""
+        events = []
+        try:
+            result = subprocess.run(
+                ["journalctl", "--no-pager", "-p", "0..3", "--since", "1 minute ago", "-n", "20"],
+                capture_output=True, text=True, timeout=10
+            )
+            if result.returncode != 0:
+                return events
+
+            for line in result.stdout.strip().split("\n"):
+                if not line.strip():
+                    continue
+                # Look for crash indicators
+                if re.search(r"(segfault|SIGSEGV|SIGABRT|core dumped|crashed|killed|OOM)", line, re.IGNORECASE):
+                    # Determine crash type
+                    if "oom" in line.lower() or "out of memory" in line.lower():
+                        crash_type, monster, sev, sym = "oom_journal", "Memory Wraith", 5, "🧟"
+                    elif "segfault" in line.lower() or "sigsegv" in line.lower():
+                        crash_type, monster, sev, sym = "segfault_journal", "Segmentation Specter", 4, "👻"
+                    elif "sigabrt" in line.lower():
+                        crash_type, monster, sev, sym = "abort_journal", "Abort Golem", 3, "🗿"
+                    elif "core dumped" in line.lower():
+                        crash_type, monster, sev, sym = "core_dump", "Core Specter", 3, "🫥"
+                    else:
+                        crash_type, monster, sev, sym = "process_death", "Signal Reaper", 2, "💀"
+
+                    events.append(CrashEvent(
+                        crash_type=crash_type,
+                        source="journalctl",
+                        raw_line=line,
+                        severity=sev,
+                        monster_type=monster,
+                        monster_symbol=sym,
+                        message=line[:200],
+                    ))
+
+        except FileNotFoundError:
+            pass
+        except Exception:
+            pass
+
+        return events
+
+    # ── Process watch (check our own processes) ────────────────
+
+    def read_proc_self(self) -> List[CrashEvent]:
+        """Check /proc/self/status for our own memory pressure."""
+        events = []
+        try:
+            status = Path("/proc/self/status").read_text()
+            for line in status.split("\n"):
+                if line.startswith("VmRSS:"):
+                    try:
+                        rss_kb = int(line.split()[1])
+                        rss_mb = rss_kb // 1024
+                        if rss_mb > 800:  # Over 800MB RSS
+                            events.append(CrashEvent(
+                                crash_type="self_memory_pressure",
+                                source="proc",
+                                raw_line=line.strip(),
+                                severity=2,
+                                monster_type="Bloat Beast",
+                                monster_symbol="🐡",
+                                message=f"Self RSS at {rss_mb}MB — approaching OOM territory",
+                                metadata={"rss_mb": rss_mb},
+                            ))
+                    except (IndexError, ValueError):
+                        pass
+        except Exception:
+            pass
+        return events
+
+    # ── Aggregate and deduplicate ──────────────────────────────
+
+    def collect_all_crashes(self) -> List[CrashEvent]:
+        """Collect crash events from all available sources."""
+        all_events = []
+
+        for source_fn in [
+            self.read_dmesg,
+            self.read_vmstat,
+            self.read_cgroup_events,
+            self.read_journalctl,
+            self.read_proc_self,
+        ]:
+            try:
+                events = source_fn()
+                all_events.extend(events)
+            except Exception:
+                continue
+
+        # Deduplicate by raw_line hash
+        unique = []
+        for e in all_events:
+            key = hash(e.raw_line)
+            if key not in self.seen_hashes:
+                self.seen_hashes.add(key)
+                unique.append(e)
+
+        # Prune old hashes (keep last 1000)
+        if len(self.seen_hashes) > 1000:
+            self.seen_hashes = set(list(self.seen_hashes)[-500:])
+
+        return unique[:MAX_CRASHES_PER_CYCLE]
+
+    # ── Feed to City API ───────────────────────────────────────
+
+    def feed_to_city(self, event: CrashEvent) -> bool:
+        """POST a crash event to the Code City crash API."""
+        try:
+            data = json.dumps({
+                "error_type": event.crash_type,
+                "file_path": event.target_file or f"/proc/{event.source}/{event.crash_type}",
+                "error_message": event.message,
+                "severity": event.severity,
+                "monster_type": event.monster_type,
+                "monster_symbol": event.monster_symbol,
+                "source": event.source,
+                "timestamp": event.timestamp,
+            }).encode("utf-8")
+
+            req = urllib.request.Request(
+                self.city_url,
+                data=data,
+                headers={"Content-Type": "application/json"},
+                method="POST",
+            )
+
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                if resp.status in (200, 201):
+                    self.crash_count += 1
+                    return True
+
+        except urllib.error.URLError:
+            pass  # City API not running — that's fine, don't crash the feeder
+        except Exception:
+            pass
+
+        return False
+
+    def feed_batch(self, events: List[CrashEvent]) -> int:
+        """Feed a batch of events to Code City. Returns count of successful feeds."""
+        fed = 0
+        for event in events:
+            if self.feed_to_city(event):
+                fed += 1
+                print(f"  {event.monster_symbol} {event.monster_type}: {event.message[:100]}")
+        return fed
+
+    # ── Main loop ──────────────────────────────────────────────
+
+    def run_forever(self) -> None:
+        """
+        Main daemon loop. Polls all sources, feeds crashes to Code City.
+        Press Ctrl+C to stop.
+        """
+        print("═══ CRASH FEEDER ═══")
+        print(f"Target: {self.city_url}")
+        print(f"Poll interval: {POLL_INTERVAL}s")
+        print(f"Max crashes/cycle: {MAX_CRASHES_PER_CYCLE}")
+        print(f"Crash sources: dmesg, vmstat, cgroup, journalctl, /proc")
+        print("Monitoring for system disasters...")
+        print()
+
+        try:
+            while True:
+                events = self.collect_all_crashes()
+
+                if events:
+                    print(f"[{datetime.now().strftime('%H:%M:%S')}] {len(events)} crash event(s) detected:")
+                    fed = self.feed_batch(events)
+                    if fed > 0:
+                        print(f"  → {fed} monster(s) spawned in Code City")
+                    else:
+                        print(f"  → City API unreachable — events logged locally")
+
+                time.sleep(POLL_INTERVAL)
+
+        except KeyboardInterrupt:
+            print(f"\n═══ CRASH FEEDER STOPPED ═══")
+            print(f"Total crashes detected: {len(self.seen_hashes)}")
+            print(f"Monsters spawned: {self.crash_count}")
+
+
+# ─── CLI ──────────────────────────────────────────────────────────
+
+def main():
+    import argparse
+    parser = argparse.ArgumentParser(
+        description="System crash monitor → Code City monster spawner",
+    )
+    parser.add_argument("--url", default=CITY_API_URL,
+                        help=f"Code City crash API URL (default: {CITY_API_URL})")
+    parser.add_argument("--poll", type=int, default=POLL_INTERVAL,
+                        help=f"Poll interval in seconds (default: {POLL_INTERVAL})")
+    parser.add_argument("--dry-run", action="store_true",
+                        help="Detect crashes but don't send to API")
+    parser.add_argument("--once", action="store_true",
+                        help="Run one scan and exit")
+
+    args = parser.parse_args()
+
+    feeder = CrashFeeder(city_url=args.url)
+
+    if args.once:
+        events = feeder.collect_all_crashes()
+        if events:
+            print(f"Detected {len(events)} crash event(s):")
+            for e in events:
+                print(f"  {e.monster_symbol} [{e.crash_type}] {e.message}")
+            if not args.dry_run:
+                fed = feeder.feed_batch(events)
+                print(f"Spawned {fed} monsters")
+        else:
+            print("No crashes detected. System is healthy.")
+        return
+
+    if args.dry_run:
+        print("DRY RUN MODE — detecting but not sending")
+        feeder.city_url = "http://127.0.0.1:9/nope"  # guaranteed unreachable
+
+    feeder.run_forever()
+
+
+if __name__ == "__main__":
+    main()

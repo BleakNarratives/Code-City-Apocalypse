@@ -1,0 +1,95 @@
+==================================================
+5TR8D0P3 DOCUMENTATION FILE
+SOURCE FILE: repugnant_bridge.py
+FULL PATH: /storage/emulated/0/root_2025/code_city/src/integrations/repugnant_bridge.py
+==================================================
+
+[INTENT AND PURPOSE (THE FEET)]
+File: /storage/emulated/0/code_city/src/integrations/repugnant_bridge.py
+Path: /storage/emulated/0/code_city/src/integrations/repugnant_bridge.py
+
+[FUNCTIONAL BREAKDOWN]
+
+--- class TauntReaction(Enum):
+==================== DATA STRUCTURES ====================
+
+@dataclass
+class BehavioralSnapshot:
+"""A moment in time capturing player behavior."""
+
+--- class BehavioralSnapshot:
+"""A moment in time capturing player behavior."""
+
+--- class PlayerProfile:
+"""Long-term behavioral profile of a player."""
+
+--- class TauntEffectiveness:
+"""Analysis of how well a taunt performs."""
+
+--- class RepugnantBridge:
+"""
+
+--- def __init__(self):
+Thresholds for intervention
+self.frustration_warning_threshold = 0.7
+self.frustration_critical_threshold = 0.9
+self.burnout_session_count = 5
+
+==================== REAL-TIME TRACKING ====================
+
+def capture_snapshot(
+self,
+player_id: str,
+session_id: str,
+game_context: Dict,
+behavioral_signals: Dict
+) -> BehavioralSnapshot:
+"""Capture a behavioral snapshot."""
+
+--- def capture_snapshot(
+"""Capture a behavioral snapshot."""
+
+--- def _infer_emotional_state(self, signals: Dict) -> EmotionalState:
+"""Infer emotional state from behavioral signals."""
+
+--- def _check_intervention_triggers(self, snapshot: BehavioralSnapshot):
+"""Check if intervention is needed."""
+
+--- def _trigger_intervention(self, player_id: str, intervention_type: str):
+"""Take adaptive action based on player state."""
+
+--- def record_taunt(
+"""Record a taunt being delivered to player."""
+
+--- def record_taunt_reaction(
+"""Record how player reacted to taunt."""
+
+--- def _update_player_taunt_preferences(
+"""Update which taunts work best on this player."""
+
+--- def get_optimal_taunt_for_player(
+"""Recommend best taunt for player's current state."""
+
+--- def _create_player_profile(self, player_id: str) -> PlayerProfile:
+"""Initialize new player profile."""
+
+--- def update_player_profile(
+"""Update profile after session ends."""
+
+--- def _get_recent_snapshot(self, player_id: str) -> Optional[BehavioralSnapshot]:
+"""Get most recent snapshot for player."""
+
+--- def recommend_difficulty_adjustment(
+"""Recommend difficulty adjustment based on player states."""
+
+--- def analyze_team_dynamics(
+"""Analyze how well team is working together."""
+
+--- def analyze_mentor_relationship(
+"""Analyze effectiveness of mentor/mentee pairing."""
+
+--- def generate_player_report(self, player_id: str) -> Dict:
+"""Generate comprehensive behavioral report."""
+
+--- def export_taunt_effectiveness_report(self, filepath: str):
+"""Export taunt analysis to JSON."""

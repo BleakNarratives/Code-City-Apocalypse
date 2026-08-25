@@ -1,0 +1,87 @@
+import json
+import os
+import random
+from typing import Dict, Any, List
+
+# --- 1. SETUP AND INPUT (BSM P.20) ---
+
+# Load the data model generated in the previous step
+# NOTE: This assumes you have saved the aislots_data_model_poc.json file in the same directory.
+try:
+    with open("aislots_data_model_poc.json", "r") as f:
+        SLOT_DATA_MODEL: List[Dict[str, str]] = json.load(f)
+except FileNotFoundError:
+    print("ERROR: 'aislots_data_model_poc.json' not found. Please ensure you saved the JSON content in the next block to a file with this exact name.")
+    SLOT_DATA_MODEL = []
+
+# Define the output structure as planned in the BSM
+ASSET_OUTPUT_FOLDER = "modmind_equinex/divine_gambit/assets/slot_symbols/"
+os.makedirs(ASSET_OUTPUT_FOLDER, exist_ok=True) # Create the folder structure
+
+# --- 2. SYNTAX AI SIMULATION LOGIC ---
+
+def simulate_syntax_ai_pipeline(data_model: List[Dict[str, str]]) -> Dict[str, Any]:
+    """
+    Simulates the Syntax AI system taking the data model and generating
+    deployable assets, complete with file metadata.
+    """
+    asset_manifest: Dict[str, Any] = {}
+    
+    for symbol in data_model:
+        # BSM P.20: Define unique file naming convention
+        entity_name = symbol["entity_name"].replace(" ", "_").lower()
+        source_type = symbol["source_type"].replace(" ", "_").lower()
+        
+        # Unique ID combining name, type, and a hash for version control
+        asset_id = f"aislot_{entity_name}_{source_type}_{hash(symbol['generation_prompt']) % 1000}"
+        
+        # BSM P.20: The final asset is generated (e.g., as a high-res PNG)
+        final_file_name = f"{asset_id}.png"
+        
+        # Simulate asset generation metadata
+        asset_metadata = {
+            "asset_path": os.path.join(ASSET_OUTPUT_FOLDER, final_file_name),
+            "source_prompt": symbol["generation_prompt"],
+            "tier_rank": symbol["rank"],
+            # Simulated file metrics after generation
+            "file_size_mb": round(random.uniform(0.9, 1.2), 2),
+            "generation_time_ms": random.randint(1500, 4500) 
+        }
+        
+        # Map the unique ID to the asset metadata
+        asset_manifest[asset_id] = asset_metadata
+        
+    return asset_manifest
+
+# --- 3. EXECUTION AND MANIFEST GENERATION (Final Output) ---
+
+if __name__ == "__main__":
+    
+    print(f"--- Syntax AI Asset Generation PoC (Final Stage) ---")
+    print(f"Input Data Model Size: {len(SLOT_DATA_MODEL)} entities")
+    print("-" * 70)
+    
+    if SLOT_DATA_MODEL:
+        asset_manifest = simulate_syntax_ai_pipeline(SLOT_DATA_MODEL)
+
+        # Print a summary of the generated assets
+        print(f"Total Unique Assets Generated: {len(asset_manifest)}")
+        print("\nDeployment Manifest (Ready for Game Client Ingestion):")
+        
+        # Print the first three generated assets for inspection
+        for i, (asset_id, data) in enumerate(asset_manifest.items()):
+            if i >= 3:
+                break
+            print(f"  Asset ID: {asset_id}")
+            print(f"    Path: {data['asset_path']}")
+            print(f"    Rank: {data['tier_rank']} | Size: {data['file_size_mb']} MB")
+            print(f"    Prompt: '{data['source_prompt'][:50]}...'")
+            print("-" * 70)
+            
+        # Save the final manifest for the game client/ModMind to reference
+        with open(os.path.join(ASSET_OUTPUT_FOLDER, "asset_manifest.json"), "w") as f:
+            json.dump(asset_manifest, f, indent=4)
+        
+        print(f"\nSUCCESS: Final asset manifest saved to: {ASSET_OUTPUT_FOLDER}asset_manifest.json")
+    else:
+        print("Asset generation skipped due to missing input data model.")

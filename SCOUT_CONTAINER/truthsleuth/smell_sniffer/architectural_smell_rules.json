@@ -1,0 +1,25 @@
+{
+  "code_smell_rules": {
+    "fragile_architecture": [
+      "import\\s+.*\\.\\.",
+      "class\\s+\\w+\\s*\\(.*\\)\\s*:\\s*#\\s*\\w+\\s+inheritance",
+      "global\\s+\\w+"
+    ],
+    "spaghetti_logic": [
+      "if\\s+.*\\s*:\\s*if\\s+.*\\s*:\\s*if\\s+.*\\s*:",
+      "while\\s+True\\s*:",
+      "def\\s+\\w+\\(.*\\):\\s*#\\s*too\\s+many\\s+arguments",
+      "lambda\\s+.*\\:"
+    ],
+    "security_vulnerabilities": [
+      "eval\\(",
+      "exec\\(",
+      "os\\.system\\(",
+      "pickle\\.load\\(",
+      "\\b(?:hardcoded|password|secret|key)\\b"
+    ],
+    "documentation_gaps": [
+      "def\\s+\\w+\\(.*\\):\\s*(?!\"\"\")"
+    ]
+  }
+}

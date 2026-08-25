@@ -50,13 +50,19 @@ class CodeCityApocalypse:
         for root, dirs, files in os.walk(directory):
             for file in files:
                 if file.endswith(('.py', '.ts', '.tsx', '.js')):
+                    full_path = os.path.join(root, file)
+                    try:
+                        size = os.path.getsize(full_path)
+                        mtime = os.path.getmtime(full_path)
+                    except (FileNotFoundError, OSError):
+                        continue  # skip broken symlinks, missing files
                     building = {
                         "name": file,
-                        "path": os.path.join(root, file),
-                        "height": min(50, os.path.getsize(os.path.join(root, file)) // 100),
+                        "path": full_path,
+                        "height": min(50, size // 100),
                         "health": 100,
                         "errors": [],
-                        "last_modified": datetime.fromtimestamp(os.path.getmtime(os.path.join(root, file))),
+                        "last_modified": datetime.fromtimestamp(mtime),
                         "symbol": "🏢" if file.endswith('.py') else "🏬"
                     }
                     self.buildings.append(building)
