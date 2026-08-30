@@ -48,7 +48,28 @@ DANGEROUS OPERATIONS
 --------------------
 - Do NOT run red_team_attacks.py against any real system
 - Do NOT execute celtic_crypto.py as a real cryptographic module
-- The simulation may use system resources heavily — monitor CPU/memory
+- The simulation may use system resources heavily — monitor CPU/memoryCRASH-TO-MONSTER OPERATIONS
+---------------------------
+# Detect local crash evidence without sending to Code City
+python3 crash_feeder.py --once --dry-run
+
+# Explicitly include MemGuard controlled-sacrifice events
+python3 crash_feeder.py --once --dry-run --include-memguard
+
+# Use a temporary ledger for tests or a review run
+python3 crash_feeder.py --once --dry-run --ledger /tmp/code-city-crashes.jsonl
+
+Evidence is written to `~/MikeySwarm/logs/code_city/crash_events.jsonl` by default. Each event has a stable ID derived from source, type, target, and raw
+line. Delivery records prevent replay after a feeder restart. The API's active
+monster state is still volatile; durable evidence and rendered state are
+separate by design.
+
+BOUNDARIES
+----------
+- Freebuff doctor: report-only. It does not launch the feeder or arena.
+- MemGuard arena: memory-pressure stress harness. It does not launch Code City.
+- Code City feeder: crash evidence translator. MemGuard input is opt-in.
+- Code City API: in-memory renderer and `/crash` receiver.
 
 RECOVERY NOTES
 --------------

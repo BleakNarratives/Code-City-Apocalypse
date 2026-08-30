@@ -10,6 +10,7 @@ No heavy deps — pure stdlib. Runs as a background daemon on Crostini/Chromeboo
 
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 import re
@@ -28,6 +29,12 @@ CITY_API_URL = os.getenv("CRASH_FEED_CITY_URL", "http://127.0.0.1:8765/crash")
 POLL_INTERVAL = int(os.getenv("CRASH_FEED_POLL", "5"))  # seconds
 MAX_CRASHES_PER_CYCLE = int(os.getenv("CRASH_FEED_MAX_PER_CYCLE", "3"))
 DMESG_MARKER_FILE = Path(os.path.expanduser("~/.crash_feeder_dmesg_pos"))
+CRASH_LEDGER = Path(os.path.expanduser(
+    os.getenv("CRASH_FEED_LEDGER", "~/MikeySwarm/logs/code_city/crash_events.jsonl")
+))
+MEMGUARD_LEDGER = Path(os.path.expanduser(
+    os.getenv("CRASH_FEED_MEMGUARD_LEDGER", "~/MikeySwarm/logs/memguard/events.jsonl")
+))
 
 
 @dataclass
@@ -48,6 +55,84 @@ class CrashEvent:
         if not self.timestamp:
             self.timestamp = datetime.now(timezone.utc).isoformat()
 
+    @property
+    def event_id(self) -> str:
+        """Return a stable identity so restarts cannot replay fed events."""
+        raw = "|".join((self.source, self.crash_type, self.target_file, self.raw_line))
+        return hashlib.sha256(raw.encode("utf-8", errors="replace")).hexdigest()[:24]
+
+
+class CrashLedger:
+    """Append-only evidence and delivery ledger for crash-to-monster events."""
+
+    def __init__(self, path: Path = CRASH_LEDGER):
+        self.path = Path(path)
+        self._latest: Dict[str, Dict[str, Any]] = {}
+        self._load()
+
+    def _load(self) -> None:
+        try:
+            for line in self.path.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                record = json.loads(line)
+                event_id = record.get("event_id")
+                if event_id:
+                    self._latest[event_id] = {
+                        **self._latest.get(event_id, {}),
+                        **record,
+                    }
+        except (OSError, ValueError):
+            return
+
+    def _append(self, record: Dict[str, Any]) -> None:
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        with self.path.open("a", encoding="utf-8") as handle:
+            handle.write(json.dumps(record, ensure_ascii=False, sort_keys=True) + "\n")
+        event_id = record["event_id"]
+        self._latest[event_id] = {
+            **self._latest.get(event_id, {}),
+            **record,
+        }
+
+    def record_event(self, event: CrashEvent) -> None:
+        """Record a newly observed event unless its identity is already known."""
+        if event.event_id in self._latest:
+            return
+        self._append({
+            "kind": "crash_event",
+            "event_id": event.event_id,
+            "fed": False,
+            "observed_at": datetime.now(timezone.utc).isoformat(),
+            "event": asdict(event),
+        })
+
+    def record_delivery(self, event: CrashEvent, fed: bool) -> None:
+        """Record the latest delivery state without rewriting prior evidence."""
+        previous = self._latest.get(event.event_id, {})
+        self._append({
+            "kind": "delivery",
+            "event_id": event.event_id,
+            "fed": fed,
+            "attempted_at": datetime.now(timezone.utc).isoformat(),
+            "attempts": int(previous.get("attempts", 0)) + 1,
+        })
+
+    def is_delivered(self, event: CrashEvent) -> bool:
+        record = self._latest.get(event.event_id, {})
+        return bool(record.get("fed"))
+
+    def pending_events(self) -> List[CrashEvent]:
+        """Reconstruct events that were observed but not delivered."""
+        pending = []
+        for record in self._latest.values():
+            if record.get("fed"):
+                continue
+            event_data = record.get("event")
+            if event_data:
+                pending.append(CrashEvent(**event_data))
+        return pending
+
 
 class CrashFeeder:
     """
@@ -60,11 +145,26 @@ class CrashFeeder:
     4. journalctl — user-space crash logs (if available)
     """
 
-    def __init__(self, city_url: str = CITY_API_URL):
+    def __init__(
+        self,
+        city_url: str = CITY_API_URL,
+        *,
+        ledger_path: Path = CRASH_LEDGER,
+        include_memguard: bool = False,
+        memguard_ledger: Path = MEMGUARD_LEDGER,
+    ):
         self.city_url = city_url
         self.seen_hashes: set = set()
         self.last_dmesg_pos = self._load_dmesg_pos()
         self.crash_count = 0
+        self.ledger = CrashLedger(ledger_path)
+        self.include_memguard = include_memguard
+        self.memguard_ledger = Path(memguard_ledger)
+        # Monotonic counters only fire on meaningful increases, otherwise the
+        # vmstat alloc_stall/oom_kill counters (which never decrease) would
+        # spawn a monster on every poll forever. Thresholds: alloc_stall re-
+        # fires only after +50 since last emission; oom_kill only on increase.
+        self._vmstat_watermarks: Dict[str, int] = {}
 
     # ── DMESG ──────────────────────────────────────────────────
 
@@ -167,23 +267,27 @@ class CrashFeeder:
                     except ValueError:
                         pass
 
-            # OOM count
+            # OOM count (fires only when the counter increases)
             oom_kill = metrics.get("oom_kill", 0)
-            if oom_kill > 0:
-                events.append(CrashEvent(
-                    crash_type="oom_pressure",
-                    source="vmstat",
-                    raw_line=f"oom_kill={oom_kill}",
-                    severity=min(5, oom_kill),
-                    monster_type="Pressure Phantom",
-                    monster_symbol="💨",
-                    message=f"Memory pressure: {oom_kill} OOM kills recorded since boot",
-                    metadata={"oom_kill_count": oom_kill},
-                ))
+            if oom_kill > self._vmstat_watermarks.get("oom_kill", 0):
+                self._vmstat_watermarks["oom_kill"] = oom_kill
+                if oom_kill > 0:
+                    events.append(CrashEvent(
+                        crash_type="oom_pressure",
+                        source="vmstat",
+                        raw_line=f"oom_kill={oom_kill}",
+                        severity=min(5, oom_kill),
+                        monster_type="Pressure Phantom",
+                        monster_symbol="💨",
+                        message=f"Memory pressure: {oom_kill} OOM kills recorded since boot",
+                        metadata={"oom_kill_count": oom_kill},
+                    ))
 
-            # Page allocation failures
+            # Page allocation failures (fires only when +50 past last emission)
             alloc_stall = metrics.get("allocstall_normal", 0) + metrics.get("allocstall_movable", 0)
-            if alloc_stall > 100:
+            last = self._vmstat_watermarks.get("alloc_stall", 0)
+            if alloc_stall > 100 and alloc_stall >= last + 50:
+                self._vmstat_watermarks["alloc_stall"] = alloc_stall
                 events.append(CrashEvent(
                     crash_type="alloc_stall",
                     source="vmstat",
@@ -311,34 +415,89 @@ class CrashFeeder:
             pass
         return events
 
+    # ── MemGuard adapter ───────────────────────────────────────
+
+    def read_memguard_ledger(self) -> List[CrashEvent]:
+        """Opt-in adapter: translate MemGuard casualties into crash events."""
+        if not self.memguard_ledger.exists():
+            return []
+        events = []
+        try:
+            for line in self.memguard_ledger.read_text(encoding="utf-8").splitlines():
+                if not line.strip():
+                    continue
+                record = json.loads(line)
+                if record.get("event") != "controlled_sacrifice":
+                    continue
+                detail = record.get("detail", {})
+                command = str(detail.get("cmd", "unknown process"))
+                events.append(CrashEvent(
+                    crash_type="memguard_controlled_sacrifice",
+                    source="memguard",
+                    raw_line=line,
+                    timestamp=record.get("ts", ""),
+                    severity=4,
+                    monster_type="Controlled Sacrifice Wraith",
+                    monster_symbol="☠",
+                    target_file=command,
+                    message=(
+                        f"MemGuard terminated expendable process {command[:160]} "
+                        f"at {record.get('avail_mb', '?')}MB available"
+                    ),
+                    metadata={
+                        "memguard_event": record.get("event"),
+                        "avail_mb": record.get("avail_mb"),
+                        "psi_some_avg10": record.get("psi_some_avg10"),
+                        "detail": detail,
+                    },
+                ))
+        except (OSError, ValueError):
+            return []
+        return events
+
     # ── Aggregate and deduplicate ──────────────────────────────
 
     def collect_all_crashes(self) -> List[CrashEvent]:
         """Collect crash events from all available sources."""
         all_events = []
 
-        for source_fn in [
+        source_fns = [
             self.read_dmesg,
             self.read_vmstat,
             self.read_cgroup_events,
             self.read_journalctl,
             self.read_proc_self,
-        ]:
+        ]
+        if self.include_memguard:
+            source_fns.append(self.read_memguard_ledger)
+
+        for source_fn in source_fns:
             try:
                 events = source_fn()
                 all_events.extend(events)
             except Exception:
                 continue
 
-        # Deduplicate by raw_line hash
+        # Dedup within this cycle (local), across cycles (durable ledger), and
+        # drop anything already delivered so the per-cycle cap applies to
+        # PENDING events only. A stable head of already-fed events must not
+        # starve the backlog (the 2026-08-26 daemon bug: a persistent in-memory
+        # `seen_hashes` gate re-skipped every pending event after the first
+        # cycle, so the city never ingested the backlog).
         unique = []
+        seen_this_cycle = set()
         for e in all_events:
-            key = hash(e.raw_line)
-            if key not in self.seen_hashes:
-                self.seen_hashes.add(key)
-                unique.append(e)
+            key = e.event_id
+            if key in seen_this_cycle:
+                continue
+            seen_this_cycle.add(key)
+            self.seen_hashes.add(key)  # cumulative "ever detected" count
+            self.ledger.record_event(e)  # durable dedup (no-op if known)
+            if self.ledger.is_delivered(e):
+                continue
+            unique.append(e)
 
-        # Prune old hashes (keep last 1000)
+        # Prune the cumulative set (keep last 1000).
         if len(self.seen_hashes) > 1000:
             self.seen_hashes = set(list(self.seen_hashes)[-500:])
 
@@ -383,7 +542,11 @@ class CrashFeeder:
         """Feed a batch of events to Code City. Returns count of successful feeds."""
         fed = 0
         for event in events:
-            if self.feed_to_city(event):
+            if self.ledger.is_delivered(event):
+                continue
+            delivered = self.feed_to_city(event)
+            self.ledger.record_delivery(event, delivered)
+            if delivered:
                 fed += 1
                 print(f"  {event.monster_symbol} {event.monster_type}: {event.message[:100]}")
         return fed
@@ -436,12 +599,20 @@ def main():
                         help=f"Poll interval in seconds (default: {POLL_INTERVAL})")
     parser.add_argument("--dry-run", action="store_true",
                         help="Detect crashes but don't send to API")
+    parser.add_argument("--include-memguard", action="store_true",
+                        help="Opt in to MemGuard controlled-sacrifice events")
+    parser.add_argument("--ledger", type=Path, default=CRASH_LEDGER,
+                        help=f"Crash event ledger (default: {CRASH_LEDGER})")
     parser.add_argument("--once", action="store_true",
                         help="Run one scan and exit")
 
     args = parser.parse_args()
 
-    feeder = CrashFeeder(city_url=args.url)
+    feeder = CrashFeeder(
+        city_url=args.url,
+        ledger_path=args.ledger,
+        include_memguard=args.include_memguard,
+    )
 
     if args.once:
         events = feeder.collect_all_crashes()

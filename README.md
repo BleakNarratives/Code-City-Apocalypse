@@ -50,11 +50,34 @@ code_tool/                  Code extraction utilities
 
 ```bash
 python3 code_city_apocalypse.py
+
+# Crash-to-monster bridge. MemGuard input is opt-in.
+python3 crash_feeder.py --once --dry-run
+python3 crash_feeder.py --once --dry-run --include-memguard
 ```
+
+## Verified Crash Boundary
+
+`start_crash_arena.sh` starts the Code City API and `crash_feeder.py`. The
+feeder watches dmesg, vmstat, cgroup events, journalctl, and optionally the
+MemGuard ledger. It POSTs translated events to `/crash`.
+
+The Freebuff doctor is not in this path. It is a report-only health shell. The
+MemGuard stress arena is also separate: it creates memory pressure for testing
+and does not feed Code City. Code City's active monsters are currently
+in-memory and disappear when its API restarts.
+
+The feeder now writes an append-only evidence ledger at
+`~/MikeySwarm/logs/code_city/crash_events.jsonl`, uses stable event IDs, and
+records delivery status so successful monster feeds are not replayed after a
+restart. MemGuard translation requires the explicit `--include-memguard` flag.
+See `../RootBase/EVIDENCE_SPINE.md` for the cross-project persistence map.
 
 ## Status
 
-**Alpha Prototype** — simulation tick logic decoupled from rendering. City state exportable as JSON for external dashboards.
+**Alpha Prototype** — simulation tick logic decoupled from rendering. City state
+is exportable as JSON for external dashboards. Crash evidence is persistent at
+the feeder boundary; active city state remains volatile.
 
 ---
 

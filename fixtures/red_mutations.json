@@ -1,0 +1,32 @@
+[
+  {
+    "id": "mut_001_syntax_error",
+    "description": "Missing closing parenthesis in function call",
+    "target": "src/city_engine.py",
+    "payload": "print('City Engine Initialized'"
+  },
+  {
+    "id": "mut_002_broken_import",
+    "description": "Importing non-existent module",
+    "target": "src/city_utils.py",
+    "payload": "from city_infrastructure import nonexistent_module"
+  },
+  {
+    "id": "mut_003_logic_trap",
+    "description": "Infinite loop condition",
+    "target": "engine/loop.py",
+    "payload": "while True: pass"
+  },
+  {
+    "id": "mut_004_broken_import_2",
+    "description": "Shadowed import",
+    "target": "core/main.py",
+    "payload": "import os; os = None; os.path.exists('test')"
+  },
+  {
+    "id": "mut_005_logic_trap_2",
+    "description": "Resource leak (open file loop)",
+    "target": "engine/logger.py",
+    "payload": "for i in range(1000000): open('log.txt', 'a')"
+  }
+]

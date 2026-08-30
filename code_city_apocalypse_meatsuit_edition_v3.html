@@ -112,7 +112,9 @@
                 <div>🐛 ACTIVE BUGS: <span id="bugCount">0</span></div>
                 <div>🏢 BUILDINGS: <span id="buildingCount">25</span></div>
                 <div>🤖 AGENTS: <span id="agentCount">0</span></div>
+                <div>📡 LIVE SYNC: <span id="liveSyncStatus">connecting…</span></div>
             </div>
+            <div id="liveEvents" style="margin-top:8px; font-size:11px; max-height:120px; overflow-y:auto;"></div>
         </div>
         <textarea id="codeEditor" placeholder="// Write some buggy code here...
 // Example bugs: syntax errors, infinite loops, memory leaks
@@ -558,6 +560,69 @@ function brokenCode() {
             renderer.render(scene, camera);
             gameLoopId = requestAnimationFrame(gameLoop);
         }
+
+
+        // ═══ LIVE ECOSYSTEM SYNC — city-api :8765 ═══
+        const CITY_API = window.location.port === '8765' ? '' : 'http://127.0.0.1:8765';
+        let lastSpawnId = null;
+        let liveSyncOk = false;
+
+        function setLiveStatus(ok) {
+            liveSyncOk = ok;
+            const el = document.getElementById('liveSyncStatus');
+            if (el) {
+                el.textContent = ok ? 'ONLINE' : 'OFFLINE';
+                el.style.color = ok ? '#00ff44' : '#ff4444';
+            }
+        }
+
+        function addLiveEvent(text) {
+            const box = document.getElementById('liveEvents');
+            if (!box) return;
+            const line = document.createElement('div');
+            line.textContent = text;
+            line.style.padding = '2px 0';
+            line.style.borderBottom = '1px solid rgba(255,255,255,0.08)';
+            box.prepend(line);
+            while (box.children.length > 12) box.removeChild(box.lastChild);
+        }
+
+        async function pollCityApi() {
+            try {
+                const res = await fetch(`${CITY_API}/city`, { cache: 'no-store' });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const city = await res.json();
+
+                setLiveStatus(true);
+                updateBuildingCount();
+
+                // Spawn monsters for new crashes we haven't seen yet
+                const spawns = (city.recent_spawns || []).filter(s => s.spawned);
+                const newest = spawns.length ? spawns[spawns.length - 1] : null;
+                if (newest && newest.id !== lastSpawnId) {
+                    const isNew = lastSpawnId !== null;
+                    lastSpawnId = newest.id;
+                    if (isNew) {
+                        spawnBug(
+                            newest.error_type || 'syntax',
+                            Math.min(10, newest.severity || 5),
+                            newest.error_message || 'Ecosystem crash event'
+                        );
+                        addLiveEvent(`👾 ${newest.monster_type || 'Crash Beast'} — ${(newest.error_message || '').slice(0, 60)}`);
+                    }
+                }
+
+                // Reflect live building count from scanner when available
+                if (city.buildings && city.buildings.length && buildings.length !== city.buildings.length) {
+                    addLiveEvent(`🏙️ Scanner: ${city.buildings.length} buildings indexed`);
+                }
+            } catch (err) {
+                setLiveStatus(false);
+            }
+        }
+
+        // Poll every 10s; initial fetch after short delay so city renders first
+        setTimeout(() => { pollCityApi(); setInterval(pollCityApi, 10000); }, 1500);
 
         // INITIALIZE
         createCity();
