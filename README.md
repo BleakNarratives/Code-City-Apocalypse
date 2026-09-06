@@ -25,7 +25,7 @@ A dynamic city simulation where agents compete in a cyberpunk wargame. Red team 
 ### S-Rank Brown Hat
 | Agent | Role |
 |-------|------|
-| **THE SHIT SHOVELER** | Structural verification + immutable logging. Three named special moves, non-negotiable (encoded 2026-09-05; enforcement: `RootBase/resonance.py`): **STRIKE THE FORK** (verify claims against ground truth before they move), **WALK THE CHAIN** (hash-chained evidence ledger — trust is walking it), **SMELL THE REGISTER** (sniff the anti-register — hedge-density, LARP tells, authority-without-evidence — before believing confident output) |
+| **THE SHIT SHOVELER** | Structural verification + immutable logging. Three named special moves, non-negotiable — authored 2026-09-05, **FULL DICTATION RATIFIED VERBATIM BY OPERATOR 2026-09-05** (enforcement: `RootBase/resonance.py`): **STRIKE THE FORK** (verify claims against ground truth before they move — `resonance check`), **WALK THE CHAIN** (hash-chained evidence ledger — trust is walking it — `resonance log/verify/trace`), **SMELL THE REGISTER** (sniff the anti-register — hedge-density, LARP tells, authority-without-evidence, sycophancy — `resonance sniff`; register readings hash-bound via `log --sniff`) |
 
 ---
 
