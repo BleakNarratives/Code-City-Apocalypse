@@ -265,6 +265,7 @@ class GauntletRun:
     challenger_name: str
     challenger_loadout: Loadout
     opponents: List[Dict[str, Any]] = field(default_factory=list)
+    ladder: bool = False  # ladder mode: rungs escalate, bonus scales
 
     # State
     started_at: Optional[float] = None
@@ -722,6 +723,59 @@ class Arena:
         return {"success": True, "fight": fight,
                 "status": run.status, "fights_won": run.fights_won}
 
+    def create_ladder(
+        self,
+        challenger_id: str,
+        challenger_name: str,
+        challenge_id: str,
+        opponent_names: List[str],
+        base_elo: int = 1200,
+        rung_gap: int = 40,
+        challenger_loadout: Optional[Loadout] = None
+    ) -> GauntletRun:
+        """LADDER MODE: the challenger climbs from the bottom rung up.
+
+        Every rung is stronger than the last (escalating ELO — each
+        opponent has climbed the same ladder to get where they stand).
+        The sweep bonus scales per rung: clearing rung 3 pays more than
+        rung 1, because the climb is harder than the first fight.
+
+        `opponent_names` is the declared number — however many rungs the
+        challenger thinks they're worth. Lose any rung and the climb ends.
+        """
+        challenge = ARENA_CHALLENGES.get(challenge_id)
+        if not challenge:
+            raise ValueError(f"Unknown challenge: {challenge_id}")
+        if not opponent_names:
+            raise ValueError("A ladder needs at least one rung")
+
+        self.match_count += 1
+        run_id = f"ladder_{self.match_count:04d}"
+        run = GauntletRun(
+            id=run_id,
+            challenge=challenge,
+            challenger_id=challenger_id,
+            challenger_name=challenger_name,
+            challenger_loadout=challenger_loadout or Loadout(),
+            ladder=True,
+            opponents=[
+                {"id": f"rung_{i + 1}", "name": name,
+                 "loadout": Loadout(), "elo": base_elo + i * rung_gap,
+                 "score": 0, "time": None}
+                for i, name in enumerate(opponent_names)
+            ],
+        )
+        self.active_matches[run_id] = run
+
+        print(f"\n🪜 LADDER DECLARED: {run_id}")
+        print(f"🥊 {challenger_name} climbing {len(run.opponents)} rungs")
+        print(f"🎯 Challenge: {challenge.title}")
+        for i, o in enumerate(run.opponents, 1):
+            print(f"   rung {i}: {o['name']} (ELO {o['elo']})")
+        print(f"   Lose any rung and the climb ends. Clear the top and "
+              f"the bonus scales with the climb.")
+        return run
+
     def _score_challenger(self, run: GauntletRun, code: str,
                           time_taken: float) -> int:
         """Challenger's answer: same base/speed/quality/loadout mechanics
@@ -764,8 +818,14 @@ class Arena:
         run.status = "won" if swept else "lost"
 
         if swept:
-            # the sweep is worth more than N separate wins
-            bonus = len(run.opponents) * 10
+            # the sweep is worth more than N separate wins. In ladder
+            # mode the bonus SCALES per rung: 1+2+...+N — climbing is
+            # harder than standing, and the arena pays for the climb.
+            n = len(run.opponents)
+            if run.ladder:
+                bonus = 10 * n * (n + 1) // 2  # 1+2+...+N rungs
+            else:
+                bonus = n * 10
             self.leaderboard[run.challenger_id] = \
                 self.leaderboard.get(run.challenger_id, 1200) + bonus
 
@@ -813,12 +873,47 @@ class Arena:
             print(f"  {i}. {mark} {f['opponent_name']} "
                   f"({f['challenger_score']} vs {f['opponent_score']})")
         if swept:
-            print(f"\n👑 {run.challenger_name} cleared the whole line — "
-                  f"legend status.")
+            if run.ladder:
+                print(f"\n👑 {run.challenger_name} climbed every rung — "
+                      f"top of the ladder.")
+            else:
+                print(f"\n👑 {run.challenger_name} cleared the whole line — "
+                      f"legend status.")
         else:
             print(f"\n☠️  {run.challenger_name} went down. The line holds.")
         print(f"📈 ELO: {run.challenger_name} "
               f"{self.leaderboard[run.challenger_id]}")
+
+    # ==================== BROWN'S RULING (post-match audit) ====================
+
+    def apply_brown_verdict(self, intel: Dict, side_ids: Dict) -> Dict:
+        """Brown's ruling hits the scoreboard. If the audit says the only
+        clean path was unification and the teams fought solo anyway, each
+        side that stayed solo takes the standing hit: ELO penalty per
+        ghost it couldn't account for alone. The register residue (dirt
+        that unification wouldn't launder) doesn't double-punish — the
+        chain is what Brown grades, the stink is what he warns about.
+
+        side_ids: {"red": [ids...], "blue": [ids...]} — the arena players.
+        Returns the penalties applied.
+        """
+        brown = intel.get("brown")
+        if brown is None:
+            return {"penalties": {}, "ruling": "no audit"}
+        ruling = brown.unify_or_get_humped
+        penalties = {}
+        for side, ids in side_ids.items():
+            solo = (brown.solo_red if side == "red" else brown.solo_blue)
+            ghosts = solo.get("ghosts", 0)
+            if ghosts <= 0:
+                continue  # this side walked it alone — nothing to answer for
+            # refused unification: pay for the ghosts you couldn't account
+            # for. Cap it so a long engagement doesn't zero a team.
+            penalty = min(ghosts, 40)
+            for pid in ids:
+                self.leaderboard[pid] = max(1, self.leaderboard.get(pid, 1200) - penalty)
+            penalties[side] = {"ghosts": ghosts, "penalty": penalty}
+        return {"penalties": penalties, "ruling": ruling}
 
     # ==================== SPECTATORS & BETTING ====================
     

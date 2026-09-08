@@ -108,6 +108,121 @@ class GauntletFightOrder(unittest.TestCase):
         self.assertFalse(res["fight"]["challenger_won"])
 
 
+class LadderMode(unittest.TestCase):
+    def setUp(self):
+        self.arena = Arena()
+
+    def test_rungs_escalate_in_strength(self):
+        run = self.arena.create_ladder(
+            "viper", "VIPER", "spaghetti_untangle",
+            ["PUNK", "SOLDIER", "WARLORD"], base_elo=1200, rung_gap=50)
+        elos = [o["elo"] for o in run.opponents]
+        self.assertEqual(elos, [1200, 1250, 1300])
+        self.assertTrue(run.ladder)
+
+    def test_ladder_bonus_scales_per_rung(self):
+        run = self.arena.create_ladder(
+            "viper", "VIPER", "spaghetti_untangle",
+            ["PUNK", "SOLDIER", "WARLORD"])
+        self.arena.start_ladder_ = run  # keep reference
+        self.arena.start_gauntlet(run.id)
+        self.arena._score_challenger = lambda run, code, t: 999
+        self.arena._score_opponent = lambda challenge, loadout: 1
+        for _ in range(3):
+            self.arena.submit_gauntlet(run.id, SOLUTION)
+        # 3 rungs: bonus = 10 * (1+2+3) = 60, on top of 3 ELO wins
+        self.assertGreater(self.arena.leaderboard["viper"],
+                           1200 + 60)
+
+    def test_ladder_vs_flat_gauntlet_bonus(self):
+        # same 3 opponents: ladder pays 60 bonus, flat gauntlet pays 30
+        ladder = self.arena.create_ladder(
+            "climber", "CLIMBER", "spaghetti_untangle",
+            ["A", "B", "C"])
+        flat = self.arena.create_gauntlet(
+            "stander", "STANDER", "spaghetti_untangle",
+            [("x", "A"), ("y", "B"), ("z", "C")])
+        self.arena.start_gauntlet(ladder.id)
+        self.arena.start_gauntlet(flat.id)
+        self.arena._score_challenger = lambda run, code, t: 999
+        self.arena._score_opponent = lambda challenge, loadout: 1
+        for _ in range(3):
+            self.arena.submit_gauntlet(ladder.id, SOLUTION)
+            self.arena.submit_gauntlet(flat.id, SOLUTION)
+        # both get the same 3 ELO wins; the ladder's climbing bonus is
+        # strictly larger than the flat sweep bonus
+        self.assertGreater(self.arena.leaderboard["climber"],
+                           self.arena.leaderboard["stander"])
+
+    def test_loss_ends_the_climb(self):
+        run = self.arena.create_ladder(
+            "viper", "VIPER", "spaghetti_untangle", ["PUNK", "SOLDIER"])
+        self.arena.start_gauntlet(run.id)
+        self.arena._score_challenger = lambda run, code, t: 50
+        self.arena._score_opponent = lambda challenge, loadout: 100
+        r = self.arena.submit_gauntlet(run.id, SOLUTION)
+        self.assertFalse(r["fight"]["challenger_won"])
+        self.assertEqual(r["status"], "lost")
+        again = self.arena.submit_gauntlet(run.id, SOLUTION)
+        self.assertIn("error", again)
+
+
+class BrownRuling(unittest.TestCase):
+    """Brown's post-match audit hits the scoreboard: solo teams that
+    should have united pay ELO per ghost; clean teams don't."""
+
+    def setUp(self):
+        self.arena = Arena()
+        self.arena.leaderboard["viper"] = 1200
+        self.arena.leaderboard["ravage"] = 1200
+        self.arena.leaderboard["bastion"] = 1200
+
+    def _fake_brown(self, red_ghosts, blue_ghosts):
+        class _Brown:
+            pass
+
+        b = _Brown()
+        b.solo_red = {"side": "red", "ghosts": red_ghosts}
+        b.solo_blue = {"side": "blue", "ghosts": blue_ghosts}
+        b.unify_or_get_humped = ("UNITE — the chain walks only when the "
+                                 "ledgers are one")
+        return b
+
+    def test_solo_sides_pay_for_ghosts(self):
+        intel = {"brown": self._fake_brown(red_ghosts=10, blue_ghosts=0)}
+        res = self.arena.apply_brown_verdict(
+            intel, {"red": ["viper", "ravage"], "blue": ["bastion"]})
+        # red refused to unite: 10 ghosts -> 10 ELO off each red player
+        self.assertEqual(self.arena.leaderboard["viper"], 1190)
+        self.assertEqual(self.arena.leaderboard["ravage"], 1190)
+        # blue walked it clean solo — nothing to answer for
+        self.assertEqual(self.arena.leaderboard["bastion"], 1200)
+        self.assertIn("red", res["penalties"])
+        self.assertNotIn("blue", res["penalties"])
+
+    def test_no_brown_no_penalty(self):
+        res = self.arena.apply_brown_verdict(
+            {}, {"red": ["viper"], "blue": ["bastion"]})
+        self.assertEqual(res["ruling"], "no audit")
+        self.assertEqual(self.arena.leaderboard["viper"], 1200)
+
+    def test_penalty_capped_for_long_engagements(self):
+        intel = {"brown": self._fake_brown(red_ghosts=500, blue_ghosts=0)}
+        self.arena.apply_brown_verdict(
+            intel, {"red": ["viper"], "blue": ["bastion"]})
+        # capped at 40 — a long war doesn't zero a team
+        self.assertEqual(self.arena.leaderboard["viper"], 1200 - 40)
+        self.assertEqual(self.arena.leaderboard["bastion"], 1200)
+
+    def test_clean_engagement_no_penalties(self):
+        intel = {"brown": self._fake_brown(red_ghosts=0, blue_ghosts=0)}
+        res = self.arena.apply_brown_verdict(
+            intel, {"red": ["viper"], "blue": ["bastion"]})
+        self.assertEqual(res["penalties"], {})
+        self.assertEqual(self.arena.leaderboard["viper"], 1200)
+        self.assertEqual(self.arena.leaderboard["bastion"], 1200)
+
+
 class GauntletLedger(unittest.TestCase):
     def test_finished_runs_move_to_history(self):
         arena = Arena()
