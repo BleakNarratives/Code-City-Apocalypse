@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CODE CITY — LIVE</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #00ff41;
+    font-family: 'Courier New', monospace;
+    overflow: hidden;
+    min-height: 100vh;
+  }
+  #header {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(0,0,0,0.9);
+    padding: 12px 16px;
+    border: 1px solid #00ff41;
+    z-index: 100;
+    min-width: 180px;
+  }
+  #header h1 {
+    font-size: 1.2em;
+    color: #00ffff;
+    text-shadow: 0 0 10px rgba(0,255,255,0.5);
+    margin-bottom: 8px;
+  }
+  .stat {
+    display: flex;
+    justify-content: space-between;
+    margin: 4px 0;
+    font-size: 0.85em;
+  }
+  .stat-label { color: #888; }
+  .stat-value { color: #ffff00; font-weight: bold; }
+  .stat-value.danger { color: #ff0066; }
+  #legend {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.9);
+    padding: 10px 14px;
+    border: 1px solid #333;
+    z-index: 100;
+    font-size: 0.75em;
+  }
+  #legend h3 {
+    color: #ff0066;
+    margin-bottom: 6px;
+    font-size: 0.9em;
+  }
+  .legend-row {
+    display: flex;
+    align-items: center;
+    margin: 3px 0;
+    gap: 8px;
+  }
+  .legend-swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+  #cityCanvas {
+    display: block;
+  }
+  #controls {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 100;
+  }
+  .ctrl-btn {
+    background: rgba(0,255,65,0.1);
+    border: 1px solid rgba(0,255,65,0.5);
+    color: #00ff41;
+    padding: 6px 14px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  .ctrl-btn:hover {
+    background: rgba(0,255,65,0.3);
+    box-shadow: 0 0 10px rgba(0,255,65,0.3);
+  }
+  .ctrl-btn.danger {
+    border-color: rgba(255,0,102,0.5);
+    color: #ff0066;
+  }
+  .ctrl-btn.danger:hover {
+    background: rgba(255,0,102,0.3);
+    box-shadow: 0 0 10px rgba(255,0,102,0.3);
+  }
+  #status {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.9);
+    padding: 6px 12px;
+    font-size: 0.7em;
+    color: #666;
+    z-index: 100;
+    border: 1px solid #333;
+  }
+</style>
+</head>
+<body>
+  <div id="header">
+    <h1>🏙️ CODE CITY — LIVE</h1>
+    <div class="stat"><span class="stat-label">Buildings:</span><span class="stat-value" id="buildingCount">--</span></div>
+    <div class="stat"><span class="stat-label">Monsters:</span><span class="stat-value danger" id="monsterCount">--</span></div>
+    <div class="stat"><span class="stat-label">Disasters:</span><span class="stat-value" id="disasterCount">--</span></div>
+    <div class="stat"><span class="stat-label">Errors:</span><span class="stat-value" id="errorCount">--</span></div>
+    <div class="stat"><span class="stat-label">Planes:</span><span class="stat-value" id="planeCount">--</span></div>
+    <div class="stat" style="margin-top:6px;border-top:1px solid #333;padding-top:6px;">
+      <span class="stat-label">API:</span><span class="stat-value" id="apiStatus" style="color:#00ff41;">CONNECTING...</span>
+    </div>
+    <div class="stat">
+      <span class="stat-label">Updated:</span><span class="stat-value" id="lastUpdate" style="font-size:0.7em;">--</span>
+    </div>
+  </div>
+
+  <div id="legend">
+    <h3>LEGEND</h3>
+    <div class="legend-row"><div class="legend-swatch" style="background:#3572A5;"></div><span>Python Tower</span></div>
+    <div class="legend-row"><div class="legend-swatch" style="background:#61DAFB;"></div><span>JS Spire</span></div>
+    <div class="legend-row"><div class="legend-swatch" style="background:#F7DF1E;"></div><span>JS React</span></div>
+    <div class="legend-row"><div class="legend-swatch" style="background:#4CAF50;"></div><span>Data Bunker</span></div>
+    <div class="legend-row"><div class="legend-swatch" style="background:#ff0066;"></div><span>Monster</span></div>
+    <div class="legend-row"><div class="legend-swatch" style="background:#ff4500;"></div><span>Fire</span></div>
+    <div class="legend-row"><div class="legend-swatch" style="background:#8B0000;"></div><span>Air Raid</span></div>
+  </div>
+
+  <canvas id="cityCanvas"></canvas>
+
+  <div id="controls">
+    <button class="ctrl-btn" onclick="refreshCity()">🔄 Refresh</button>
+    <button class="ctrl-btn danger" onclick="toggleAutoRefresh()">⏯️ Auto-Refresh</button>
+  </div>
+
+  <div id="status">API: 127.0.0.1:8765</div>
+
+<script>
+const canvas = document.getElementById('cityCanvas');
+const ctx = canvas.getContext('2d');
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+let cityData = { buildings: [], monsters: [], disasters: [], airRaids: [] };
+let autoRefresh = true;
+let lastRefresh = 0;
+
+async function fetchCity() {
+  try {
+    const resp = await fetch('http://127.0.0.1:8765/city');
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    const data = await resp.json();
+    cityData = data;
+    
+    // Update stats
+    document.getElementById('buildingCount').textContent = data.buildings;
+    document.getElementById('monsterCount').textContent = data.monsters;
+    document.getElementById('disasterCount').textContent = data.disasters;
+    document.getElementById('errorCount').textContent = data.error_count;
+    document.getElementById('planeCount').textContent = data.planes;
+    document.getElementById('apiStatus').textContent = 'OK';
+    document.getElementById('apiStatus').style.color = '#00ff41';
+    document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString();
+    
+    return data;
+  } catch (e) {
+    document.getElementById('apiStatus').textContent = 'OFFLINE';
+    document.getElementById('apiStatus').style.color = '#ff0066';
+    console.error('City API error:', e);
+    return null;
+  }
+}
+
+function drawCity() {
+  // Clear with dark bg
+  ctx.fillStyle = '#0a0a0a';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  
+  // Grid
+  ctx.strokeStyle = 'rgba(0,255,65,0.05)';
+  ctx.lineWidth = 1;
+  const gridSize = 50;
+  for (let x = 0; x < canvas.width; x += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(x, 0);
+    ctx.lineTo(x, canvas.height);
+    ctx.stroke();
+  }
+  for (let y = 0; y < canvas.height; y += gridSize) {
+    ctx.beginPath();
+    ctx.moveTo(0, y);
+    ctx.lineTo(canvas.width, y);
+    ctx.stroke();
+  }
+  
+  // Ground glow
+  const groundGrad = ctx.createLinearGradient(0, canvas.height - 100, 0, canvas.height);
+  groundGrad.addColorStop(0, 'rgba(0,255,65,0)');
+  groundGrad.addColorStop(1, 'rgba(0,255,65,0.1)');
+  ctx.fillStyle = groundGrad;
+  ctx.fillRect(0, canvas.height - 100, canvas.width, 100);
+  
+  // Scale factor: map 100-unit city to canvas
+  const scaleX = canvas.width / 120;
+  const scaleY = canvas.height / 120;
+  const offX = canvas.width / 2;
+  const offY = canvas.height / 2 + 50;
+  
+  // Draw buildings
+  cityData.buildings = cityData.buildings || [];
+  cityData.buildings.forEach(b => {
+    const x = (b.x || 0) * scaleX + offX;
+    const z = (b.z || 0) * scaleY + offY;
+    const w = (b.width || 5) * scaleX;
+    const h = (b.height || 10) * scaleY * 0.8;
+    const d = (b.depth || 5) * scaleY;
+    
+    // Building color
+    const colorMap = {
+      'python_tower': '#3572A5',
+      'javascript_spire': '#F7DF1E',
+      'react_dome': '#61DAFB',
+      'data_bunker': '#4CAF50'
+    };
+    const color = colorMap[b.type] || '#666';
+    const health = b.health || 100;
+    const healthFactor = health / 100;
+    
+    // 3D effect: top face + front face
+    ctx.save();
+    
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.fillRect(x + 4, z + 4, w, h);
+    
+    // Main building (front face)
+    ctx.fillStyle = color;
+    ctx.globalAlpha = 0.5 + healthFactor * 0.5;
+    ctx.fillRect(x, z, w, h);
+    ctx.globalAlpha = 1;
+    
+    // Border - green if healthy, red if damaged
+    ctx.strokeStyle = health > 50 ? '#00ff41' : '#ff0066';
+    ctx.lineWidth = 1;
+    ctx.strokeRect(x, z, w, h);
+    
+    // Windows (grid of lit windows)
+    const winColor = health > 70 ? '#ffff00' : health > 40 ? '#ff6600' : '#ff0066';
+    ctx.fillStyle = winColor;
+    const cols = Math.max(2, Math.floor(w / 8));
+    const rows = Math.max(2, Math.floor(h / 12));
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        if (Math.random() > 0.2) {
+          ctx.fillRect(x + 3 + c * (w/cols), z + 3 + r * (h/rows), 3, 5);
+        }
+      }
+    }
+    
+    // Health bar for damaged buildings
+    if (health < 100) {
+      ctx.fillStyle = 'rgba(0,0,0,0.7)';
+      ctx.fillRect(x - 1, z - 8, w + 2, 4);
+      ctx.fillStyle = health > 50 ? '#00ff41' : '#ff0066';
+      ctx.fillRect(x, z - 7, w * healthFactor, 2);
+    }
+    
+    ctx.restore();
+  });
+  
+  // Draw air raids (planes)
+  cityData.airRaids = cityData.airRaids || [];
+  cityData.airRaids.forEach(plane => {
+    const x = (plane.position?.x || 0) * scaleX + offX;
+    const z = (plane.position?.z || 0) * scaleY + offY;
+    
+    ctx.save();
+    ctx.translate(x, z);
+    ctx.fillStyle = '#8B0000';
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 8, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = '#ff4444';
+    ctx.fillRect(-6, -1, 12, 2);
+    ctx.restore();
+  });
+  
+  // Draw monsters
+  cityData.monsters = cityData.monsters || [];
+  cityData.monsters.forEach(m => {
+    const x = (m.position?.x || 0) * scaleX + offX;
+    const z = (m.position?.z || 0) * scaleY + offY;
+    const size = (m.scale || 1) * 8;
+    
+    ctx.save();
+    ctx.translate(x, z);
+    ctx.rotate(m.rotation || 0);
+    
+    // Monster glow
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = '#ff0066';
+    ctx.fillStyle = '#ff0066';
+    ctx.beginPath();
+    ctx.arc(0, 0, size, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+    
+    // Eyes
+    ctx.fillStyle = '#ffff00';
+    ctx.fillRect(-size*0.4, -size*0.3, size*0.3, size*0.3);
+    ctx.fillRect(size*0.1, -size*0.3, size*0.3, size*0.3);
+    
+    // Teeth
+    ctx.fillStyle = '#fff';
+    for (let i = -size*0.5; i < size*0.5; i += 4) {
+      ctx.fillRect(i, size*0.2, 2, 4);
+    }
+    
+    ctx.restore();
+  });
+}
+
+async function refreshCity() {
+  await fetchCity();
+  drawCity();
+}
+
+function toggleAutoRefresh() {
+  autoRefresh = !autoRefresh;
+  document.querySelector('#controls .ctrl-btn:last-child').textContent = autoRefresh ? '⏯️ Auto-Refresh' : '▶️ Start Refresh';
+}
+
+// Initial load
+await fetchCity();
+drawCity();
+
+// Auto-refresh every 5 seconds
+setInterval(() => {
+  if (autoRefresh) refreshCity();
+}, 5000);
+
+// Also redraw on animation frame for subtle effects
+function animate() {
+  requestAnimationFrame(animate);
+  // Subtle monster movement
+  if (cityData.monsters) {
+    cityData.monsters.forEach(m => {
+      if (m.rotation !== undefined) m.rotation += 0.02;
+    });
+    drawCity();
+  }
+}
+animate();
+</script>
+</body>
+</html>

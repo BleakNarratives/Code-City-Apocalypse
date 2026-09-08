@@ -21,7 +21,9 @@ Real-time 1v1 or team battles with ELO rankings and betting systems.
 import random
 import time
 import math
-from typing import Dict, List, Optional, Tuple
+import os
+import sys
+from typing import Any, Dict, List, Optional, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
 
@@ -246,6 +248,42 @@ class ArenaMatch:
     winner_id: Optional[str] = None
 
 
+# ==================== GAUNTLET RUN (1-vs-N) ====================
+
+@dataclass
+class GauntletRun:
+    """One challenger vs N opponents, fought sequentially.
+
+    The challenger declares how many they're worth ("one on however many a
+    snippet thinks it's worth in ass whoopin'"). Lose ANY fight and the run
+    is over — no continuation, no mercy. Beat all N and it's a sweep: the
+    biggest win the arena can hand out.
+    """
+    id: str
+    challenge: Challenge
+    challenger_id: str
+    challenger_name: str
+    challenger_loadout: Loadout
+    opponents: List[Dict[str, Any]] = field(default_factory=list)
+
+    # State
+    started_at: Optional[float] = None
+    ended_at: Optional[float] = None
+    current_index: int = 0
+    results: List[Dict[str, Any]] = field(default_factory=list)  # per-fight
+    status: str = "pending"  # pending | active | won | lost
+
+    @property
+    def current_opponent(self) -> Optional[Dict[str, Any]]:
+        if self.status != "active" or self.current_index >= len(self.opponents):
+            return None
+        return self.opponents[self.current_index]
+
+    @property
+    def fights_won(self) -> int:
+        return len(self.results)
+
+
 # ==================== ELO RANKING ====================
 
 class ELOSystem:
@@ -295,6 +333,39 @@ class Arena:
         
         self.match_count = 0
     
+    # ==================== SCOUT RECON (RED TEAM ARM) ====================
+
+    def scout_recon(self, target_dir: str, rounds: int = 3,
+                    record: bool = True) -> Dict:
+        """Pre-battle recon: deploy the Vigil scout swarm against a target
+        and return intel before the duel starts.
+
+        The arena is where they go to battle; the scouts are the eyes that
+        walk the ground first. Uses SCOUT_CONTAINER/scout_bridge.py — plain
+        dict in, plain dict out, no coupling into the city.
+        """
+        bridge = os.path.join(os.path.dirname(__file__), "..", "..",
+                              "SCOUT_CONTAINER", "scout_bridge.py")
+        bridge_dir = os.path.dirname(os.path.abspath(bridge))
+        if bridge_dir not in sys.path:
+            sys.path.insert(0, bridge_dir)
+        from scout_bridge import run_recon
+
+        intel = run_recon(target_dir, rounds=rounds)
+        if record:
+            self.match_history.append({
+                "type": "scout_recon",
+                "target": target_dir,
+                "rounds": rounds,
+                "summary": intel.get("summary", {}),
+            })
+        print(f"\n🔭 SCOUT RECON COMPLETE — {target_dir}")
+        s = intel.get("summary", {})
+        print(f"   RED {s.get('red_score')} / BLUE {s.get('blue_score')} "
+              f"| {s.get('findings')} findings, {s.get('executions')} "
+              f"executions, {s.get('mines_deployed')} mines")
+        return intel
+
     # ==================== MATCHMAKING ====================
     
     def create_match(
@@ -539,6 +610,216 @@ class Arena:
             score = match.player1_score if player_id == match.player1_id else match.player2_score
             stats["total_score"] += score
     
+    # ==================== GAUNTLET (1-vs-N CHALLENGE) ====================
+
+    def create_gauntlet(
+        self,
+        challenger_id: str,
+        challenger_name: str,
+        challenge_id: str,
+        opponents: List[Tuple[str, str]],  # (id, name) per opponent
+        challenger_loadout: Optional[Loadout] = None
+    ) -> GauntletRun:
+        """One challenger steps up against N opponents.
+
+        `opponents` is the declaration of intent: however many the
+        challenger thinks they're worth, that's how many line up. Fought
+        sequentially — lose once, and the line wins.
+        """
+        challenge = ARENA_CHALLENGES.get(challenge_id)
+        if not challenge:
+            raise ValueError(f"Unknown challenge: {challenge_id}")
+        if not opponents:
+            raise ValueError("A gauntlet needs at least one opponent")
+
+        self.match_count += 1
+        run_id = f"gauntlet_{self.match_count:04d}"
+
+        run = GauntletRun(
+            id=run_id,
+            challenge=challenge,
+            challenger_id=challenger_id,
+            challenger_name=challenger_name,
+            challenger_loadout=challenger_loadout or Loadout(),
+            opponents=[
+                {"id": oid, "name": oname, "loadout": Loadout(),
+                 "elo": self.leaderboard.get(oid, 1200),
+                 "score": 0, "time": None}
+                for oid, oname in opponents
+            ],
+        )
+        self.active_matches[run_id] = run
+
+        print(f"\n⚔️ GAUNTLET DECLARED: {run_id}")
+        print(f"🥊 {challenger_name} vs {len(run.opponents)} opponents")
+        print(f"🎯 Challenge: {challenge.title}")
+        print(f"   {' vs '.join(o['name'] for o in run.opponents)}")
+        print(f"   Lose once and it's over. Sweep them all and it's a legend.")
+        return run
+
+    def start_gauntlet(self, run_id: str) -> bool:
+        """Begin the gauntlet timer and open the first fight."""
+        run = self.active_matches.get(run_id)
+        if not run or not isinstance(run, GauntletRun):
+            return False
+        run.started_at = time.time()
+        run.status = "active"
+        opp = run.current_opponent
+        print(f"\n🔔 FIGHT {run.fights_won + 1} OF {len(run.opponents)}!")
+        print(f"⏳ {run.challenge.time_limit}s on the clock vs {opp['name']}...")
+        return True
+
+    def submit_gauntlet(
+        self,
+        run_id: str,
+        solution_code: str
+    ) -> Dict:
+        """Challenger submits a solution for the CURRENT fight."""
+        run = self.active_matches.get(run_id)
+        if not run or not isinstance(run, GauntletRun):
+            return {"error": "Gauntlet not found"}
+        if run.status != "active":
+            return {"error": f"Gauntlet not active ({run.status})"}
+
+        opp = run.current_opponent
+        submission_time = time.time() - run.started_at
+        if submission_time > run.challenge.time_limit:
+            return {"error": "Time expired"}
+
+        challenger_score = self._score_challenger(
+            run, solution_code, submission_time)
+        opp["score"] = self._score_opponent(run.challenge, opp["loadout"])
+        opp["time"] = run.challenge.time_limit * 0.6  # simulated pace
+
+        challenger_wins = challenger_score > opp["score"]
+        fight = {
+            "opponent_id": opp["id"],
+            "opponent_name": opp["name"],
+            "challenger_score": challenger_score,
+            "opponent_score": opp["score"],
+            "challenger_won": challenger_wins,
+        }
+        run.results.append(fight)
+
+        print(f"\n⚔️ FIGHT RESULT — vs {opp['name']}")
+        print(f"   {run.challenger_name}: {challenger_score} "
+              f"({submission_time:.1f}s)")
+        print(f"   {opp['name']}: {opp['score']} ({opp['time']:.1f}s)")
+
+        run.current_index += 1  # the line advances either way
+
+        if challenger_wins:
+            self._update_gauntlet_elo(run, opp, challenger_won=True)
+            if run.fights_won >= len(run.opponents):
+                self._end_gauntlet(run, swept=True)
+            else:
+                nxt = run.current_opponent
+                print(f"\n🔔 NEXT: {nxt['name']} steps up. FIGHT!")
+        else:
+            self._update_gauntlet_elo(run, opp, challenger_won=False)
+            self._end_gauntlet(run, swept=False)
+
+        return {"success": True, "fight": fight,
+                "status": run.status, "fights_won": run.fights_won}
+
+    def _score_challenger(self, run: GauntletRun, code: str,
+                          time_taken: float) -> int:
+        """Challenger's answer: same base/speed/quality/loadout mechanics
+        as a normal submission, but keyed off the gauntlet run's shape."""
+        score = random.randint(60, run.challenge.max_score)
+        time_percent = time_taken / run.challenge.time_limit
+        if time_percent < 0.5:
+            score += int(run.challenge.speed_bonus * (1 - time_percent))
+        score += int(run.challenge.quality_bonus
+                     * self._analyze_code_quality(code))
+        score += run.challenger_loadout.quality_bonus
+        return int(score * run.challenger_loadout.speed_multiplier)
+
+    def _score_opponent(self, challenge: Challenge, loadout: Loadout) -> int:
+        """Opponent's answer: same scoring path, but the opponent isn't
+        typing — they're a snippet waiting in line. Their score is drawn
+        from the same base/quality mechanics with their loadout applied."""
+        score = random.randint(40, challenge.max_score)
+        quality = random.uniform(0.3, 0.8)
+        score += int(challenge.quality_bonus * quality)
+        score += loadout.quality_bonus
+        score = int(score * loadout.speed_multiplier)
+        return score
+
+    def _update_gauntlet_elo(self, run: GauntletRun, opp: Dict,
+                             challenger_won: bool):
+        """Per-fight ELO: challenger vs this opponent's rating."""
+        c_elo = self.leaderboard.get(run.challenger_id, 1200)
+        o_elo = opp["elo"]
+        if challenger_won:
+            new_c, new_o = self.elo_system.update_ratings(c_elo, o_elo)
+        else:
+            new_o, new_c = self.elo_system.update_ratings(o_elo, c_elo)
+        self.leaderboard[run.challenger_id] = new_c
+        opp["elo"] = new_o
+
+    def _end_gauntlet(self, run: GauntletRun, swept: bool):
+        """Close the run: sweep bonus, stats, history."""
+        run.ended_at = time.time()
+        run.status = "won" if swept else "lost"
+
+        if swept:
+            # the sweep is worth more than N separate wins
+            bonus = len(run.opponents) * 10
+            self.leaderboard[run.challenger_id] = \
+                self.leaderboard.get(run.challenger_id, 1200) + bonus
+
+        self._update_gauntlet_stats(run)
+        self.match_history.append(run)
+        del self.active_matches[run.id]
+        self._announce_gauntlet(run, swept)
+
+    def _update_gauntlet_stats(self, run: GauntletRun):
+        """Stats for the challenger and every opponent who fought."""
+        wins = sum(1 for f in run.results if f["challenger_won"])
+        losses = len(run.results) - wins
+        self._bump_stats(run.challenger_id, wins, losses, 0,
+                         sum(f["challenger_score"] for f in run.results))
+        for f in run.results:
+            if f["challenger_won"]:
+                self._bump_stats(f["opponent_id"], 0, 1, 0, f["opponent_score"])
+            else:
+                self._bump_stats(f["opponent_id"], 1, 0, 0, f["opponent_score"])
+
+    def _bump_stats(self, player_id: str, wins: int, losses: int,
+                    draws: int, total_score: int):
+        """Shared stat accounting (used by gauntlet resolution)."""
+        stats = self.player_stats.setdefault(player_id, {
+            "matches_played": 0, "wins": 0, "losses": 0, "draws": 0,
+            "total_score": 0, "avg_time": 0, "fastest_win": None})
+        stats["matches_played"] += wins + losses + draws
+        stats["wins"] += wins
+        stats["losses"] += losses
+        stats["draws"] += draws
+        stats["total_score"] += total_score
+
+    def _announce_gauntlet(self, run: GauntletRun, swept: bool):
+        """The call is answered. Announce how it landed."""
+        print("\n" + "=" * 60)
+        if swept:
+            print("🏆 GAUNTLET SWEPT!")
+        else:
+            print("💀 GAUNTLET ENDED")
+        print("=" * 60)
+        print(f"\n🥊 {run.challenger_name} fought {len(run.results)} "
+              f"of {len(run.opponents)} opponents")
+        for i, f in enumerate(run.results, 1):
+            mark = "✅" if f["challenger_won"] else "❌"
+            print(f"  {i}. {mark} {f['opponent_name']} "
+                  f"({f['challenger_score']} vs {f['opponent_score']})")
+        if swept:
+            print(f"\n👑 {run.challenger_name} cleared the whole line — "
+                  f"legend status.")
+        else:
+            print(f"\n☠️  {run.challenger_name} went down. The line holds.")
+        print(f"📈 ELO: {run.challenger_name} "
+              f"{self.leaderboard[run.challenger_id]}")
+
     # ==================== SPECTATORS & BETTING ====================
     
     def add_spectator(self, match_id: str, spectator_id: str) -> bool:
